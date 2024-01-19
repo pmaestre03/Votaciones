@@ -3,7 +3,6 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    text-align: center;
 }
 
 header {
@@ -92,6 +91,11 @@ footer {
 }
 
 /* index.php */
+
+.indice {
+          text-align: center;
+
+}
 
 .contenedor_indice {
           margin-top: 5%;
