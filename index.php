@@ -6,7 +6,7 @@
     <title>Tu Sitio Web</title>
     <link rel="stylesheet" href="Utilidades/styles.css">
 </head>
-<body class="indice">
+<body class="index">
     <?php include("header.php") ?>
     <div class="contenedor_indice">
     <img src="./imagenes/votaciones.jpeg" alt="">
