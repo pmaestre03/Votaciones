@@ -6,7 +6,7 @@
     <title>Logout</title>
     <link rel="stylesheet" href="Utilidades/styles.css">
 </head>
-<body>
+<body class="logout">
     <?php include("header.php") ?>
 
     <div class="logout-container">

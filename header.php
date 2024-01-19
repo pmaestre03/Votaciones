@@ -6,11 +6,14 @@
     <title>header.php</title>
     <link rel="stylesheet" href="Utilidades/styles.css">
 </head>
-<body>
+<body class="header">
     <header>
         <button class="button">SIGNUP</button>
         <h1>Tu Sitio Web</h1>
-        <button class="button button-login">LOGIN</button>
+        <div class="button-container">
+            <button class="button button-secund">HOME</button>
+            <button class="button button-login">LOGIN</button>
+        </div>
     </header>
 </body>
 </html>
