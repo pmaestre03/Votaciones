@@ -11,7 +11,7 @@
 </head>
 <body class="create_poll">
 <?php include("header.php") ?>
-<?php include("Utilidades/conexion.php")?>
+
 <div class="content-paragraph">
         <p>
             Errores o Informacíon
@@ -27,6 +27,29 @@
 
 </form>
 </div>
+<?php
+// Assuming the form was submitted using the POST method
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+    // Array to store filtered input values
+    $filteredInputs = [];
+
+    // Iterate through all POST variables
+    foreach ($_POST as $key => $value) {
+        // Check if the input name matches the pattern "opcion_encuesta" followed by a number at the end
+        if (preg_match('/^opcion_encuesta\d+$/', $key)) {
+            // Add the input to the filtered array
+            $filteredInputs[$key] = $value;
+            print_r($value." ");
+        }
+    }
+
+    // Now $filteredInputs contains only the inputs with names starting with "opcion_encuesta" and ending with a number
+    
+    // Do something with the filtered inputs
+    print_r($filteredInputs);
+}
+?>
 
 <?php include("footer.php") ?>
 </body>
