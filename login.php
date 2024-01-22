@@ -9,10 +9,10 @@
 <body class="login">
     <?php include("header.php") ?>
 
-    <!-- Parrado Feedback -->
+    <!-- Párrafo Feedback -->
     <div class="content-paragraph">
         <p>
-            Errores o Informacíon
+            Errores o Información
         </p>
     </div>
 
@@ -31,6 +31,8 @@
 
     <!-- BBDD -->
     <?php
+    session_start();  // Asegúrate de iniciar la sesión
+
     try {
         $hostname = "localhost";
         $dbname = "Votaciones";
@@ -46,7 +48,6 @@
         $usuario = $_POST["username"];
         $contrasenya = $_POST["password"];
 
-        // Utiliza marcadores de posición en la consulta
         $querystr = "SELECT nombre FROM users WHERE email=:usuario AND contrasea_cifrada=md5(:contrasenya)";
         $query = $pdo->prepare($querystr);
         $query->bindParam(':usuario', $usuario, PDO::PARAM_STR);
@@ -56,8 +57,14 @@
 
         $filas = $query->rowCount();
         if ($filas > 0) {
-            echo "Usuario Correcto: Hola $usuario";
+            // Obtén el nombre de usuario desde la base de datos
+            $row = $query->fetch(PDO::FETCH_ASSOC);
+            $nombre_usuario = $row['nombre'];
+
+            $_SESSION['usuario'] = $nombre_usuario;
+            echo "Usuario Correcto: Hola $nombre_usuario";
             header("Location: index.php");
+            exit();
         } else {
             echo "Usuario o contraseña incorrectos";
         }
