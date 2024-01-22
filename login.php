@@ -47,7 +47,7 @@
         $contrasenya = $_POST["password"];
 
         // Utiliza marcadores de posición en la consulta
-        $querystr = "SELECT nombre FROM users WHERE nombre=:usuario AND contrasea_cifrada=md5(:contrasenya)";
+        $querystr = "SELECT nombre FROM users WHERE email=:usuario AND contrasea_cifrada=md5(:contrasenya)";
         $query = $pdo->prepare($querystr);
         $query->bindParam(':usuario', $usuario, PDO::PARAM_STR);
         $query->bindParam(':contrasenya', $contrasenya, PDO::PARAM_STR);
