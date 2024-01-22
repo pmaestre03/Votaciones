@@ -14,10 +14,8 @@
 <?php include("header.php") ?>
 
 <div class="content-paragraph">
-        <p>
-            Errores o Informacíon
-        </p>
-    </div>
+        <p id="notification-container"></p>
+</div>
 <div class="poll-container">
 <form action="" method="post" id="create_poll">
 <label for="fecha_inicio">Fecha Inicio</label>
@@ -45,6 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                               $resultat_opciones = mysqli_query($conn, $opciones);
                     }
           }
+          echo "<script>showNotification('Encuesta creada correctamente.')</script>";
 
 }
 ?>

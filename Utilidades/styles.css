@@ -131,7 +131,9 @@ body {
           margin: 0;
           padding: 0;
       }
-      
+      .notification {
+          position: relative;
+      }
       .content-paragraph {
           max-width: 900px;
           margin: 20px auto;
@@ -142,9 +144,10 @@ body {
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       }
       
-      .content-paragraph p {
+      .notification-container {
           font-size: 16px;
           line-height: 1.6;
+          position:static;
       }
       
 /* login.php */
