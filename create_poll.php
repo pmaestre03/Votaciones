@@ -18,7 +18,7 @@
             Errores o Informacíon
         </p>
     </div>
-<div class="login-container">
+<div class="poll-container">
 <form action="" method="post" id="create_poll">
           <label for="titulo_encuesta" >Titulo Encuesta</label>
           <input type="text" name="titulo_encuesta" id="titulo_encuesta" required>

@@ -49,8 +49,8 @@ body {
 footer {
     background-color: #454546;
     color: #fff;
+    position: fixed;
     padding: 0 10px;
-    position:  fixed;
     text-align: center;
     bottom: 0;
     width: 100%;
@@ -113,6 +113,17 @@ footer {
           margin-top: 20px;
 }
 
+.poll-container {
+          max-width: 600px;
+          margin:  auto;
+          margin-bottom: 150px;
+          padding: 30px;
+          border: 1px solid #ccc;
+          background-color: #f9f9f9;
+          border-radius: 8px;
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      }
+
 /* login.php */
 
 body {
@@ -146,7 +157,6 @@ body {
           background-color: #f9f9f9;
           border-radius: 8px;
           box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-          margin-bottom: 150px; /* Add margin-bottom */
       }
       
       
