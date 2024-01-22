@@ -31,7 +31,7 @@
 
     <!-- BBDD -->
     <?php
-    session_start();  // Asegúrate de iniciar la sesión
+    session_start();
 
     try {
         $hostname = "localhost";
@@ -42,7 +42,10 @@
     } catch (PDOException $e) {
         echo "Failed to get DB handle: " . $e->getMessage() . "\n";
         exit;
-    }  
+    }
+
+        // $conn = mysqli_connect('localhost','xavi','Superlocal123@');
+        // mysqli_select_db($conn, 'Votaciones');
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $usuario = $_POST["username"];
@@ -57,7 +60,6 @@
 
         $filas = $query->rowCount();
         if ($filas > 0) {
-            // Obtén el nombre de usuario desde la base de datos
             $row = $query->fetch(PDO::FETCH_ASSOC);
             $nombre_usuario = $row['nombre'];
 

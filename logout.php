@@ -3,7 +3,6 @@ session_start();
 
 $nombreUsuario = isset($_SESSION['usuario']) ? $_SESSION['usuario'] : 'Usuario';
 
-// Limpiar y destruir la sesión
 session_unset();
 session_destroy();
 ?>
@@ -23,7 +22,7 @@ session_destroy();
 </head>
 <body class="logout">
     <?php include("header.php") ?>
-        
+
     <div class="logout-container">
         <p>Hasta pronto, <?php echo $nombreUsuario; ?></p>
     </div>

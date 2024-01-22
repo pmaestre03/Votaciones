@@ -206,3 +206,35 @@ body.index {
 .parrafo_indice {
     font-size: 20px;
 }
+
+/* dashboard.php */
+body.dashboard {
+    font-family: Arial, sans-serif;
+    width: 100%;
+    margin: 0;
+}
+
+.dashboard-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin: 150px auto;
+}
+
+.dashboard-box {
+    width: 40%; 
+    margin: 20px;
+    padding: 40px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.dashboard-box h2 {
+    font-size: 24px;
+    margin: 0px;
+    
+}

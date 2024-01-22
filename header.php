@@ -9,7 +9,7 @@
 
 </head>
 <body class="header">
-    <header>
+    <header class="header">
         
         <?php
         session_start();
