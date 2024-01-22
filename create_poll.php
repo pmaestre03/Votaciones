@@ -10,6 +10,7 @@
           <script src="Utilidades/scripts.js"></script>
 </head>
 <body class="create_poll">
+<?php include("Utilidades/conexion.php") ?>
 <?php include("header.php") ?>
 
 <div class="content-paragraph">
@@ -23,34 +24,30 @@
           <input type="text" name="titulo_encuesta" id="titulo_encuesta" required>
           <label for="opciones_encuesta">Opciones Encuesta:</label>
           <input type="text" name="opciones_encuesta" id="opciones_encuesta">
+          <label for="fecha_inicio">Fecha Inicio</label>
+          <input type="date" name="fecha_inicio" id="fecha_inicio" required>
+          <label for="fecha_fin">Fecha Fin</label>
+          <input type="date" name="fecha_fin" id="fecha_fin" required>
           <button type="button" id="add-option" class="button button-login">Añadir Opcion</button>
 
 </form>
 </div>
+<?php include("footer.php") ?>
 <?php
-// Assuming the form was submitted using the POST method
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
-    // Array to store filtered input values
-    $filteredInputs = [];
+          $fecha_inicio = date("Y-m-d",strtotime($_POST["fecha_inicio"]));
+          $fecha_fin = date("Y-m-d",strtotime($_POST["fecha_fin"]));
+          $encuesta = "insert into encuestas(titulo_encuesta,creador,fech_inicio,fecha_fin) values('".$_POST["titulo_encuesta"]."',1,'".$fecha_inicio."','".$fecha_fin."')";
+          $resultat_enquesta = mysqli_query($conn, $encuesta);
+          foreach ($_POST as $key => $value) {
+                    if (preg_match('/^opcion_encuesta\d+$/', $key)) {
+                              $opciones = "insert into opciones_encuestas(nombre_opciones,id_encuesta) values('".$value."',(SELECT max(id_encuesta) from encuestas))";
+                              $resultat_opciones = mysqli_query($conn, $opciones);
+                    }
+          }
 
-    // Iterate through all POST variables
-    foreach ($_POST as $key => $value) {
-        // Check if the input name matches the pattern "opcion_encuesta" followed by a number at the end
-        if (preg_match('/^opcion_encuesta\d+$/', $key)) {
-            // Add the input to the filtered array
-            $filteredInputs[$key] = $value;
-            print_r($value." ");
-        }
-    }
-
-    // Now $filteredInputs contains only the inputs with names starting with "opcion_encuesta" and ending with a number
-    
-    // Do something with the filtered inputs
-    print_r($filteredInputs);
 }
 ?>
 
-<?php include("footer.php") ?>
 </body>
 </html>
