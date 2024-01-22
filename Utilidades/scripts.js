@@ -26,34 +26,20 @@ $("#send-poll").click(function () {
           sessionStorage.removeItem("opciones");
 });
 
-var notificationIndex = 1;  // Variable para llevar el seguimiento del índice de z-index
-
 function showNotification(message) {
-          var notificationContainer = document.getElementById("notification-container");
+          var notificationContainer = $("#notification-container");
 
-          // Crear div de notificación
-          var notificationDiv = document.createElement("div");
-          notificationDiv.className = "notification";
+          var notificationDiv = $("<div>").addClass("notification");
+          notificationDiv.text(message);
 
-          // Establecer el índice de z-index y actualizar la variable
-          notificationDiv.style.zIndex = notificationIndex++;
-
-          // Agregar mensaje
-          notificationDiv.innerHTML = message;
-
-          // Crear botón de cerrar
-          var closeButton = document.createElement("button");
-          closeButton.innerHTML = "Cerrar";
-          closeButton.className = "close-button";
-
-          // Agregar evento al botón de cerrar
-          closeButton.addEventListener("click", function () {
-                    notificationContainer.removeChild(notificationDiv);
+          var closeButton = $("<button>").addClass("close-button");
+          closeButton.html("&times;");
+          closeButton.click(function () {
+          notificationDiv.remove();
           });
 
-          // Agregar botón de cerrar a la notificación
-          notificationDiv.appendChild(closeButton);
+          notificationDiv.append(closeButton);
 
-          // Agregar notificación en la parte superior del contenedor
-          notificationContainer.insertBefore(notificationDiv, notificationContainer.firstChild);
-}
+          notificationContainer.append(notificationDiv);
+          notificationContainer.animate({ scrollTop: notificationContainer.prop("scrollHeight") }, 500);
+};

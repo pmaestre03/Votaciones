@@ -115,8 +115,7 @@ footer {
 
 .poll-container {
           max-width: 600px;
-          margin:  auto;
-          margin-bottom: 150px;
+          margin:  15px auto;
           padding: 30px;
           border: 1px solid #ccc;
           background-color: #f9f9f9;
@@ -221,4 +220,31 @@ body {
           line-height: 1.6;
       }
 
+/* feedback */
 
+#notification-container {
+          position: fixed;
+          bottom: 10px;
+          right: 10px;
+          max-width: 300px;
+          z-index: 9999; 
+          margin-bottom: 100px;
+      }
+
+      .notification {
+          background-color: #4CAF50;
+          color: white;
+          padding: 20px;
+          margin: 10px 0;
+          border-radius: 5px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .close-button {
+          background-color: #555;
+          color: white;
+          border: none;
+          border-radius: 3px;
+          cursor: pointer;
+          float: right;
+      }
