@@ -10,9 +10,9 @@ $(document).ready(function () {
                               $("form").append('<input style="display: none;" type="text" name="opcion_encuesta' + array_opciones_encuesta.length + '" id="opcion_encuesta' + array_opciones_encuesta.length + '">');
                               $('#opcion_encuesta' + array_opciones_encuesta.length).val(array_opciones_encuesta[indice_opciones]);
                               indice_opciones++;
-                              showNotification('Opción añadida correctamente.')
+                              showNotification('Opción añadida correctamente ')
                     } else {
-                              showNotification('No lo puedes dejar en blanco')
+                              showNotification('No se puede dejar en blanco ', 'orange')
                     }
                     $("#opciones_encuesta").val("");
                     if (array_opciones_encuesta.length >= 2 && $("#send-poll").length === 0) {
@@ -26,20 +26,22 @@ $("#send-poll").click(function () {
           sessionStorage.removeItem("opciones");
 });
 
-function showNotification(message) {
+function showNotification(message, bgColor) {
           var notificationContainer = $("#notification-container");
 
           var notificationDiv = $("<div>").addClass("notification");
           notificationDiv.text(message);
 
+          if (bgColor) {
+                    notificationDiv.css("background-color", bgColor);
+          }
+
           var closeButton = $("<button>").addClass("close-button");
           closeButton.html("&times;");
           closeButton.click(function () {
-          notificationDiv.remove();
+                    notificationDiv.remove();
           });
 
           notificationDiv.append(closeButton);
-
           notificationContainer.append(notificationDiv);
-          notificationContainer.animate({ scrollTop: notificationContainer.prop("scrollHeight") }, 500);
 };

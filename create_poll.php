@@ -34,7 +34,7 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
           $fecha_inicio = date("Y-m-d", strtotime($_POST["fecha_inicio"]));
           $fecha_fin = date("Y-m-d", strtotime($_POST["fecha_fin"]));
-          $encuesta = "insert into encuestas(titulo_encuesta,creador,fech_inicio,fecha_fin) values('" . $_POST["titulo_encuesta"] . "',1,'" . $fecha_inicio . "','" . $fecha_fin . "')";
+          $encuesta = "INSERT INTO encuestas (titulo_encuesta, creador, fech_inicio, fecha_fin) VALUES ('" . $_POST["titulo_encuesta"] . "', (SELECT id_user FROM users WHERE nombre = '" . $_SESSION['usuario'] . "'), '" . $fecha_inicio . "', '" . $fecha_fin . "')";
           $resultat_enquesta = mysqli_query($conn, $encuesta);
           foreach ($_POST as $key => $value) {
                     if (preg_match('/^opcion_encuesta\d+$/', $key)) {

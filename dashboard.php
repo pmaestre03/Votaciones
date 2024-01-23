@@ -8,6 +8,7 @@
 </head>
 <body class="index">
     <?php include("header.php") ?>
+    
     <?php include("footer.php") ?>
 </body>
 </html>

@@ -5,16 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="Utilidades/styles.css">
+    <script src="Utilidades/scripts.js"></script>
 </head>
 <body class="login">
     <?php include("header.php") ?>
-
-    <!-- Párrafo Feedback -->
-    <div class="content-paragraph">
-        <p>
-            Errores o Información
-        </p>
-    </div>
 
     <!-- Formulario Login -->
     <div class="login-container">
@@ -28,7 +22,7 @@
             <button type="submit" class="button button-login">Login</button>
         </form>
     </div>
-
+    <div id="notification-container"></div>
     <!-- BBDD -->
     <?php
     session_start();  // Asegúrate de iniciar la sesión
@@ -46,9 +40,8 @@
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $usuario = $_POST["username"];
-        $contrasenya = $_POST["password"];
-
-        $querystr = "SELECT nombre FROM users WHERE email=:usuario AND contrasea_cifrada=md5(:contrasenya)";
+        $contrasenya = hash('sha512',$_POST["password"]);
+        $querystr = "SELECT nombre FROM users WHERE email=:usuario AND contrasea_cifrada=:contrasenya";
         $query = $pdo->prepare($querystr);
         $query->bindParam(':usuario', $usuario, PDO::PARAM_STR);
         $query->bindParam(':contrasenya', $contrasenya, PDO::PARAM_STR);
@@ -64,9 +57,10 @@
             $_SESSION['usuario'] = $nombre_usuario;
             echo "Usuario Correcto: Hola $nombre_usuario";
             header("Location: index.php");
+            
             exit();
         } else {
-            echo "Usuario o contraseña incorrectos";
+            echo "<script>showNotification('Usuario o contraseña incorrecto','red')</script>";
         }
 
         unset($pdo);

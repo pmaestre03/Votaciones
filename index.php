@@ -15,6 +15,7 @@
             El panel de control, o <i>Dashboard</i>, ofrece la capacidad de crear encuestas y realizar modificaciones en las mismas..<br>
               </p>
     </div>
+    
     <?php include("footer.php") ?>
 </body>
 </html>

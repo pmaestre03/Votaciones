@@ -22,8 +22,9 @@ session_destroy();
     </script>
 </head>
 <body class="logout">
+<div id="notification-container"></div>
     <?php include("header.php") ?>
-        
+    
     <div class="logout-container">
         <p>Hasta pronto, <?php echo $nombreUsuario; ?></p>
     </div>
