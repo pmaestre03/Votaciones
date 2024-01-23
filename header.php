@@ -26,7 +26,7 @@
             echo '});';
             echo '</script>';
 
-            echo "<h1>Tu Sitio Web</h1>";
+            echo "<h1>VotaPAX</h1>";
             echo '<div class="button-container">';
 
             echo '<button class="button button-secund" id="homeButton">HOME</button>';
@@ -35,6 +35,16 @@
             echo '$(document).ready(function() {';
             echo '    $("#homeButton").on("click", function() {';
             echo '        window.location.href = "index.php";';
+            echo '    });';
+            echo '});';
+            echo '</script>';
+
+            echo '<button class="button button-secund" id="dashboardButton">DASHBOARD</button>';
+            //redireccion boton home
+            echo '<script>';
+            echo '$(document).ready(function() {';
+            echo '    $("#dashboardButton").on("click", function() {';
+            echo '        window.location.href = "dashboard.php";';
             echo '    });';
             echo '});';
             echo '</script>';
@@ -62,7 +72,7 @@
             echo '});';
             echo '</script>';
 
-            echo "<h1>Tu Sitio Web</h1>";
+            echo "<h1>VotaPAX</h1>";
             echo '<div class="button-container">';
 
             echo '<button class="button button-secund" id="homeButton">HOME</button>';

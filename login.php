@@ -65,7 +65,7 @@
 
             $_SESSION['usuario'] = $nombre_usuario;
             echo "Usuario Correcto: Hola $nombre_usuario";
-            header("Location: index.php");
+            header("Location: dashboard.php");
             exit();
         } else {
             echo "Usuario o contraseña incorrectos";
