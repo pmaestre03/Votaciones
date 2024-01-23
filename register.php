@@ -10,9 +10,15 @@
 
 <body>
     <h1>Exemple de lectura de dades a MySQL</h1>
+    <form id="miFormulario" action="procesar_formulario.php" method="post">
+    <button type="submit" name="submitBtn">Enviar</button>
+    
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
+
+            var miFormulario = $('#miFormulario');
+            var formularioNombreCreado = false;
             var formularioMailCreado = false;
             var formularioPasswordCreado = false;
             var formularioConfirmarPasswordCreado = false;
@@ -22,31 +28,46 @@
             var formularioCodigoPostalCreado = false;
             var botonSubmitCreado = false;
 
-            // Agregar campo de entrada para el nombre
-            $('body').append($('<label>', { for: 'nombre', text: 'Nombre:' }));
-            $('body').append($('<input>', { type: 'text', id: 'nombre', name: 'nombre' }));
+            crearFormularioNombre()
 
-            // Evento al escribir en el campo de nombre
-            $('#nombre').on('input', function() {
-                var nombre = $(this).val().trim();
-
-                if (nombre !== '' && !/^\d+$/.test(nombre)) {
-                    crearFormularioMail();
+            function crearFormularioNombre() {
+                if (!formNombre) {
+                    var formNombre = $('<div>');
+                    formNombre.append($('<label>', { for: 'nombre', text: 'Nombre:' }));
+                    formNombre.append($('<input>', { type: 'nombre', id: 'nombre', name: 'nombre' }));
+                    miFormulario.append(formNombre);
                 }
-            });
+
+                $('#nombre').on('input', function () {
+                    var nombre = $(this).val().trim();
+
+                    if (nombre !== '' && !/^\d+$/.test(nombre)) {
+                        crearFormularioMail();
+                    }
+                });
+            }
 
             function crearFormularioMail() {
                 if (!formularioMailCreado) {
-                    var formularioMail = $('<form>');
+                    var formularioMail = $('<div>');
                     formularioMail.append($('<label>', { for: 'mail', text: 'Correo Electrónico:' }));
                     formularioMail.append($('<input>', { type: 'email', id: 'mail', name: 'mail' }));
-                    $('body').append(formularioMail);
+                    miFormulario.append(formularioMail);
+
                     formularioMailCreado = true;
 
-                    $('#mail').on('input', function() {
+                    formularioMail.on('submit', function (event) {
+                        event.preventDefault();
+                        var correo = $('#mail').val().trim();
+                        validarCorreoElectronico(correo);
+                    });
+
+                    $('#mail').on('input', function () {
                         var correo = $(this).val().trim();
                         validarCorreoElectronico(correo);
                     });
+
+                    return formularioMail;
                 }
             }
 
@@ -66,13 +87,23 @@
 
             function crearFormularioPassword() {
                 if (!formularioPasswordCreado) {
-                    var formularioPassword = $('<form>');
+                    var formularioPassword = $('<div>');
                     formularioPassword.append($('<label>', { for: 'password', text: 'Contraseña:' }));
                     formularioPassword.append($('<input>', { type: 'password', id: 'password', name: 'password' }));
-                    $('body').append(formularioPassword);
+                    miFormulario.append(formularioPassword);
+
                     formularioPasswordCreado = true;
 
-                    $('#password').on('input', function() {
+                    formularioPassword.on('submit', function (event) {
+                        event.preventDefault();
+                        var password = $('#password').val().trim();
+
+                        if (password !== '') {
+                            crearFormularioConfirmarPassword();
+                        }
+                    });
+
+                    $('#password').on('input', function () {
                         var password = $(this).val().trim();
 
                         if (password !== '') {
@@ -84,13 +115,24 @@
 
             function crearFormularioConfirmarPassword() {
                 if (!formularioConfirmarPasswordCreado) {
-                    var formularioConfirmarPassword = $('<form>');
+                    var formularioConfirmarPassword = $('<div>');
                     formularioConfirmarPassword.append($('<label>', { for: 'confirmarPassword', text: 'Confirmar Contraseña:' }));
                     formularioConfirmarPassword.append($('<input>', { type: 'password', id: 'confirmarPassword', name: 'confirmarPassword' }));
-                    $('body').append(formularioConfirmarPassword);
+                    miFormulario.append(formularioConfirmarPassword);
+
                     formularioConfirmarPasswordCreado = true;
 
-                    $('#confirmarPassword').on('input', function() {
+                    formularioConfirmarPassword.on('submit', function (event) {
+                        event.preventDefault();
+                        var confirmarPassword = $('#confirmarPassword').val().trim();
+                        var password = $('#password').val().trim();
+
+                        if (confirmarPassword === password) {
+                            crearFormularioPaises();
+                        }
+                    });
+
+                    $('#confirmarPassword').on('input', function () {
                         var confirmarPassword = $(this).val().trim();
                         var password = $('#password').val().trim();
 
@@ -103,7 +145,7 @@
 
             function crearFormularioPaises() {
                 if (!formularioPaisesCreado) {
-                    var formularioPaises = $('<form>');
+                    var formularioPaises = $('<div>');
                     formularioPaises.append($('<label>', { for: 'pais', text: 'Selecciona un país:' }));
                     var selectPais = $('<select>', { id: 'pais', name: 'pais' });
 
@@ -125,21 +167,22 @@
                     ?>
 
                     formularioPaises.append(selectPais);
-                    $('body').append(formularioPaises);
+                    miFormulario.append(formularioPaises);
+
                     formularioPaisesCreado = true;
 
-                    $('#pais').on('change', function() {
+                    $('#pais').on('change', function () {
                         var selectedPais = $(this).val();
                         if (selectedPais !== '') {
                             crearFormularioTelefono(selectedPais);
-                        } 
+                        }
                     });
                 }
             }
 
             function crearFormularioTelefono(selectedPais) {
                 if (!formularioTelefonoCreado) {
-                    var formularioTelefono = $('<form>');
+                    var formularioTelefono = $('<div>');
                     formularioTelefono.append($('<label>', { for: 'telefono', text: 'Teléfono:' }));
 
                     // Obtener el prefijo del país seleccionado
@@ -153,10 +196,25 @@
 
                     formularioTelefono.append(inputPrefijo);
                     formularioTelefono.append(inputTelefono);
-                    $('body').append(formularioTelefono);
+                    miFormulario.append(formularioTelefono);
+
                     formularioTelefonoCreado = true;
 
-                    $('#telefono').on('input', function() {
+                    formularioTelefono.on('submit', function (event) {
+                        event.preventDefault();
+                        var telefono = $('#telefono').val().trim();
+
+                        // Verificar si el teléfono tiene solo números y está en el rango deseado
+                        var regexNumeros = /^\d+$/;
+                        var longitudMinima = 8;
+                        var longitudMaxima = 15;
+
+                        if (regexNumeros.test(telefono) && telefono.length >= longitudMinima && telefono.length <= longitudMaxima) {
+                            crearFormularioCiudad();
+                        }
+                    });
+
+                    $('#telefono').on('input', function () {
                         var telefono = $(this).val().trim();
 
                         // Verificar si el teléfono tiene solo números y está en el rango deseado
@@ -175,50 +233,76 @@
                 }
             }
 
-
             function crearFormularioCiudad() {
                 if (!formularioCiudadCreado) {
-                    var formularioCiudad = $('<form>');
+                    var formularioCiudad = $('<div>');
                     formularioCiudad.append($('<label>', { for: 'ciudad', text: 'Ciudad:' }));
                     formularioCiudad.append($('<input>', { type: 'text', id: 'ciudad', name: 'ciudad' }));
-                    $('body').append(formularioCiudad);
+                    miFormulario.append(formularioCiudad);
                     formularioCiudadCreado = true;
 
-                    $('#ciudad').on('input', function() {
+                    formularioCiudad.on('submit', function (event) {
+                        event.preventDefault();
+                        var ciudad = $('#ciudad').val().trim();
+
+                        if (ciudad !== '') {
+                            crearFormularioCodigoPostal();
+                        }
+                    });
+
+                    $('#ciudad').on('input', function () {
                         var ciudad = $(this).val().trim();
 
                         if (ciudad !== '') {
                             crearFormularioCodigoPostal();
-                        } 
+                        }
                     });
                 }
             }
 
             function crearFormularioCodigoPostal() {
                 if (!formularioCodigoPostalCreado) {
-                    var formularioCodigoPostal = $('<form>');
+                    var formularioCodigoPostal = $('<div>', { id: 'formularioCodigoPostal' });
                     formularioCodigoPostal.append($('<label>', { for: 'codigoPostal', text: 'Código Postal:' }));
                     formularioCodigoPostal.append($('<input>', { type: 'text', id: 'codigoPostal', name: 'codigoPostal' }));
-                    $('body').append(formularioCodigoPostal);
+                    miFormulario.append(formularioCodigoPostal);
+
+                    // Agregar el botón de envío si el código postal no está vacío
+                    var codigoPostal = $('#codigoPostal').val().trim();
+                    if (codigoPostal !== '') {
+                        agregarBotonEnviar();
+                    }
+
                     formularioCodigoPostalCreado = true;
 
+                    // Monitorear cambios en el código postal
                     $('#codigoPostal').on('input', function () {
-                        var codigoPostal = $(this).val().trim();
+                        var nuevoCodigoPostal = $(this).val().trim();
 
-                        if (codigoPostal !== '') {
-                            crearBotonSubmit();
+                        if (nuevoCodigoPostal !== '') {
+                            agregarBotonEnviar();
+                        } else {
+                            eliminarBotonEnviar();
                         }
                     });
                 }
             }
 
-            function crearBotonSubmit() {
+            function agregarBotonEnviar() {
                 if (!botonSubmitCreado) {
                     var botonSubmit = $('<button>', { type: 'submit', text: 'Enviar' });
-                    $('body').append(botonSubmit);
+                    miFormulario.append(botonSubmit);
                     botonSubmitCreado = true;
                 }
             }
+
+            function eliminarBotonEnviar() {
+                if (botonSubmitCreado) {
+                    miFormulario.find('button[type="submit"]').remove();
+                    botonSubmitCreado = false;
+                }
+            }
+
             function eliminarFormularios(formularios) {
                 for (var i = 0; i < formularios.length; i++) {
                     $('#' + formularios[i]).closest('form').remove();
@@ -231,42 +315,14 @@
                 formularioTelefonoCreado = false;
                 formularioCiudadCreado = false;
                 formularioCodigoPostalCreado = false;
+
+                eliminarBotonEnviar();
             }
+
+
+
         });
     </script>
-
-    <!-- Formulario PHP -->
-    <form method="post" action="">
-        <input type="hidden" name="form_submitted" value="1">
-    </form>
-
-    <?php
-
-        error_reporting(E_ALL);
-        ini_set('display_errors', 1);
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['form_submitted']) && $_POST['form_submitted'] == 1) {
-            // Verificar si se han enviado datos por POST
-            $nombre = $_POST['nombre'];
-            
-            // Conectar a la base de datos
-            $conn = mysqli_connect('localhost', 'aleix', 'Caqjuueeemke64*');
-            mysqli_select_db($conn, 'votaciones');
-
-            // Insertar solo el nombre en la tabla users
-            $insertQuery = "INSERT INTO `votaciones`.`users` (`nombre`) VALUES ('$nombre');";
-
-            if (mysqli_query($conn, $insertQuery)) {
-                echo "Nombre insertado correctamente en la tabla users.";
-            } else {
-                echo "Error al insertar nombre: " . mysqli_error($conn);
-            }
-
-            // Cerrar la conexión
-            mysqli_close($conn);
-        }
-    ?>
-
 
 </body>
 

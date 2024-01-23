@@ -1,42 +1,31 @@
 <?php
-// procesar_formulario.php
+// Conectar a la base de datos
+$conn = mysqli_connect('localhost', 'aleix', 'Caqjuueeemke64*', 'votaciones');
 
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    // Recuperar los datos del formulario
-    $nombre = $_GET["nombre"];
-    $email = $_GET["mail"];
-    $password = password_hash($_GET["password"], PASSWORD_DEFAULT);
-    $pais = $_GET["pais"];
-    $telefono = $_GET["prefijo"] . $_GET["telefono"];
-    $ciudad = $_GET["ciudad"];
-    $codigoPostal = $_GET["codigoPostal"];
-    $rol = "user";
-
-    // Realizar la conexión a la base de datos (ajusta las credenciales según tu entorno)
-    $conn = new mysqli('localhost', 'tu_usuario', 'tu_contraseña', 'tu_base_de_datos');
-
-    // Verificar la conexión
-    if ($conn->connect_error) {
-        die("La conexión a la base de datos falló: " . $conn->connect_error);
-    }
-
-    // Preparar la consulta SQL
-    $stmt = $conn->prepare("INSERT INTO users (nombre, email, contraseña_cifrada, nombre_pais, telefono, ciudad, codigoPostal, rol) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-
-    // Vincular los parámetros
-    $stmt->bind_param("ssssssss", $nombre, $email, $password, $pais, $telefono, $ciudad, $codigoPostal, $rol);
-
-    // Ejecutar la consulta
-    $stmt->execute();
-
-    // Cerrar la conexión
-    $stmt->close();
-    $conn->close();
-
-    // Devolver una respuesta
-    echo "¡Datos insertados correctamente!";
-} else {
-    // Método no permitido
-    echo "Método no permitido";
+// Verificar la conexión
+if (!$conn) {
+    die("La conexión a la base de datos falló: " . mysqli_connect_error());
 }
+
+// Recuperar datos del formulario
+$nombre = mysqli_real_escape_string($conn, $_POST['nombre']);
+$mail = mysqli_real_escape_string($conn, $_POST['mail']);
+$password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash de la contraseña (se recomienda)
+$pais = mysqli_real_escape_string($conn, $_POST['pais']);
+$telefono = mysqli_real_escape_string($conn, $_POST['telefono']);
+$ciudad = mysqli_real_escape_string($conn, $_POST['ciudad']);
+$codigoPostal = mysqli_real_escape_string($conn, $_POST['codigoPostal']);
+
+// Consulta SQL para insertar los datos
+$query = "INSERT INTO tu_tabla (nombre, mail, password, pais, telefono, ciudad, codigo_postal) VALUES ('$nombre', '$mail', '$password', '$pais', '$telefono', '$ciudad', '$codigoPostal')";
+
+// Ejecutar la consulta
+if (mysqli_query($conn, $query)) {
+    echo "Datos insertados correctamente.";
+} else {
+    echo "Error al insertar datos: " . mysqli_error($conn);
+}
+
+// Cerrar la conexión
+mysqli_close($conn);
 ?>
