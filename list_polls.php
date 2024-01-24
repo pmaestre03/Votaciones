@@ -16,8 +16,8 @@
     try {
         $hostname = "localhost";
         $dbname = "votaciones";
-        $username = "super";
-        $pw = "e1ce1uy7nc173?";
+        $username = "userVotaciones";
+        $pw = "P@ssw0rd";
         $pdo = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $pw);
     } catch (PDOException $e) {
         echo "Failed to get DB handle: " . $e->getMessage() . "\n";
@@ -37,13 +37,23 @@
         echo "<h2>Encuestas creadas</h2>";
         echo "<div class='center'>";
         echo "<table border='1'>";
-        echo "<tr><th>Título de la Encuesta</th><th>Fecha de Inicio</th><th>Fecha de Fin</th></tr>";
-        
+        echo "<tr><th>Título de la Encuesta</th><th>Fecha Inicio</th><th>Fecha Fin</th>";
         foreach ($encuestas as $encuesta) {
             echo "<tr>";
             echo "<td>{$encuesta['titulo_encuesta']}</td>";
             echo "<td>{$encuesta['fech_inicio']}</td>";
-            echo "<td>{$encuesta['fecha_fin']}</td>";
+	    echo "<td>{$encuesta['fecha_fin']}</td>";
+        //$fechaActual = strtotime(date("Y-m-d"));
+        //$inicioEncuesta = strtotime($encuesta['fech_inicio']);
+        //$finEncuesta = strtotime($encuesta['fecha_fin']);
+
+	    //if ($fechaActual >= $inicioEncuesta && $fechaActual <= $finEncuesta) {
+	    //echo "<td class='publica'>Publicada</td>"; 
+ 	    //} if ($fechaActual < $inicioEncuesta) {
+	    //echo "<td class='oculta'>Oculta</td>";
+	    //} if ($fechaActual > $finEncuesta){
+	    //echo "<td class='finalizada'>Finalizada</td>";
+	    //}
             echo "</tr>";
         }
 

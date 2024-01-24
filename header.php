@@ -13,7 +13,6 @@
         
         <?php
         session_start();
-
         if (isset($_SESSION['usuario'])) {
             // Si el usuario está logueado
             echo "<button class='button' id='signupButton'>SIGNUP</button>";
