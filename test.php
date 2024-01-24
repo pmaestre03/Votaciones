@@ -1,8 +1,19 @@
-<?php
-    $mysqli_conexion = new mysqli("localhost", "root", "root", "votaciones");
-    if($mysqli_conexion->connect_errno) {
-        echo "Error de conexión con la base de datos: " . $mysqli_conexion->connect_errno;	
-    } else {
-        echo "Hemos podido conectarnos con MySQL";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <?php
+    $conn = mysqli_connect('localhost', 'root', '','votaciones');
+
+    if(!$conn){
+        die("no". mysql_Error());
     }
-?>
+    echo "conexion exitosa";
+    mysqli_close($conn);
+    ?>
+</body>
+</html>

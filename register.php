@@ -19,26 +19,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ciudad = mysqli_real_escape_string($conn, $_POST['ciudad']);
     $codigoPostal = mysqli_real_escape_string($conn, $_POST['codigoPostal']);
 
-    // Imprimir el contenido del prefijo para depuración
-    echo "Contenido del prefijo: ";
-    var_dump($prefijo);
+    // Consulta SQL para verificar si el correo ya existe
+    $checkQuery = "SELECT COUNT(*) as count FROM users WHERE email = '$mail'";
+    $checkResult = mysqli_query($conn, $checkQuery);
+    $checkData = mysqli_fetch_assoc($checkResult);
 
-    // Consulta SQL para insertar los datos
-    $query = "INSERT INTO users (nombre, contrasea_cifrada, email, telefono, nombre_pais, rol, pref, nombre_ciudad, codigo_postal) VALUES ('$nombre', '$password', '$mail', '$telefono', '$pais', 'user', '$prefijo', '$ciudad', '$codigoPostal')";
-
-    // Ejecutar la consulta
-    if (mysqli_query($conn, $query)) {
-        header('Location: index.php');
-        exit();
+    // Si el correo ya existe, mostrar un mensaje y no realizar la inserción
+    if ($checkData['count'] > 0) {
+        $mensaje = "El correo electrónico ya ha sido registrado.";
+        $colorFondo = "red";
+        echo "<script>var mensajeNotificacion = '$mensaje'; var colorFondo = '$colorFondo';</script>";
     } else {
-        echo "Error al insertar datos: " . mysqli_error($conn);
+        // Si el correo no existe, realizar la inserción
+        // Imprimir el contenido del prefijo para depuración
+        echo "Contenido del prefijo: ";
+        var_dump($prefijo);
+
+        // Consulta SQL para insertar los datos
+        $insertQuery = "INSERT INTO users (nombre, contrasea_cifrada, email, telefono, nombre_pais, rol, pref, nombre_ciudad, codigo_postal) VALUES ('$nombre', '$password', '$mail', '$telefono', '$pais', 'user', '$prefijo', '$ciudad', '$codigoPostal')";
+
+        // Ejecutar la consulta
+        if (mysqli_query($conn, $insertQuery)) {
+            header('Location: index.php');
+            exit();
+        } else {
+            echo "Error al insertar datos: " . mysqli_error($conn);
+        }
     }
 
     // Cerrar la conexión
     mysqli_close($conn);
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -49,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Formulario Dinámico</title>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <link rel="stylesheet" href="./Utilidades/styles.css">
-
+    <script src="./Utilidades/scripts.js"></script>
 
 </head>
 
@@ -57,15 +69,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   
     <?php include("header.php") ?>
     <?php include("footer.php") ?>
-
+    <div id="notification-container"></div>
     <script>
         $(document).ready(function () {
+            var titulo = $('<h1>', { class: 'register-info' });
+            titulo.text('Registro');
+            $('body').append(titulo);
 
             var divContenedor = $('<div>', { class: 'register-container' });
             $('body').append(divContenedor);
 
+            var divNotification = $('<div>', {id: 'notification-container'})
+            divContenedor.append(divNotification); 
             var miFormulario = $('<form>', { id: 'miFormulario', action: '', method: 'post' });
             divContenedor.append(miFormulario);  // Utilizar el div contenedor como elemento padre
+
+            if (typeof mensajeNotificacion !== 'undefined' && typeof colorFondo !== 'undefined') {
+                // Llamar a la función showNotification con el mensaje y el color de fondo
+                showNotification(mensajeNotificacion, colorFondo);
+            }
+            
 
             var miFormulario = $('#miFormulario');
             var formularioNombreCreado = false;
@@ -414,7 +437,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             function agregarBotonEnviar() {
                 if (!botonSubmitCreado) {
-                    var botonSubmit = $('<button>', { type: 'submit', text: 'Enviar' });
+                    var botonSubmit = $('<button>', { type: 'submit', text: 'Enviar', class: 'enviar-registro' });
                     miFormulario.append(botonSubmit);
                     botonSubmitCreado = true;
                 }

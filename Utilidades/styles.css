@@ -54,6 +54,7 @@ footer {
     text-align: center;
     bottom: 0;
     width: 100%;
+    height: 15%;
 }
 
 .footer-content {
@@ -90,9 +91,10 @@ footer {
 
 /* index.php */
 
-.index {
+body.index {
     text-align: center;
-
+    margin: 0;
+    padding: 0;
 }
 
 .contenedor_indice {
@@ -101,6 +103,51 @@ footer {
 
 .parrafo_indice {
     font-size: 20px;
+}
+
+/* dashboard.php */
+body.dashboard {
+    font-family: Arial, sans-serif;
+    width: 100%;
+    margin: 0;
+}
+
+.user-info {
+    margin:40px auto 80px auto;
+    width: 40%; 
+    background-color: #454546;
+    color: #fff;
+    text-align: center;
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    font-size: 32px;
+}
+
+.dashboard-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.dashboard-box {
+    width: 40%; 
+    margin: 20px;
+    padding: 40px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.dashboard-box h2,
+.user-info h2 {
+    font-size: 24px;
+    margin: 0;
 }
 
 /* create_poll.php */
@@ -125,33 +172,26 @@ footer {
 
 /* login.php */
 
-body {
+body.login {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
 
-.notification {
-    position: relative;
-}
-
 .content-paragraph {
     max-width: 900px;
     margin: 20px auto;
-    padding: 15px;
+    padding: 15px; 
     background-color: #f9f9f9;
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.notification-container {
-    font-size: 10px;
+.content-paragraph p {
+    font-size: 16px;
     line-height: 1.6;
-    position: static;
 }
-
-/* login.php */
 
 .login-container {
     max-width: 600px;
@@ -162,7 +202,6 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
-
 
 form {
     display: flex;
@@ -200,7 +239,7 @@ input {
 
 /* Logout.php */
 
-body {
+body.logout {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -218,7 +257,7 @@ body {
 }
 
 .logout-container p {
-    font-size: 18px;
+    font-size: 32px;
     line-height: 1.6;
 }
 
@@ -278,18 +317,45 @@ th {
 /* register.php */
 
 .register-container {
-    max-width: 600px;
+    max-width: 400px; /* Reducir el ancho máximo */
     margin: 17px auto;
-    padding: 23px;
-    border: 1px solid #ddd; /* Use a lighter border color */
-    background-color: #fff; /* White background */
+    padding: 15px;
+    border: 1px solid #ddd; 
+    background-color: #fff; 
     border-radius: 8px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    display: flex; /* Use flex display */
-    flex-direction: column; /* Align children vertically */
-    align-items: center; /* Center align children horizontally */
-    height: 73vh; /* Set height to 100% of the viewport height */ 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+   
 }
+
+.register-container h1 {
+    font-size: 1.2em; /* Reducir el tamaño del encabezado h1 */
+}
+
+.register-container label {
+    font-size: 0.9em; /* Reducir el tamaño de las etiquetas de formulario */
+}
+
+.register-container input {
+    padding: 1px; /* Reducir el relleno de los campos de entrada */
+    margin-bottom: 1px; /* Añadir espacio entre los campos de entrada */
+}
+
+.register-container select {
+    padding: 1px; /* Reducir el relleno de los campos de selección */
+    margin-bottom: 1px; /* Añadir espacio entre los campos de selección */
+}
+
+.register-container button {
+    padding: 1px; /* Reducir el relleno del botón de envío */
+}
+
+
+/* Puedes continuar ajustando otros estilos según tus necesidades */
+
+
 /* Common styles for image-correcto classes */
 .imagen-correcto,
 .imagen-correcto2,
@@ -301,37 +367,35 @@ th {
 .imagen-correcto8,
 .imagen-correcto9 {
     display: none;
-    width: 20px; /* Increase size for better visibility */
+    width: 20px; 
     height: 20px;
-    margin-left: 10px; /* Add margin to the left */
+    margin-left: 10px; 
 }
 
-/* Form label styles */
 label {
-    display: flex; /* Use flex display */
-    align-items: center; /* Align children vertically */
+    display: flex; 
+    align-items: center; 
     margin-bottom: 8px;
     color: #555;
 }
 
-/* Input styles */
+
 input {
-    width: calc(100% - 30px); /* Adjust width considering image width and margin */
+    width: calc(100% - 30px);
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-    transition: background-color 0.3s; /* Agregar transición para suavizar el cambio de color de fondo */
+    transition: background-color 0.3s;
 }
 
-/* Optional: Add placeholder styling */
 input::placeholder {
     color: #999;
 }
 
-/* Submit button styles */
-button[type="submit"] {
+
+.enviar-registro[type="submit"] {
     background-color: #4CAF50;
     color: #fff;
     padding: 10px 15px;
@@ -341,54 +405,54 @@ button[type="submit"] {
     transition: background-color 0.3s;
 }
 
-button[type="submit"]:hover {
+.enviar-registro[type="submit"]:hover {
     background-color: #45a049;
 }
 
 #pais-container {
-    display: flex; /* Use flex display */
-    align-items: center; /* Align children vertically */
-    margin-bottom: 15px; /* Adjust margin-bottom as needed */
+    display: flex; 
+    align-items: center; 
+    margin-bottom: 15px; 
 }
 
-/* Additional styles for the dropdown */
+
 #pais {
-    width: calc(100% - 30px); /* Adjust width considering image width and margin */
+    width: calc(100% - 30px); 
     padding: 10px;
-    margin-right: 10px; /* Add margin to the right */
-    margin-bottom: 10px; /* Add margin-bottom to create space between dropdown and telefono */
+    margin-right: 10px; 
+    margin-bottom: 10px; 
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-    appearance: none; /* Remove default appearance on some browsers */
-    background: url('https://cdn2.iconfinder.com/data/icons/flags/flags/16/GB.png') no-repeat right center; /* Use an arrow-down icon */
-    background-size: 20px; /* Set the size of the arrow icon */
+    appearance: none; 
+    background: url('https://cdn2.iconfinder.com/data/icons/flags/flags/16/GB.png') no-repeat right center;
+    background-size: 20px; 
     cursor: pointer;
 }
 
-/* Style for the dropdown arrow */
+
 #pais::-ms-expand {
-    display: none; /* Hide default arrow on IE/Edge */
+    display: none;
 }
 
-/* Style for the selected option */
+
 #pais option[value=""] {
-    display: none; /* Hide the placeholder option */
+    display: none; 
 }
 
-/* Optional: Add a subtle border effect on focus for the dropdown */
+
 #pais:focus {
     border: 1px solid #4CAF50;
 }
 
-/* Optional: Add a subtle transition effect on hover for better user experience */
+
 #pais:hover {
     border: 1px solid #4CAF50;
 }
 
-/* Submit button styles */
+
 button[type="submit"] {
-    width: calc(100% - 30px); /* Match the width of the inputs */
+    width: calc(100% - 30px); 
     background-color: #4CAF50;
     color: #fff;
     padding: 10px 15px;
@@ -396,7 +460,7 @@ button[type="submit"] {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-top: 15px; /* Add margin to the top for spacing */
+    margin-top: 15px; 
 }
 
 button[type="submit"]:hover {
@@ -404,17 +468,74 @@ button[type="submit"]:hover {
 }
 
 input:focus {
-    background-color: #e6f7ff; /* Color de fondo cuando el campo está enfocado */
+    background-color: #e6f7ff;
 }
 
-/* Optional: Add placeholder styling */
+
 input::placeholder {
     color: #999;
 }
 
-/* Estilo para campos deshabilitados */
+
 .campo-desabilitado {
     background-color: #f2f2f2; 
     color: #666; 
     cursor: not-allowed; 
+}
+
+.register-info {
+    margin:10px auto 0px auto;
+    width: 40%; 
+    background-color: #454546;
+    color: #fff;
+    text-align: center;
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    font-size: 32px;
+}
+/* dashboard.php */
+body.dashboard {
+    font-family: Arial, sans-serif;
+    width: 100%;
+    margin: 0;
+}
+
+.user-info {
+    margin:40px auto 80px auto;
+    width: 40%; 
+    background-color: #454546;
+    color: #fff;
+    text-align: center;
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    font-size: 32px;
+}
+
+.dashboard-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.dashboard-box {
+    width: 40%; 
+    margin: 20px;
+    padding: 40px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.dashboard-box h2,
+.user-info h2 {
+    font-size: 24px;
+    margin: 0;
 }
