@@ -1,0 +1,541 @@
+/* header.php */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #454546;
+    color: #fff;
+    padding: 0 10px;
+    text-align: center;
+    margin: 0;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+h1 {
+    margin: 0;
+}
+
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 20px;
+}
+
+.button-login {
+    background-color: #3498db;
+}
+
+/* footer.php */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+footer {
+    background-color: #454546;
+    color: #fff;
+    position: fixed;
+    padding: 0 10px;
+    text-align: center;
+    bottom: 0;
+    width: 100%;
+    height: 15%;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.contact-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.contact {
+    margin-left: 40px;
+}
+
+.footer-links {
+    text-align: right;
+}
+
+.footer-links p {
+    margin: 0;
+}
+
+.footer-links a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-right: 40px;
+}
+
+/* index.php */
+
+body.index {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.contenedor_indice {
+    margin-top: 5%;
+}
+
+.parrafo_indice {
+    font-size: 20px;
+}
+
+/* dashboard.php */
+body.dashboard {
+    font-family: Arial, sans-serif;
+    width: 100%;
+    margin: 0;
+}
+
+.user-info {
+    margin:40px auto 80px auto;
+    width: 40%; 
+    background-color: #454546;
+    color: #fff;
+    text-align: center;
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    font-size: 32px;
+}
+
+.dashboard-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.dashboard-box {
+    width: 40%; 
+    margin: 20px;
+    padding: 40px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.dashboard-box h2,
+.user-info h2 {
+    font-size: 24px;
+    margin: 0;
+}
+
+/* create_poll.php */
+
+.create_poll {
+    text-align: center;
+}
+
+.crear_encuesta {
+    margin-top: 20px;
+}
+
+.poll-container {
+    max-width: 600px;
+    margin: 15px auto;
+    padding: 30px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* login.php */
+
+body.login {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.content-paragraph {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 15px; 
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.content-paragraph p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.login-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 30px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 12px;
+    font-size: 18px;
+}
+
+input {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.button-login {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 18px 24px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.button-login:hover {
+    background-color: #2980b9;
+}
+
+/* Logout.php */
+
+body.logout {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.logout-container {
+    max-width: 600px;
+    margin: 250px auto;
+    padding: 30px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.logout-container p {
+    font-size: 32px;
+    line-height: 1.6;
+}
+
+/* feedback */
+
+#notification-container {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    max-width: 300px;
+    z-index: 9999;
+    margin-bottom: 100px;
+}
+
+.notification {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.close-button {
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    float: right;
+}
+
+/* list_polls.php */
+
+.center {
+    margin: auto;
+    width: 50%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* register.php */
+
+.register-container {
+    max-width: 400px; /* Reducir el ancho máximo */
+    margin: 17px auto;
+    padding: 15px;
+    border: 1px solid #ddd; 
+    background-color: #fff; 
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+   
+}
+
+.register-container h1 {
+    font-size: 1.2em; /* Reducir el tamaño del encabezado h1 */
+}
+
+.register-container label {
+    font-size: 0.9em; /* Reducir el tamaño de las etiquetas de formulario */
+}
+
+.register-container input {
+    padding: 1px; /* Reducir el relleno de los campos de entrada */
+    margin-bottom: 1px; /* Añadir espacio entre los campos de entrada */
+}
+
+.register-container select {
+    padding: 1px; /* Reducir el relleno de los campos de selección */
+    margin-bottom: 1px; /* Añadir espacio entre los campos de selección */
+}
+
+.register-container button {
+    padding: 1px; /* Reducir el relleno del botón de envío */
+}
+
+
+/* Puedes continuar ajustando otros estilos según tus necesidades */
+
+
+/* Common styles for image-correcto classes */
+.imagen-correcto,
+.imagen-correcto2,
+.imagen-correcto3,
+.imagen-correcto4,
+.imagen-correcto5,
+.imagen-correcto6,
+.imagen-correcto7,
+.imagen-correcto8,
+.imagen-correcto9 {
+    display: none;
+    width: 20px; 
+    height: 20px;
+    margin-left: 10px; 
+}
+
+label {
+    display: flex; 
+    align-items: center; 
+    margin-bottom: 8px;
+    color: #555;
+}
+
+
+input {
+    width: calc(100% - 30px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: background-color 0.3s;
+}
+
+input::placeholder {
+    color: #999;
+}
+
+
+.enviar-registro[type="submit"] {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.enviar-registro[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+#pais-container {
+    display: flex; 
+    align-items: center; 
+    margin-bottom: 15px; 
+}
+
+
+#pais {
+    width: calc(100% - 30px); 
+    padding: 10px;
+    margin-right: 10px; 
+    margin-bottom: 10px; 
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    appearance: none; 
+    background: url('https://cdn2.iconfinder.com/data/icons/flags/flags/16/GB.png') no-repeat right center;
+    background-size: 20px; 
+    cursor: pointer;
+}
+
+
+#pais::-ms-expand {
+    display: none;
+}
+
+
+#pais option[value=""] {
+    display: none; 
+}
+
+
+#pais:focus {
+    border: 1px solid #4CAF50;
+}
+
+
+#pais:hover {
+    border: 1px solid #4CAF50;
+}
+
+
+button[type="submit"] {
+    width: calc(100% - 30px); 
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 15px; 
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+input:focus {
+    background-color: #e6f7ff;
+}
+
+
+input::placeholder {
+    color: #999;
+}
+
+
+.campo-desabilitado {
+    background-color: #f2f2f2; 
+    color: #666; 
+    cursor: not-allowed; 
+}
+
+.register-info {
+    margin:10px auto 0px auto;
+    width: 40%; 
+    background-color: #454546;
+    color: #fff;
+    text-align: center;
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    font-size: 32px;
+}
+/* dashboard.php */
+body.dashboard {
+    font-family: Arial, sans-serif;
+    width: 100%;
+    margin: 0;
+}
+
+.user-info {
+    margin:40px auto 80px auto;
+    width: 40%; 
+    background-color: #454546;
+    color: #fff;
+    text-align: center;
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    font-size: 32px;
+}
+
+.dashboard-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.dashboard-box {
+    width: 40%; 
+    margin: 20px;
+    padding: 40px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.dashboard-box h2,
+.user-info h2 {
+    font-size: 24px;
+    margin: 0;
+}
