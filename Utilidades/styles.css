@@ -8,7 +8,7 @@ body {
 header {
     background-color: #454546;
     color: #fff;
-    padding: 10px;
+    padding: 0 10px;
     text-align: center;
     margin: 0;
     height: 80px;
@@ -49,9 +49,9 @@ body {
 footer {
     background-color: #454546;
     color: #fff;
-    padding: 10px;
-    text-align: center;
     position: fixed;
+    padding: 0 10px;
+    text-align: center;
     bottom: 0;
     width: 100%;
 }
@@ -59,7 +59,6 @@ footer {
 .footer-content {
     display: flex;
     justify-content: space-between;
-    padding: 10px;
 }
 
 .contact-list {
@@ -69,7 +68,6 @@ footer {
 }
 
 .contact {
-    margin-bottom: 5px;
     margin-left: 40px;
 }
 
@@ -88,4 +86,335 @@ footer {
     margin-bottom: 20px;
     margin-top: 20px;
     margin-right: 40px;
+}
+
+/* index.php */
+
+.index {
+    text-align: center;
+
+}
+
+.contenedor_indice {
+    margin-top: 5%;
+}
+
+.parrafo_indice {
+    font-size: 20px;
+}
+
+/* create_poll.php */
+
+.create_poll {
+    text-align: center;
+}
+
+.crear_encuesta {
+    margin-top: 20px;
+}
+
+.poll-container {
+    max-width: 600px;
+    margin: 15px auto;
+    padding: 30px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* login.php */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.notification {
+    position: relative;
+}
+
+.content-paragraph {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.notification-container {
+    font-size: 10px;
+    line-height: 1.6;
+    position: static;
+}
+
+/* login.php */
+
+.login-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 30px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 12px;
+    font-size: 18px;
+}
+
+input {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.button-login {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 18px 24px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.button-login:hover {
+    background-color: #2980b9;
+}
+
+/* Logout.php */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.logout-container {
+    max-width: 600px;
+    margin: 250px auto;
+    padding: 30px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.logout-container p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/* feedback */
+
+#notification-container {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    max-width: 300px;
+    z-index: 9999;
+    margin-bottom: 100px;
+}
+
+.notification {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.close-button {
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    float: right;
+}
+
+/* list_polls.php */
+
+.center {
+    margin: auto;
+    width: 50%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* register.php */
+
+.register-container {
+    max-width: 600px;
+    margin: 17px auto;
+    padding: 23px;
+    border: 1px solid #ddd; /* Use a lighter border color */
+    background-color: #fff; /* White background */
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    display: flex; /* Use flex display */
+    flex-direction: column; /* Align children vertically */
+    align-items: center; /* Center align children horizontally */
+    height: 73vh; /* Set height to 100% of the viewport height */ 
+}
+/* Common styles for image-correcto classes */
+.imagen-correcto,
+.imagen-correcto2,
+.imagen-correcto3,
+.imagen-correcto4,
+.imagen-correcto5,
+.imagen-correcto6,
+.imagen-correcto7,
+.imagen-correcto8,
+.imagen-correcto9 {
+    display: none;
+    width: 20px; /* Increase size for better visibility */
+    height: 20px;
+    margin-left: 10px; /* Add margin to the left */
+}
+
+/* Form label styles */
+label {
+    display: flex; /* Use flex display */
+    align-items: center; /* Align children vertically */
+    margin-bottom: 8px;
+    color: #555;
+}
+
+/* Input styles */
+input {
+    width: calc(100% - 30px); /* Adjust width considering image width and margin */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: background-color 0.3s; /* Agregar transición para suavizar el cambio de color de fondo */
+}
+
+/* Optional: Add placeholder styling */
+input::placeholder {
+    color: #999;
+}
+
+/* Submit button styles */
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+#pais-container {
+    display: flex; /* Use flex display */
+    align-items: center; /* Align children vertically */
+    margin-bottom: 15px; /* Adjust margin-bottom as needed */
+}
+
+/* Additional styles for the dropdown */
+#pais {
+    width: calc(100% - 30px); /* Adjust width considering image width and margin */
+    padding: 10px;
+    margin-right: 10px; /* Add margin to the right */
+    margin-bottom: 10px; /* Add margin-bottom to create space between dropdown and telefono */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    appearance: none; /* Remove default appearance on some browsers */
+    background: url('https://cdn2.iconfinder.com/data/icons/flags/flags/16/GB.png') no-repeat right center; /* Use an arrow-down icon */
+    background-size: 20px; /* Set the size of the arrow icon */
+    cursor: pointer;
+}
+
+/* Style for the dropdown arrow */
+#pais::-ms-expand {
+    display: none; /* Hide default arrow on IE/Edge */
+}
+
+/* Style for the selected option */
+#pais option[value=""] {
+    display: none; /* Hide the placeholder option */
+}
+
+/* Optional: Add a subtle border effect on focus for the dropdown */
+#pais:focus {
+    border: 1px solid #4CAF50;
+}
+
+/* Optional: Add a subtle transition effect on hover for better user experience */
+#pais:hover {
+    border: 1px solid #4CAF50;
+}
+
+/* Submit button styles */
+button[type="submit"] {
+    width: calc(100% - 30px); /* Match the width of the inputs */
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 15px; /* Add margin to the top for spacing */
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+input:focus {
+    background-color: #e6f7ff; /* Color de fondo cuando el campo está enfocado */
+}
+
+/* Optional: Add placeholder styling */
+input::placeholder {
+    color: #999;
+}
+
+/* Estilo para campos deshabilitados */
+.campo-desabilitado {
+    background-color: #f2f2f2; 
+    color: #666; 
+    cursor: not-allowed; 
 }
