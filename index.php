@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="Utilidades/styles.css">
 </head>
 <body class="index">
-    <?php include("header.php") ?>
+    <?php include("Utilidades/header.php") ?>
     <div class="contenedor_indice">
     <img src="./imagenes/votaciones.jpeg" alt="">
     <p class="parrafo_indice">Nuestra plataforma se fundamenta en un sistema de votación que brinda la posibilidad de participar en encuestas de manera anónima o mediante la utilización de un usuario previamente registrado.<br>
@@ -16,6 +16,6 @@
               </p>
     </div>
     
-    <?php include("footer.php") ?>
+    <?php include("Utilidades/footer.php") ?>
 </body>
 </html>
