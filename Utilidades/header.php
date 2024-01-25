@@ -40,7 +40,7 @@
             echo '});';
             echo '</script>';
 
-            echo '<button class="button button-secund" id="dashboardButton">Mi  ^area</button>';
+            echo '<button class="button button-secund" id="dashboardButton">Mi  area</button>';
             //redireccion boton home
             echo '<script>';
             echo '$(document).ready(function() {';
@@ -49,7 +49,7 @@
             echo '    });';
             echo '});';
             echo '</script>';
-          echo '<button class="button button-login" id="logoutButton"> <a href="logout.php">Cerrar Sesi  n</a></button>';
+          echo '<button class="button button-login" id="logoutButton"> <a href="logout.php">Cerrar Sesión</a></button>';
             //redireccion boton logout
             echo '<script>';
             echo '$(document).ready(function() {';

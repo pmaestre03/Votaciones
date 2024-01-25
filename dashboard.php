@@ -51,11 +51,9 @@
                 echo '</script>';
 
             echo "</div>";
-            
         } else {
             //header("HTTP/1.1 403 Forbidden");
             header("Location: ../errores/error403.php");
-            http_response(403);
             exit;
 }
         ?>

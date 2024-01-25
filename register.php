@@ -1,90 +1,90 @@
 <?php
 // Conectar a la base de datos
-$conn = mysqli_connect('localhost', 'userProyecto', 'votacionesAXP24', 'votaciones');
+$conn = mysqli_connect('localhost', 'super', 'e1ce1uy7nc173?', 'votaciones');
 
 // Verificar la conexión
 if (!$conn) {
-    die("La conexión a la base de datos falló: " . mysqli_connect_error());
+          die("La conexión a la base de datos falló: " . mysqli_connect_error());
 }
 
 // Verificar si el formulario se ha enviado
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Recuperar datos del formulario
-    $nombre = mysqli_real_escape_string($conn, $_POST['nombre']);
-    $prefijo = mysqli_real_escape_string($conn, $_POST['prefijo']);
-    $mail = mysqli_real_escape_string($conn, $_POST['mail']);
-    $password = hash('sha512', $_POST['password']);
-    $pais = mysqli_real_escape_string($conn, $_POST['pais']);
-    $telefono = mysqli_real_escape_string($conn, $_POST['telefono']);
-    $ciudad = mysqli_real_escape_string($conn, $_POST['ciudad']);
-    $codigoPostal = mysqli_real_escape_string($conn, $_POST['codigoPostal']);
+          // Recuperar datos del formulario
+          $nombre = mysqli_real_escape_string($conn, $_POST['nombre']);
+          $prefijo = mysqli_real_escape_string($conn, $_POST['prefijo']);
+          $mail = mysqli_real_escape_string($conn, $_POST['mail']);
+          $password = hash('sha512', $_POST['password']);
+          $pais = mysqli_real_escape_string($conn, $_POST['pais']);
+          $telefono = mysqli_real_escape_string($conn, $_POST['telefono']);
+          $ciudad = mysqli_real_escape_string($conn, $_POST['ciudad']);
+          $codigoPostal = mysqli_real_escape_string($conn, $_POST['codigoPostal']);
 
-    // Consulta SQL para verificar si el correo ya existe
-    $checkQuery = "SELECT COUNT(*) as count FROM users WHERE email = '$mail'";
-    $checkResult = mysqli_query($conn, $checkQuery);
-    $checkData = mysqli_fetch_assoc($checkResult);
+          // Consulta SQL para verificar si el correo ya existe
+          $checkQuery = "SELECT COUNT(*) as count FROM users WHERE email = '$mail'";
+          $checkResult = mysqli_query($conn, $checkQuery);
+          $checkData = mysqli_fetch_assoc($checkResult);
 
-    // Si el correo ya existe, mostrar un mensaje y no realizar la inserción
-    if ($checkData['count'] > 0) {
-        $mensaje = "El correo electrónico ya ha sido registrado.";
-        $colorFondo = "red";
-        echo "<script>var mensajeNotificacion = '$mensaje'; var colorFondo = '$colorFondo';</script>";
-    } else {
-        // Si el correo no existe, realizar la inserción
-        // Imprimir el contenido del prefijo para depuración
-        echo "Contenido del prefijo: ";
-        var_dump($prefijo);
+          // Si el correo ya existe, mostrar un mensaje y no realizar la inserción
+          if ($checkData['count'] > 0) {
+                    $mensaje = "El correo electrónico ya ha sido registrado.";
+                    $colorFondo = "red";
+                    echo "<script>var mensajeNotificacion = '$mensaje'; var colorFondo = '$colorFondo';</script>";
+          } else {
+                    // Si el correo no existe, realizar la inserción
+                    // Imprimir el contenido del prefijo para depuración
+                    echo "Contenido del prefijo: ";
+                    var_dump($prefijo);
 
-        // Consulta SQL para insertar los datos
-        $insertQuery = "INSERT INTO users (nombre, contrasea_cifrada, email, telefono, nombre_pais, rol, pref, nombre_ciudad, codigo_postal) VALUES ('$nombre', '$password', '$mail', '$telefono', '$pais', 'user', '$prefijo', '$ciudad', '$codigoPostal')";
+                    // Consulta SQL para insertar los datos
+                    $insertQuery = "INSERT INTO users (nombre, contrasea_cifrada, email, telefono, nombre_pais, rol, pref, nombre_ciudad, codigo_postal) VALUES ('$nombre', '$password', '$mail', '$telefono', '$pais', 'user', '$prefijo', '$ciudad', '$codigoPostal')";
 
-        // Ejecutar la consulta
-        if (mysqli_query($conn, $insertQuery)) {
-            // Realizar la autenticación del usuario recién registrado
-            $usuario = $mail;  // Utilizar el correo electrónico como nombre de usuario
-            $contrasenya = $password;  // Utilizar la contraseña cifrada
+                    // Ejecutar la consulta
+                    if (mysqli_query($conn, $insertQuery)) {
+                              // Realizar la autenticación del usuario recién registrado
+                              $usuario = $mail;  // Utilizar el correo electrónico como nombre de usuario
+                              $contrasenya = $password;  // Utilizar la contraseña cifrada
 
-            // Establecer la conexión a la base de datos con PDO
-            try {
-                $pdo = new PDO('mysql:host=localhost;dbname=votaciones', 'userProyecto', 'votacionesAXP24');
-                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            } catch (PDOException $e) {
-                die("Error en la conexión a la base de datos: " . $e->getMessage());
-            }
+                              // Establecer la conexión a la base de datos con PDO
+                              try {
+                                        $pdo = new PDO('mysql:host=localhost;dbname=votaciones', 'super', 'e1ce1uy7nc173?');
+                                        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                              } catch (PDOException $e) {
+                                        die("Error en la conexión a la base de datos: " . $e->getMessage());
+                              }
 
-            $querystr = "SELECT email,nombre FROM users WHERE email=:usuario AND contrasea_cifrada=:contrasenya";
-            $query = $pdo->prepare($querystr);
-            $query->bindParam(':usuario', $usuario, PDO::PARAM_STR);
-            $query->bindParam(':contrasenya', $contrasenya, PDO::PARAM_STR);
+                              $querystr = "SELECT email,nombre FROM users WHERE email=:usuario AND contrasea_cifrada=:contrasenya";
+                              $query = $pdo->prepare($querystr);
+                              $query->bindParam(':usuario', $usuario, PDO::PARAM_STR);
+                              $query->bindParam(':contrasenya', $contrasenya, PDO::PARAM_STR);
 
-            $query->execute();
+                              $query->execute();
 
-            $filas = $query->rowCount();
-            if ($filas > 0) {
-                // Obtén el nombre de usuario desde la base de datos
-                $row = $query->fetch(PDO::FETCH_ASSOC);
-                $nombre_usuario = $row['nombre'];
-                $email = $row['email'];
-                session_start();
-                $_SESSION['usuario'] = $nombre_usuario;
-                $_SESSION['email'] = $email;
-                echo "Usuario Correcto: Hola $nombre_usuario";
-                header("Location: dashboard.php");
-                exit();
-            } else {
-                echo "<script>showNotification('Usuario o contraseña incorrecto','red')</script>";
-            }
+                              $filas = $query->rowCount();
+                              if ($filas > 0) {
+                                        // Obtén el nombre de usuario desde la base de datos
+                                        $row = $query->fetch(PDO::FETCH_ASSOC);
+                                        $nombre_usuario = $row['nombre'];
+                                        $email = $row['email'];
+                                        session_start();
+                                        $_SESSION['usuario'] = $nombre_usuario;
+                                        $_SESSION['email'] = $email;
+                                        echo "Usuario Correcto: Hola $nombre_usuario";
+                                        header("Location: dashboard.php");
+                                        exit();
+                              } else {
+                                        echo "<script>showNotification('Usuario o contraseña incorrecto','red')</script>";
+                              }
 
-            unset($pdo);
-            unset($query);
+                              unset($pdo);
+                              unset($query);
 
-        } else {
-            echo "Error al insertar datos: " . mysqli_error($conn);
-        }
-    }
+                    } else {
+                              echo "Error al insertar datos: " . mysqli_error($conn);
+                    }
+          }
 
-    // Cerrar la conexión
-    mysqli_close($conn);
+          // Cerrar la conexión
+          mysqli_close($conn);
 }
 ?>
 
@@ -126,6 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 showNotification(mensajeNotificacion, colorFondo);
             }
             
+            var pasoActual = 1;
 
             var miFormulario = $('#miFormulario');
             var formularioNombreCreado = false;
@@ -144,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             var ciudadValido = false;
             var cpValido = false;
 
-           crearFormularioNombre()
+           crearSiguienteFormulario();
 
            function crearFormularioNombre() {
         
@@ -161,10 +162,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     if (nombre !== '' && !/^\d+$/.test(nombre)) {
                         nombreValido = true;
-                        crearFormularioMail();
-                        $('.imagen-correcto').show(); // Muestra la imagen cuando el nombre es válido
                         agregarBotonEnviar()
                     } else {
+                       eliminarFormularios(['mail','password','confirmarPassword','pais','prefijo','telefono','ciudad','codigoPostal'])
+                       eliminarFormularioPrefijo();
+                       pasoActual = 2;
                         nombreValido = false;
                         $('.imagen-correcto').hide(); // Oculta la imagen si el nombre no es válido
                         eliminarBotonEnviar()
@@ -173,10 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                
             }
 
-           
-
-
-            function crearFormularioMail() {
+          function crearFormularioMail() {
                 if (!formularioMailCreado) {
                     var formularioMail = $('<div>');
                     formularioMail.append($('<label>', { for: 'mail', text: 'Correo Electrónico:' }));
@@ -203,24 +202,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
             function validarCorreoElectronico(correo) {
-                // Expresión regular para validar un correo electrónico
                 var expresionRegularCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-                // Verificar si el correo electrónico tiene un formato válido
                 var correoValido = expresionRegularCorreo.test(correo);
 
-                // Obtener la imagen de la marca de verificación
                 var imagenCorrecto2 = $('.imagen-correcto2');
 
                 if (correoValido) {
                     mailValido = true;
-                    imagenCorrecto2.show(); // Mostrar la imagen si el correo es válido
-                    crearFormularioPassword();
+                    imagenCorrecto2.show(); 
                     agregarBotonEnviar()
                 } else {
                     mailValido = false;
-                    imagenCorrecto2.hide(); // Ocultar la imagen si el correo no es válido
+                    imagenCorrecto2.hide(); 
                     eliminarBotonEnviar()
+                    
                 }
             }
 
@@ -242,7 +238,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         if (password !== '') {
                             imagenCorrecto3.show(); 
-                            crearFormularioConfirmarPassword();
                         }else{
                             imagenCorrecto3.hide();
                         }
@@ -272,12 +267,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             $('#password').addClass('campo-desabilitado').attr('readonly', true);
                             $('#confirmarPassword').addClass('campo-desabilitado').attr('readonly', true);
                             imagenCorrecto4.show(); 
-                            crearFormularioPaises();
                         }
                     });
                 }
             }
-
 
             function crearFormularioPaises() {
                 if (!formularioPaisesCreado) {
@@ -290,18 +283,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     // Agregar las opciones al select desde la base de datos
                     <?php
-                    $conn = mysqli_connect('localhost', 'userProyecto', 'votacionesAXP24');
+                    $conn = mysqli_connect('localhost', 'super', 'e1ce1uy7nc173?');
                     mysqli_select_db($conn, 'votaciones');
                     $consulta = "SELECT nombre, pref FROM `votaciones`.`paises`;";
                     $resultat = mysqli_query($conn, $consulta);
                     $paises = array();
                     while ($fila = mysqli_fetch_assoc($resultat)) {
-                        $paises[] = $fila;
+                              $paises[] = $fila;
                     }
                     mysqli_close($conn);
 
                     foreach ($paises as $pais) {
-                        echo 'selectPais.append("<option value=\'" + \'' . $pais['nombre'] . '\' + "\' data-pref=\'" + \'' . $pais['pref'] . '\' + "\'>" + \'' . $pais['nombre'] . '\' + "</option>");';
+                              echo 'selectPais.append("<option value=\'" + \'' . $pais['nombre'] . '\' + "\' data-pref=\'" + \'' . $pais['pref'] . '\' + "\'>" + \'' . $pais['nombre'] . '\' + "</option>");';
                     }
                     ?>
 
@@ -313,8 +306,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $('#pais').on('change', function () {
                         var selectedPais = $(this).val();
                         if (selectedPais !== '') {
-                            crearFormularioTelefono(selectedPais);
-                            
+                              crearFormularioTelefono(selectedPais);
                             // Eliminar la opción "Selecciona un país" después de la selección
                             $(this).find('option[value=""]').remove();
                         }
@@ -329,7 +321,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
             }
-
 
 
 
@@ -382,7 +373,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         if (regexNumeros.test(telefono) && telefono.length >= longitudMinima && telefono.length <= longitudMaxima) {
                             telefonoValido = true;
                             imagenCorrecto5.show();
-                            crearFormularioCiudad();
                             agregarBotonEnviar()
                         }else{
                             telefonoValido = false;
@@ -412,7 +402,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         if (ciudad !== '') {
                             ciudadValido = true;
                             imagenCorrecto8.show();
-                            crearFormularioCodigoPostal();
                             agregarBotonEnviar()
                         }else{
                             ciudadValido = false;
@@ -454,8 +443,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
-           
-
+          
             function agregarBotonEnviar() {
                 if (nombreValido && mailValido && telefonoValido && ciudadValido && cpValido) {
                     if (!botonSubmitCreado) {
@@ -473,21 +461,92 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
-            function eliminarFormularios(formularios) {
-                for (var i = 0; i < formularios.length; i++) {
-                    $('#' + formularios[i]).closest('form').remove();
-                }
+          function eliminarFormularios(camposAEliminar) {
+                    for (var i = 0; i < camposAEliminar.length; i++) {
+                              var formularioPadre = $('#' + camposAEliminar[i]).closest('form');
+                              var etiquetaPadre = formularioPadre.find('label[for="' + camposAEliminar[i] + '"]');
+                              formularioPadre.find('#' + camposAEliminar[i]).remove();
+                              etiquetaPadre.remove();
+                    }
 
-                formularioMailCreado = false;
-                formularioPasswordCreado = false;
-                formularioConfirmarPasswordCreado = false;
-                formularioPaisesCreado = false;
-                formularioTelefonoCreado = false;
-                formularioCiudadCreado = false;
-                formularioCodigoPostalCreado = false;
+                    formularioMailCreado = false;
+                    formularioPasswordCreado = false;
+                    formularioConfirmarPasswordCreado = false;
+                    formularioPaisesCreado = false;
+                    formularioTelefonoCreado = false;
+                    formularioCiudadCreado = false;
+                    formularioCodigoPostalCreado = false;
 
-                eliminarBotonEnviar();
-            }
+                    eliminarBotonEnviar();
+          }
+
+          function eliminarFormularioPrefijo() {
+                    var formularioPadre = $('#prefijo').closest('form');
+                    var etiquetaPadre = formularioPadre.find('label[for="prefijo"]');
+                    formularioPadre.find('#prefijoTexto').remove();
+                    formularioPadre.find('#prefijo').remove();
+                    etiquetaPadre.remove();
+
+                    formularioPaisesCreado = false;
+                    formularioTelefonoCreado = false;
+
+                    eliminarBotonEnviar();
+          }
+
+          function comprovarLastChild() {
+                    var lastInput = $("#miFormulario :input:last");
+                    return lastInput.length > 0 && lastInput.val().trim() !== '';
+          }
+
+            $(document).keypress(function(e) {
+                    if (e.which === 13) {  
+                              e.preventDefault(); 
+                              var inputActual = $('input:focus'); 
+                              if (inputActual.val().trim() !== '') {
+                                        if (inputActual.attr('id') === 'mail') {
+                                                  validarCorreoElectronico(inputActual.val().trim());
+                                        if (mailValido) {
+                                                  if (comprovarLastChild()) {
+                                                            crearSiguienteFormulario();
+                                                  }
+                                        }
+                                        } else {
+                                                  if (comprovarLastChild()) {
+                                                            crearSiguienteFormulario();
+                                                  }
+                                        }
+                              }
+                    }
+                    });
+
+
+                    function crearSiguienteFormulario() {
+                    switch (pasoActual) {
+                              case 1:
+                                        crearFormularioNombre();
+                                        break;
+                              case 2:
+                                        crearFormularioMail();
+                                        break;
+                              case 3:
+                                        crearFormularioPassword();
+                                        break; 
+                              case 4:
+                                        crearFormularioConfirmarPassword();
+                                        break; 
+                              case 5:
+                                        crearFormularioPaises();
+                                        break; 
+                              case 6:
+                                        crearFormularioCiudad();
+                                        break; 
+                              case 7:
+                                        crearFormularioCodigoPostal();
+                                        break; 
+                    }
+                    pasoActual++;
+          }
+
 
         });
     </script>
