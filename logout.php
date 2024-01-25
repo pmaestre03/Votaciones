@@ -3,6 +3,7 @@ session_start();
 
 $nombreUsuario = isset($_SESSION['usuario']) ? $_SESSION['usuario'] : 'Usuario';
 
+// Limpiar y destruir la sesi  n
 session_unset();
 session_destroy();
 ?>
@@ -13,7 +14,7 @@ session_destroy();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Logout</title>
-    <link rel="stylesheet" href="Utilidades/styles.css">
+    <link rel="stylesheet" href="Utilidades/styles.css?no-cache=<?php echo time(); ?>">
     <script>
         setTimeout(function() {
             window.location.href = "index.php";
@@ -21,12 +22,13 @@ session_destroy();
     </script>
 </head>
 <body class="logout">
-    <?php include("header.php") ?>
-
+<div id="notification-container"></div>
+    <?php include("Utilidades/header.php") ?>
+    
     <div class="logout-container">
         <p>Hasta pronto, <?php echo $nombreUsuario; ?></p>
     </div>
 
-    <?php include("footer.php") ?>
+    <?php include("Utilidades/footer.php") ?>
 </body>
 </html>

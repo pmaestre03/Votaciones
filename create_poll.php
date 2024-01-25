@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Encuesta</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="./Utilidades/styles.css?no-cache=<?php echo time(); ?>">
+    <script src="Utilidades/scripts.js"></script>
+</head>
+<body class="create_poll">
+    <?php include("Utilidades/conexion.php") ?>
+    <?php include("Utilidades/header.php") ?>
+
+    <div class="poll-container">
+        <form action="" method="post" id="create_poll">
+            <label for="fecha_inicio">Fecha Inicio</label>
+            <input type="date" name="fecha_inicio" id="fecha_inicio" required>
+            <label for="fecha_fin">Fecha Fin</label>
+            <input type="date" name="fecha_fin" id="fecha_fin" required>
+            <label for="titulo_encuesta" >Titulo Encuesta</label>
+            <input type="text" name="titulo_encuesta" id="titulo_encuesta" required>
+            <label for="opciones_encuesta">Opciones Encuesta:</label>
+            <div id="opciones-container">
+                <input type="text" name="opciones_encuesta[]" class="opcion-input">
+            </div>
+            <button type="button" id="add-option" class="button button-login">Añadir Opcion</button>
+            <input type="submit" value="Crear Encuesta" id="crear_encuesta_btn" style="display:none;" disabled>
+        </form>
+        <div id="notification-container"></div>
+    </div>
+
+    <?php include("Utilidades/footer.php") ?>
+
+    <script>
+        $(document).ready(function () {
+            var optionIndex = 1;
+
+            $("#add-option").click(function () {
+                var newOptionInput = '<input type="text" name="opciones_encuesta[]" class="opcion-input">';
+                $("#opciones-container").append(newOptionInput);
+                optionIndex++;
+
+                // Mostrar el botón de "Crear Encuesta" solo después de agregar al menos dos opciones
+                if (optionIndex > 2) {
+                    $("#crear_encuesta_btn").show().prop("disabled", false);
+                }
+            });
+        });
+    </script>
+    
+    <?php
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $fecha_inicio = date("Y-m-d", strtotime($_POST["fecha_inicio"]));
+                $fecha_fin = date("Y-m-d", strtotime($_POST["fecha_fin"]));
+            
+                $encuesta = "INSERT INTO encuestas (titulo_encuesta, creador, fech_inicio, fecha_fin) VALUES ('" . $_POST["titulo_encuesta"] . "', (SELECT id_user FROM users WHERE email = '" . $_SESSION['email'] . "'), '" . $fecha_inicio . "', '" . $fecha_fin . "')";
+            
+                $resultat_enquesta = mysqli_query($conn, $encuesta);
+                
+                foreach ($_POST['opciones_encuesta'] as $opcion) {
+                    $opciones = "INSERT INTO opciones_encuestas(nombre_opciones, id_encuesta) VALUES ('" . $opcion . "', (SELECT max(id_encuesta) from encuestas))";
+                    $resultat_opciones = mysqli_query($conn, $opciones);
+                }
+            
+                echo "<script>showNotification('Encuesta creada correctamente.')</script>";
+            }
+    ?>
+</body>
+</html>
