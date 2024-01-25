@@ -1,4 +1,4 @@
 <?php 
-$conn = mysqli_connect('localhost','super','e1ce1uy7nc173?');
+$conn = mysqli_connect('localhost', 'userProyecto', 'votacionesAXP24', 'votaciones');
 mysqli_select_db($conn, 'votaciones');
 ?>
