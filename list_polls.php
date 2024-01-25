@@ -16,8 +16,8 @@
     try {
         $hostname = "localhost";
         $dbname = "votaciones";
-        $username = "userProyecto";
-        $pw = "votacionesAXP24";
+        $username = "root";
+        $pw = "PlataNoEs18";
         $pdo = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $pw);
     } catch (PDOException $e) {
         echo "Failed to get DB handle: " . $e->getMessage() . "\n";

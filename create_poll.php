@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
         <meta charset="UTF-8">
@@ -12,21 +12,17 @@
 <?php include("Utilidades/conexion.php") ?>
 <?php include("Utilidades/header.php") ?>
 
-<div class="poll-container">
+<!-- <div class="poll-container">
 <form action="" method="post" id="create_poll">
-<label for="fecha_inicio">Fecha Inicio</label>
           <input type="date" name="fecha_inicio" id="fecha_inicio" required>
-          <label for="fecha_fin">Fecha Fin</label>
           <input type="date" name="fecha_fin" id="fecha_fin" required>
-          <label for="titulo_encuesta" >Titulo Encuesta</label>
           <input type="text" name="titulo_encuesta" id="titulo_encuesta" required>
-          <label for="opciones_encuesta">Opciones Encuesta:</label>
           <input type="text" name="opciones_encuesta" id="opciones_encuesta">
-          <button type="button" id="add-option" class="button button-login">A  adir Opcion</button>
+          <button type="button" id="add-option" class="button button-login">Añadir Opción</button>
 
 </form>
+</div> -->
 <div id="notification-container"></div>
-</div>
 
 <?php include("Utilidades/footer.php") ?>
 <?php
