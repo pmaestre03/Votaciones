@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./Utilidades/styles.css?no-cache=<?php echo time(); ?>">
     <title>Login</title>
     <script src="Utilidades/scripts.js"></script>
 </head>
 <body class="login">
-    <?php include("header.php") ?>
+    <?php include("Utilidades/header.php") ?>
 
     <!-- Formulario Login -->
     <div class="login-container">
@@ -15,10 +16,10 @@
             <label for="username">Correo:</label>
             <input type="text" id="username" name="username" required>
 
-            <label for="password">Contraseña:</label>
+            <label for="password">Contrase  a:</label>
             <input type="password" id="password" name="password" required>
 
-            <button type="submit" class="button button-login">Iniciar Sesión</button>
+            <button type="submit" class="button button-login">Iniciar Sesi  n</button>
         </form>
     </div>
     <div id="notification-container"></div>
@@ -28,15 +29,15 @@
     try {
         $hostname = "localhost";
         $dbname = "votaciones";
-        $username = "root";
-        $pw = "";
+        $username = "userProyecto";
+        $pw = "votacionesAXP24";
         $pdo = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $pw);
     } catch (PDOException $e) {
         echo "Failed to get DB handle: " . $e->getMessage() . "\n";
         exit;
     }  
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $usuario = $_POST["username"];
         $contrasenya = hash('sha512',$_POST["password"]);
         
@@ -49,17 +50,17 @@
 
         $filas = $query->rowCount();
         if ($filas > 0) {
-            // Obtén el nombre de usuario desde la base de datos
+            // Obt  n el nombre de usuario desde la base de datos
             $row = $query->fetch(PDO::FETCH_ASSOC);
             $nombre_usuario = $row['nombre'];
             $_SESSION['email'] = $row["email"];
             $_SESSION['usuario'] = $nombre_usuario;
             echo "Usuario Correcto: Hola $nombre_usuario";
             header("Location: dashboard.php");
-            
+
             exit();
         } else {
-            echo "<script>showNotification('Usuario o contraseña incorrecto','red')</script>";
+            echo "<script>showNotification('Usuario o contrase  a incorrecto','red')</script>";
         }
 
         unset($pdo);
@@ -67,6 +68,6 @@
     }
     ?>
 
-    <?php include("footer.php") ?>
+    <?php include("Utilidades/footer.php") ?>
 </body>
 </html>
