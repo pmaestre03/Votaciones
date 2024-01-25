@@ -1,6 +1,6 @@
 <?php
 // Conectar a la base de datos
-$conn = mysqli_connect('localhost', 'root', '', 'votaciones');
+$conn = mysqli_connect('localhost', 'userProyecto', 'votacionesAXP24', 'votaciones');
 
 // Verificar la conexión
 if (!$conn) {
@@ -46,13 +46,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Establecer la conexión a la base de datos con PDO
             try {
-                $pdo = new PDO('mysql:host=localhost;dbname=votaciones', 'root', '');
+                $pdo = new PDO('mysql:host=localhost;dbname=votaciones', 'userProyecto', 'votacionesAXP24');
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (PDOException $e) {
                 die("Error en la conexión a la base de datos: " . $e->getMessage());
             }
 
-            $querystr = "SELECT nombre FROM users WHERE email=:usuario AND contrasea_cifrada=:contrasenya";
+            $querystr = "SELECT email,nombre FROM users WHERE email=:usuario AND contrasea_cifrada=:contrasenya";
             $query = $pdo->prepare($querystr);
             $query->bindParam(':usuario', $usuario, PDO::PARAM_STR);
             $query->bindParam(':contrasenya', $contrasenya, PDO::PARAM_STR);
@@ -64,9 +64,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Obtén el nombre de usuario desde la base de datos
                 $row = $query->fetch(PDO::FETCH_ASSOC);
                 $nombre_usuario = $row['nombre'];
-
+                $email = $row['email'];
                 session_start();
                 $_SESSION['usuario'] = $nombre_usuario;
+                $_SESSION['email'] = $email
                 echo "Usuario Correcto: Hola $nombre_usuario";
                 header("Location: dashboard.php");
                 exit();
@@ -104,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
   
     <?php include("header.php") ?>
-    <?php include("footer.php") ?>
+    
     <div id="notification-container"></div>
     <script>
         $(document).ready(function () {
@@ -289,7 +290,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     // Agregar las opciones al select desde la base de datos
                     <?php
-                    $conn = mysqli_connect('localhost', 'root', '');
+                    $conn = mysqli_connect('localhost', 'userProyecto', 'votacionesAXP24');
                     mysqli_select_db($conn, 'votaciones');
                     $consulta = "SELECT nombre, pref FROM `votaciones`.`paises`;";
                     $resultat = mysqli_query($conn, $consulta);
@@ -490,7 +491,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         });
     </script>
-
+<?php include("footer.php") ?>
 </body>
 
 </html>
