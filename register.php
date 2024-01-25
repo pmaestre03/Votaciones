@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
   
-    <?php include("header.php") ?>
+    <?php include("Utilidades/header.php") ?>
     
     <div id="notification-container"></div>
     <script>
@@ -491,7 +491,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         });
     </script>
-<?php include("footer.php") ?>
+<?php include("Utilidades/footer.php") ?>
 </body>
 
 </html>
