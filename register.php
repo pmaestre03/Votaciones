@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $email = $row['email'];
                 session_start();
                 $_SESSION['usuario'] = $nombre_usuario;
-                $_SESSION['email'] = $email
+                $_SESSION['email'] = $email;
                 echo "Usuario Correcto: Hola $nombre_usuario";
                 header("Location: dashboard.php");
                 exit();
