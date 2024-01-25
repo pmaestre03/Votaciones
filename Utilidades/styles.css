@@ -223,7 +223,9 @@ body.dashboard {
   overflow-y: auto;
 }
 
-
+.poll-container label {
+  margin-top: 25px;
+}
 /* login.php */
 
 body.login {

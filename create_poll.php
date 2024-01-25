@@ -21,9 +21,7 @@
             <label for="titulo_encuesta" >Titulo Encuesta</label>
             <input type="text" name="titulo_encuesta" id="titulo_encuesta" required>
             <label for="opciones_encuesta">Opciones Encuesta:</label>
-            <div id="opciones-container">
                 <input type="text" name="opciones_encuesta[]" class="opcion-input">
-            </div>
             <button type="button" id="add-option" class="button button-login">Añadir Opcion</button>
             <input type="submit" value="Crear Encuesta" id="crear_encuesta_btn" style="display:none;" disabled>
         </form>
