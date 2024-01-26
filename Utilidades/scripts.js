@@ -1,39 +1,84 @@
 $(document).ready(function () {
     var array_opciones_encuesta = [];
     var indice_opciones = 0;
-    
-    // Crear Titulo Encuesta desde el script
+    var maxOptions = 100;
+    var optionNumber = 1;
+
+    // Crear Fecha Inicio Encuesta
     var container_poll = $('<div>').addClass('poll-container');
     var box_poll = $('<div>').attr('id', 'box');
-    var titulo_encuesta = $('<h2>').text('Titulo encuesta:');
+    var fecha_inicio = $('<h2>').text('Fecha inicio:');
     var inputElement = $('<input>').attr({
-        type: 'text',
-        name: 'titulo',
-        placeholder: 'TITULO'
+        type: 'date',
+        name: 'fecha_inicio',
+        id: 'fecha_inicio'
     });
-
     inputElement.on('input', function () {
         $(this).closest('#box').nextAll('#box').remove();
-        /* $(this).css('background-color', ''); */
     });
     var buttonElement = $('<button>').attr('id', 'validate').text('Validar');
-    box_poll.append(titulo_encuesta, inputElement, buttonElement);
+    box_poll.append(fecha_inicio, inputElement, buttonElement);
     container_poll.append(box_poll);
     $('.create_poll').append(container_poll);
 $('#validate').click(function(){
     if (box_poll.next('#box').length === 0) {
     validatePoll($(this).prev("input[name]").attr("name"));  }
-});}
-);
+});
 
-function createBoxOption(){
-    var optionDiv = $('<div id="box">').append(
-        $('<h2>').text('Opción encuesta:'),
-        $('<input>').attr({ type: 'text', name: 'opcion1', placeholder: 'Opción 1'}).on('input', function () {
+// Crear Fecha Final Encuesta
+function createBoxFinal(){
+    var inputElement = $('<div id="box">').append(
+        $('<h2>').text('Fecha Final:'),
+        $('<input>').attr({ type: 'date', name: 'fecha_final', id: 'fecha_final'}).on('input', function () {
             $(this).closest('#box').nextAll('#box').remove();
             $(this).css('background-color', '');
         }),
-        $('<h2>').text('Opción encuesta:'),
+        $('<button>').attr({ id: 'validate' }).text('Validar').click(function(){
+            if (inputElement.next('#box').length === 0) {
+                validatePoll($(this).prev("input[name]").attr("name"));  }  
+        })
+    );
+
+    $('.poll-container').append(inputElement);
+}
+
+// Crear Titulo Encuesta
+function createBoxTitle(){
+    var inputElement = $('<div id="box">').append(
+        $('<h2>').text('Titulo encuesta:'),
+        $('<input>').attr({ type: 'text', name: 'titulo', id:'titulo', placeholder: 'TITULO'}).on('input', function () {
+            $(this).closest('#box').nextAll('#box').remove();
+            $(this).css('background-color', '');
+        }),
+        $('<button>').attr({ id: 'validate' }).text('Validar').click(function(){
+            if (inputElement.next('#box').length === 0) {
+                validatePoll($(this).prev("input[name]").attr("name"));  }  
+        })
+    );
+
+    $('.poll-container').append(inputElement);
+}
+// Crear Opción 1 Encuesta
+/* function createBoxOption1(){
+    var optionDiv = $('<div id="box">').append(
+        $('<h2>').text('Opción encuesta 1:'),
+        $('<input>').attr({ type: 'text', name: 'opcion1', id: 'opcion', placeholder: 'Opción 1'}).on('input', function () {
+            $(this).closest('#box').nextAll('#box').remove();
+            $(this).css('background-color', '');
+        }),
+        $('<button>').attr({ id: 'validate' }).text('Añadir').click(function(){
+            if (optionDiv.next('#box').length === 0) {
+                validatePoll($(this).prev("input[name]").attr("name"));  }  
+        })
+    );
+
+    $('.poll-container').append(optionDiv);
+    
+}
+
+function createBoxOption2(){
+    var optionDiv = $('<div id="box">').append(
+        $('<h2>').text('Opción encuesta 2:'),
         $('<input>').attr({ type: 'text', name: 'opcion2', placeholder: 'Opción 2'}).on('input', function () {
             $(this).closest('#box').nextAll('#box').remove();
             $(this).css('background-color', '');
@@ -50,11 +95,68 @@ function createBoxOption(){
 
     $('.poll-container').append(optionDiv);
     
+} */
+
+// Función para crear una nueva opción
+function createBoxOption(optionNumber) {
+    var optionDiv = $('<div id="box">').append(
+        $('<h2>').text('Opción encuesta ' + optionNumber + ':'),
+        $('<input>').attr({ type: 'text', name: 'opcion' + optionNumber, placeholder: 'Opción ' + optionNumber}).on('input', function () {
+            $(this).closest('#box').nextAll('#box').remove();
+            console.log(optionNumber);
+            $(this).css('background-color', '');
+        }),
+        $('<button>').attr({ id: 'validate', class: 'validateOption', 'data-option': optionNumber }).text('Añadir').click(function(){
+            if (optionDiv.next('#box').length === 0) {
+                validatePoll($(this).prev("input[name]").attr("name"));
+            }
+            /* var optionNumber = $(this).data('option');
+            if ($('input[name=opcion' + optionNumber + ']').val().trim() === "") {
+                showNotification("La opción " + optionNumber + " no puede estar vacía", 'red');
+            } else {
+                localStorage.setItem('nameOpcion' + optionNumber, $('input[name=opcion' + optionNumber + ']').val());
+                if (optionNumber < maxOptions) {
+                    createBoxOption(optionNumber + 1);
+                }
+            } */
+        }),
+    );
+    $('.poll-container').append(optionDiv);
 }
+
+// Al hacer clic en "Añadir", se crea una nueva opción
+/* $('#validate').click(function() {
+    if (indice_opciones < maxOptions) {
+        indice_opciones++;
+        createBoxOption(indice_opciones);
+    } else {
+        showNotification("Se ha alcanzado el máximo de opciones permitidas.", 'red');
+    }
+}); */
 
 function validatePoll(inputType){
     console.log(inputType);
     switch(inputType) {
+        case "fecha_inicio":
+            var nameInicio = $('input[name=fecha_inicio]').val();
+            if (nameInicio.trim()===""){
+                showNotification("La fecha inicial no puede estar vacía", 'red');
+            }
+            else{
+                localStorage.setItem('nameInicio',nameInicio);
+                createBoxFinal();
+            }
+            break;
+        case "fecha_final":
+            var nameFinal = $('input[name=fecha_final]').val();
+            if (nameFinal.trim()===""){
+                showNotification("La fecha final no puede estar vacía", 'red');
+            }
+            else{
+                localStorage.setItem('nameFinal',nameFinal);
+                createBoxTitle();
+            }
+            break;
         case "titulo":
             var nameTitulo = $('input[name=titulo]').val();
             if(nameTitulo.trim()===""){
@@ -63,46 +165,50 @@ function validatePoll(inputType){
             else{
                 /* $('input[name=titulo]').css('background-color', '#b4e7b3'); */
                 localStorage.setItem('nameTitulo',nameTitulo);
-                createBoxOption();
+                createBoxOption(optionNumber);
+            }
+            break;
+
+        case "opcion" + optionNumber:
+            var nameOpcion = $('input[name=opcion' + optionNumber + ']').val();
+            if(nameOpcion.trim()===""){
+                showNotification("La opción" + optionNumber + "no puede estar vacía", 'red');
+            }
+            else {
+                /* $('input[name=titulo]').css('background-color', '#b4e7b3'); */
+                localStorage.setItem('nameOpcion' + optionNumber +'',nameOpcion);
+                console.log(optionNumber);
+                optionNumber++;
+                createBoxOption(optionNumber);
+            }
+            break;
+
+/*         case "opcion1":
+            var nameOpcion1 = $('input[name=opcion1]').val();
+            if(nameOpcion1.trim()===""){
+                showNotification("La opción 1 no puede estar vacía", 'red');
+            }
+            else {
+                localStorage.setItem('nameOpcion1',nameOpcion1);
+                createBoxOption2();
             }
             break;
 
         case "opcion2":
-            var nameOpcion1 = $('input[name=opcion1]').val();
             var nameOpcion2 = $('input[name=opcion2]').val();
-            if(nameOpcion1.trim()===""){
-                showNotification("La opción 1 no puede estar vacía", 'red');
-            }
-            else if(nameOpcion2.trim()===""){
+            if(nameOpcion2.trim()===""){
                 showNotification("La opción 2 no puede estar vacía", 'red');
             }
             else {
-                /* $('input[name=titulo]').css('background-color', '#b4e7b3'); */
-                localStorage.setItem('nameOpcion1',nameOpcion1);
+                /* $('input[name=titulo]').css('background-color', '#b4e7b3');
                 localStorage.setItem('nameOpcion2',nameOpcion2);
                 createBoxOptions();
             }
-
-            /* if($('input[name=opcion1]').val()===$('input[name=opcion2]').val()){
-                var pwd = $('input[name=opcion1]').val();
-                if(pwd.trim().length>=8){
-                    $('input[name=opcion1]').css('background-color', '#b4e7b3');
-                    $('input[name=opcion2]').css('background-color', '#b4e7b3');
-                    createBoxSendData(pwd);
-                    
-                }
-
-                else{
-                    showNotification("La contraseña debe contener como minimo 8 caracteres");
-                }
-            }else{
-                showNotification("Las contraseñas no coinciden");
-            } */
-            break;
+            break; */
         }
     }
-
-
+}
+);
 
 
 
@@ -154,6 +260,9 @@ function validatePoll(inputType){
         array_opciones_encuesta = [];
         sessionStorage.removeItem("opciones");
     });
+
+
+
 
     function showNotification(message, bgColor) {
         var notificationContainer = $("#notification-container");

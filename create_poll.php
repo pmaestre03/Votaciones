@@ -28,8 +28,8 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
           $fecha_inicio = date("Y-m-d", strtotime($_POST["fecha_inicio"]));
-          $fecha_fin = date("Y-m-d", strtotime($_POST["fecha_fin"]));
-$encuesta = "INSERT INTO encuestas (titulo_encuesta, creador, fech_inicio, fecha_fin) VALUES ('" . $_POST["titulo_encuesta"] . "', (SELECT id_user FROM users WHERE email = '" . $_SESSION['email'] . "'), '" .
+          $fecha_final = date("Y-m-d", strtotime($_POST["fecha_final"]));
+$encuesta = "INSERT INTO encuestas (titulo, creador, fech_inicio, fecha_final) VALUES ('" . $_POST["titulo"] . "', (SELECT id_user FROM users WHERE email = '" . $_SESSION['email'] . "'), '" .
 
           //print_r($encuesta);
            $resultat_enquesta = mysqli_query($conn, $encuesta);
