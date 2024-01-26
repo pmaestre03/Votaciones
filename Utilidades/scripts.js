@@ -29,13 +29,22 @@ $('#validate').click(function(){
 function createBoxOption(){
     var optionDiv = $('<div id="box">').append(
         $('<h2>').text('Opción encuesta:'),
-        $('<input>').attr({ type: 'text', name: 'opcion', placeholder: 'Opción 1'}).on('input', function () {
+        $('<input>').attr({ type: 'text', name: 'opcion1', placeholder: 'Opción 1'}).on('input', function () {
             $(this).closest('#box').nextAll('#box').remove();
             $(this).css('background-color', '');
         }),
-        $('<button>').attr({ id: 'validate' }).text('Validar').click(function(){
+        $('<h2>').text('Opción encuesta:'),
+        $('<input>').attr({ type: 'text', name: 'opcion2', placeholder: 'Opción 2'}).on('input', function () {
+            $(this).closest('#box').nextAll('#box').remove();
+            $(this).css('background-color', '');
+        }),
+        $('<button>').attr({ id: 'validate' }).text('Añadir').click(function(){
             if (optionDiv.next('#box').length === 0) {
                 validatePoll($(this).prev("input[name]").attr("name"));  }  
+        }),
+        $('<button>').attr({ id: 'enviar' }).text('Enviar').click(function(){
+            if (optionDiv.next('#box').length === 0) {
+                validatePoll($(this).prev("input[name]").attr("name"));  } 
         })
     );
 
@@ -47,18 +56,48 @@ function validatePoll(inputType){
     console.log(inputType);
     switch(inputType) {
         case "titulo":
-             var nameTitulo = $('input[name=titulo]').val();
+            var nameTitulo = $('input[name=titulo]').val();
             if(nameTitulo.trim()===""){
-                errormessage("El titulo no puede estar vacío");
-            }
-            else if(/\d/.test(nameTitulo)){
-                errormessage("El titulo no puede contener números");
+                showNotification("El titulo no puede estar vacío", 'red');
             }
             else{
                 /* $('input[name=titulo]').css('background-color', '#b4e7b3'); */
                 localStorage.setItem('nameTitulo',nameTitulo);
                 createBoxOption();
             }
+            break;
+
+        case "opcion2":
+            var nameOpcion1 = $('input[name=opcion1]').val();
+            var nameOpcion2 = $('input[name=opcion2]').val();
+            if(nameOpcion1.trim()===""){
+                showNotification("La opción 1 no puede estar vacía", 'red');
+            }
+            else if(nameOpcion2.trim()===""){
+                showNotification("La opción 2 no puede estar vacía", 'red');
+            }
+            else {
+                /* $('input[name=titulo]').css('background-color', '#b4e7b3'); */
+                localStorage.setItem('nameOpcion1',nameOpcion1);
+                localStorage.setItem('nameOpcion2',nameOpcion2);
+                createBoxOptions();
+            }
+
+            /* if($('input[name=opcion1]').val()===$('input[name=opcion2]').val()){
+                var pwd = $('input[name=opcion1]').val();
+                if(pwd.trim().length>=8){
+                    $('input[name=opcion1]').css('background-color', '#b4e7b3');
+                    $('input[name=opcion2]').css('background-color', '#b4e7b3');
+                    createBoxSendData(pwd);
+                    
+                }
+
+                else{
+                    showNotification("La contraseña debe contener como minimo 8 caracteres");
+                }
+            }else{
+                showNotification("Las contraseñas no coinciden");
+            } */
             break;
         }
     }
