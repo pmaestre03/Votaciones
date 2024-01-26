@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="./Utilidades/styles.css?no-cache=<?php echo time(); ?>">
     <title>Login</title>
     <script src="Utilidades/scripts.js"></script>
+    <?php require('Utilidades/scripts2.php')?>
 </head>
 <body class="login">
     <?php include("Utilidades/header.php") ?>
@@ -41,7 +42,7 @@
         $usuario = $_POST["username"];
         $contrasenya = hash('sha512',$_POST["password"]);
         
-        $querystr = "SELECT nombre,email FROM users WHERE email=:usuario AND contrasea_cifrada=:contrasenya";
+        $querystr = "SELECT id_user,nombre,email FROM users WHERE email=:usuario AND contrasea_cifrada=:contrasenya";
         $query = $pdo->prepare($querystr);
         $query->bindParam(':usuario', $usuario, PDO::PARAM_STR);
         $query->bindParam(':contrasenya', $contrasenya, PDO::PARAM_STR);
@@ -53,14 +54,20 @@
             // Obt  n el nombre de usuario desde la base de datos
             $row = $query->fetch(PDO::FETCH_ASSOC);
             $nombre_usuario = $row['nombre'];
-            $_SESSION['email'] = $row["email"];
+            $_SESSION['email'] = $row["email"]; 
             $_SESSION['usuario'] = $nombre_usuario;
+            $_SESSION['id_user'] = $row["id_user"]; 
+
             echo "Usuario Correcto: Hola $nombre_usuario";
             header("Location: dashboard.php");
 
             exit();
         } else {
+            $usuarioIntentado = htmlspecialchars($_POST["username"]);
+
             echo "<script>showNotification('Usuario o contraseña incorrecto','red')</script>";
+                  
+            registrarEvento("Intento de inicio de sesión fallido por el usuario: $usuarioIntentado");
         }
 
         unset($pdo);

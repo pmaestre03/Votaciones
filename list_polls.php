@@ -25,7 +25,7 @@
     }
 
     $user = $_SESSION["email"];
-    $listar = 'SELECT titulo_encuesta, fech_inicio, fecha_fin FROM encuestas WHERE creador = (SELECT id_user FROM users WHERE email=:email);';
+    $listar = 'SELECT id_encuesta, titulo_encuesta, fech_inicio, fecha_fin FROM encuestas WHERE creador = (SELECT id_user FROM users WHERE email=:email);';
 
     $stmt = $pdo->prepare($listar);
     $stmt->bindParam(':email', $user, PDO::PARAM_STR);
@@ -37,24 +37,31 @@
         echo "<h2>Encuestas creadas</h2>";
         echo "<div class='center'>";
         echo "<table border='1'>";
-        echo "<tr><th>T  tulo de la Encuesta</th><th>Fecha Inicio</th><th>Fecha Fin</th>";
+        echo "<tr><th>T  tulo de la Encuesta</th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Estado</th><th></th>";
         foreach ($encuestas as $encuesta) {
             echo "<tr>";
             echo "<td>{$encuesta['titulo_encuesta']}</td>";
             echo "<td>{$encuesta['fech_inicio']}</td>";
             echo "<td>{$encuesta['fecha_fin']}</td>";
-        //$fechaActual = strtotime(date("Y-m-d"));
-        //$inicioEncuesta = strtotime($encuesta['fech_inicio']);
-        //$finEncuesta = strtotime($encuesta['fecha_fin']);
+        $fechaActual = strtotime(date("Y-m-d"));
+        $inicioEncuesta = strtotime($encuesta['fech_inicio']);
+        $finEncuesta = strtotime($encuesta['fecha_fin']);
 
-            //if ($fechaActual >= $inicioEncuesta && $fechaActual <= $finEncuesta) {
-            //echo "<td class='publica'>Publicada</td>"; 
-            //} if ($fechaActual < $inicioEncuesta) {
-            //echo "<td class='oculta'>Oculta</td>";
-            //} if ($fechaActual > $finEncuesta){
-            //echo "<td class='finalizada'>Finalizada</td>";
-            //}
+            if ($fechaActual >= $inicioEncuesta && $fechaActual <= $finEncuesta) {
+            echo "<td class='publica'>Activa</td>"; 
+            } if ($fechaActual < $inicioEncuesta) {
+            echo "<td class='oculta'>No Activa</td>";
+            } if ($fechaActual > $finEncuesta){
+            echo "<td class='finalizada'>Finalizada</td>";
+            }
+
+            $id_encuesta = $encuesta['id_encuesta'];
+            echo "<td>{$encuesta['id_encuesta']}</td>";
+
+            echo "<td><button onclick=\"window.location.href='graphics.php?id=$id_encuesta'\">Detalls Enquesta</button></td>";
             echo "</tr>";
+            
+
         }
 
         echo "</table>";

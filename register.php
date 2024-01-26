@@ -292,7 +292,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php
                     $conn = mysqli_connect('localhost', 'xavi', 'Superlocal123@');
                     mysqli_select_db($conn, 'Votaciones');
-                    $consulta = "SELECT nombre, pref FROM `votaciones`.`paises`;";
+                    $consulta = "SELECT nombre, pref FROM `Votaciones`.`paises`;";
                     $resultat = mysqli_query($conn, $consulta);
                     $paises = array();
                     while ($fila = mysqli_fetch_assoc($resultat)) {
