@@ -28,20 +28,21 @@ $("#send-poll").click(function () {
 
 function showNotification(message, bgColor) {
           var notificationContainer = $("#notification-container");
-
+      
           var notificationDiv = $("<div>").addClass("notification");
           notificationDiv.text(message);
-
+      
           if (bgColor) {
-                    notificationDiv.css("background-color", bgColor);
+              notificationDiv.css("background-color", bgColor);
           }
-
+      
           var closeButton = $("<button>").addClass("close-button");
           closeButton.html("&times;");
           closeButton.click(function () {
-                    notificationDiv.remove();
+              notificationDiv.remove();
           });
-
+      
           notificationDiv.append(closeButton);
-          notificationContainer.append(notificationDiv);
-};
+          notificationContainer.prepend(notificationDiv);
+      }
+      

@@ -144,13 +144,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             var telefonoValido = false;
             var ciudadValido = false;
             var cpValido = false;
+            var confirmarPasswordValido = false;
 
            crearSiguienteFormulario();
 
            function crearFormularioNombre() {
         
                 if (!formNombre) {
-                    var formNombre = $('<div>');
+                    var formNombre = $('<div>',{ id: 'formularioNombre' });
                     formNombre.append($('<label>', { for: 'nombre', text: 'Nombre:' }));
                     formNombre.append($('<input>', { type: 'nombre', id: 'nombre', name: 'nombre' }));
                     formNombre.append($('<img>', { src: 'https://static.vecteezy.com/system/resources/previews/018/824/865/original/green-check-mark-button-without-text-free-png.png', class: 'imagen-correcto', alt: 'Correcto' })); // Agrega la imagen
@@ -162,13 +163,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     if (nombre !== '' && !/^\d+$/.test(nombre)) {
                         nombreValido = true;
-                        agregarBotonEnviar()
                     } else {
-                       eliminarFormularios(['mail','password','confirmarPassword','pais','prefijo','telefono','ciudad','codigoPostal'])
-                       eliminarFormularioPrefijo();
-                       pasoActual = 2;
+                       eliminarFormularios(['mail','password','confirmarPassword','pais','prefijoTexto','telefono','ciudad','codigoPostal'])
                         nombreValido = false;
-                        $('.imagen-correcto').hide(); // Oculta la imagen si el nombre no es válido
+                        pasoActual = 2;
                         eliminarBotonEnviar()
                     }
                 });
@@ -177,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
           function crearFormularioMail() {
                 if (!formularioMailCreado) {
-                    var formularioMail = $('<div>');
+                    var formularioMail = $('<div>',{ id: 'formularioMail' });;
                     formularioMail.append($('<label>', { for: 'mail', text: 'Correo Electrónico:' }));
                     formularioMail.append($('<input>', { type: 'email', id: 'mail', name: 'mail' }));
                     formularioMail.append($('<img>', { src: 'https://static.vecteezy.com/system/resources/previews/018/824/865/original/green-check-mark-button-without-text-free-png.png', class: 'imagen-correcto2', alt: 'Correcto' })); // Ajusta la ruta de la imagen
@@ -210,20 +208,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 if (correoValido) {
                     mailValido = true;
-                    imagenCorrecto2.show(); 
-                    agregarBotonEnviar()
                 } else {
                     mailValido = false;
-                    imagenCorrecto2.hide(); 
+                    eliminarFormularios(['password','confirmarPassword','pais','prefijoTexto','telefono','ciudad','codigoPostal']);
                     eliminarBotonEnviar()
-                    
+                    pasoActual = 3;
                 }
             }
 
 
-            function crearFormularioPassword() {
+          function crearFormularioPassword() {
                 if (!formularioPasswordCreado) {
-                    var formularioPassword = $('<div>');
+                    var formularioPassword = $('<div>',{ id: 'formularioPassword' });
                     formularioPassword.append($('<label>', { for: 'password', text: 'Contraseña:' }));
                     formularioPassword.append($('<input>', { type: 'password', id: 'password', name: 'password' }));
                     formularioPassword.append($('<img>', { src: 'https://static.vecteezy.com/system/resources/previews/018/824/865/original/green-check-mark-button-without-text-free-png.png', class: 'imagen-correcto3', alt: 'Correcto' }));
@@ -236,18 +232,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $('#password').on('input', function () {
                         var password = $(this).val().trim();
 
-                        if (password !== '') {
+                        if (validarPassword(password)) {
                             imagenCorrecto3.show(); 
                         }else{
-                            imagenCorrecto3.hide();
+                            eliminarFormularios(['confirmarPassword','pais','prefijoTexto','telefono','ciudad','codigoPostal'])
+                            pasoActual = 4;
                         }
                     });
                 }
-            }
+          }
+
+          function validarPassword(password) {
+                    var longitudMinima = 8;
+                    var tieneNumero = /\d/.test(password);
+                    var tieneMayuscula = /[A-Z]/.test(password);
+                    var tieneMinuscula = /[a-z]/.test(password);
+                    var tieneCaracterEspecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+                    return password.length >= longitudMinima && tieneNumero && tieneMayuscula && tieneMinuscula && tieneCaracterEspecial;
+          }
 
             function crearFormularioConfirmarPassword() {
                 if (!formularioConfirmarPasswordCreado) {
-                    var formularioConfirmarPassword = $('<div>');
+                    var formularioConfirmarPassword = $('<div>',{ id: 'formularioConfirmarPassword' });
                     formularioConfirmarPassword.append($('<label>', { for: 'confirmarPassword', text: 'Confirmar Contraseña:' }));
                     formularioConfirmarPassword.append($('<input>', { type: 'password', id: 'confirmarPassword', name: 'confirmarPassword' }));
                     formularioConfirmarPassword.append($('<img>', { src: 'https://static.vecteezy.com/system/resources/previews/018/824/865/original/green-check-mark-button-without-text-free-png.png', class: 'imagen-correcto4', alt: 'Correcto' }));
@@ -264,9 +271,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         if (confirmarPassword === password) {
                             // Añadir clase y atributo readonly a los campos de contraseña
+                            confirmarPasswordValido = true;
                             $('#password').addClass('campo-desabilitado').attr('readonly', true);
                             $('#confirmarPassword').addClass('campo-desabilitado').attr('readonly', true);
-                            imagenCorrecto4.show(); 
                         }
                     });
                 }
@@ -274,7 +281,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             function crearFormularioPaises() {
                 if (!formularioPaisesCreado) {
-                    var formularioPaises = $('<div>');
+                    var formularioPaises = $('<div>',{ id: 'formularioPaises' });
                     formularioPaises.append($('<label>', { for: 'pais', text: 'Selecciona un país:' }));
                     var selectPais = $('<select>', { id: 'pais', name: 'pais' });
 
@@ -326,11 +333,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             function crearFormularioTelefono(selectedPais) {
                 if (!formularioTelefonoCreado) {
-                    var formularioTelefono = $('<div>');
+                    var formularioTelefono = $('<div>',{ id: 'formularioTelefono' });
                     formularioTelefono.append($('<label>', { for: 'telefono', text: 'Teléfono:' }));
-                    
 
-                   
                     // Input para el prefijo (no editable por el usuario)
                     var inputPrefijo = $('<input>', { type: 'text', id: 'prefijoTexto', name: 'prefijo', readonly: true });
 
@@ -372,12 +377,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         if (regexNumeros.test(telefono) && telefono.length >= longitudMinima && telefono.length <= longitudMaxima) {
                             telefonoValido = true;
-                            imagenCorrecto5.show();
-                            agregarBotonEnviar()
                         }else{
-                            telefonoValido = false;
-                            imagenCorrecto5.hide();
-                            eliminarBotonEnviar()
+                              telefonoValido =  false
+                            eliminarFormularios(['ciudad','codigoPostal'])
+                            pasoActual = 6;
                         }
                     });
                 }
@@ -387,13 +390,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             function crearFormularioCiudad() {
                 if (!formularioCiudadCreado) {
-                    var formularioCiudad = $('<div>');
+                    var formularioCiudad = $('<div>',{ id: 'formularioCiudad' });
                     formularioCiudad.append($('<label>', { for: 'ciudad', text: 'Ciudad:' }));
                     formularioCiudad.append($('<input>', { type: 'text', id: 'ciudad', name: 'ciudad' }));
                     formularioCiudad.append($('<img>', { src: 'https://static.vecteezy.com/system/resources/previews/018/824/865/original/green-check-mark-button-without-text-free-png.png', class: 'imagen-correcto8', alt: 'Correcto' })); // Ajusta la ruta de la imagen
                     miFormulario.append(formularioCiudad);
                     formularioCiudadCreado = true;
-
 
                     $('#ciudad').on('input', function () {
                         var imagenCorrecto8 = $('.imagen-correcto8');
@@ -401,16 +403,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         if (ciudad !== '') {
                             ciudadValido = true;
-                            imagenCorrecto8.show();
-                            agregarBotonEnviar()
                         }else{
                             ciudadValido = false;
-                            imagenCorrecto8.hide();
+                            eliminarFormularios(['codigoPostal'])
                             eliminarBotonEnviar()
+                            pasoActual = 7;
                         }
                     });
-                }
-            }
+                    }         
+          }
 
             function crearFormularioCodigoPostal() {
                 if (!formularioCodigoPostalCreado) {
@@ -428,13 +429,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         // Verificar si el código postal tiene solo números
                         var regexNumeros = /^\d+$/;
 
-                        if (nuevoCodigoPostal !== '' && regexNumeros.test(nuevoCodigoPostal)) {
-                            cpValido = true;
-                            imagenCorrecto9.show()
-                            agregarBotonEnviar()
+                    if (nuevoCodigoPostal !== '' && regexNumeros.test(nuevoCodigoPostal)) {
+                              cpValido = true;
+                              if (!botonSubmitCreado) {
+                                        var botonSubmit = $('<button>', { type: 'submit', text: 'Enviar', class: 'enviar-registro' });
+                                        miFormulario.append(botonSubmit);
+                                        botonSubmitCreado = true;
+                              }
                         } else {
                             cpValido = false;
-                            imagenCorrecto9.hide()
                             eliminarBotonEnviar()
                         }
                     });
@@ -444,29 +447,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
           
-            function agregarBotonEnviar() {
-                if (nombreValido && mailValido && telefonoValido && ciudadValido && cpValido) {
-                    if (!botonSubmitCreado) {
-                        var botonSubmit = $('<button>', { type: 'submit', text: 'Enviar', class: 'enviar-registro' });
-                        miFormulario.append(botonSubmit);
-                        botonSubmitCreado = true;
-                    }
-                }
-            }
+          
 
             function eliminarBotonEnviar() {
-                if (botonSubmitCreado) {
                     miFormulario.find('button[type="submit"]').remove();
                     botonSubmitCreado = false;
-                }
             }
 
-          function eliminarFormularios(camposAEliminar) {
+            function eliminarFormularios(camposAEliminar) {
                     for (var i = 0; i < camposAEliminar.length; i++) {
-                              var formularioPadre = $('#' + camposAEliminar[i]).closest('form');
-                              var etiquetaPadre = formularioPadre.find('label[for="' + camposAEliminar[i] + '"]');
-                              formularioPadre.find('#' + camposAEliminar[i]).remove();
-                              etiquetaPadre.remove();
+                              var formularioPadre = $('#' + camposAEliminar[i]).closest('div[id^="formulario"]');
+                              formularioPadre.remove();
                     }
 
                     formularioMailCreado = false;
@@ -476,8 +467,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     formularioTelefonoCreado = false;
                     formularioCiudadCreado = false;
                     formularioCodigoPostalCreado = false;
+                    botonSubmitCreado = false;
 
-                    eliminarBotonEnviar();
+                    pasoActual = camposAEliminar.includes('password') ? 3 : pasoActual;
+
+                    if (camposAEliminar.includes('codigoPostal')) {
+                              $('#miFormulario').find('div[id^="formularioCodigoPostal"]').remove();
+                              eliminarBotonEnviar();
+                    }
           }
 
           function eliminarFormularioPrefijo() {
@@ -498,54 +495,80 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     return lastInput.length > 0 && lastInput.val().trim() !== '';
           }
 
-            $(document).keypress(function(e) {
-                    if (e.which === 13) {  
-                              e.preventDefault(); 
-                              var inputActual = $('input:focus'); 
-                              if (inputActual.val().trim() !== '') {
-                                        if (inputActual.attr('id') === 'mail') {
-                                                  validarCorreoElectronico(inputActual.val().trim());
-                                        if (mailValido) {
-                                                  if (comprovarLastChild()) {
-                                                            crearSiguienteFormulario();
-                                                  }
-                                        }
-                                        } else {
-                                                  if (comprovarLastChild()) {
-                                                            crearSiguienteFormulario();
-                                                  }
-                                        }
-                              }
-                    }
-                    });
+          $(document).keypress(function (e) {
+    if (e.which === 13) {
+        e.preventDefault();
+        var inputActual = $('input:focus');
+
+        if (inputActual.val().trim() !== '') {
+            if (inputActual.attr('id') === 'mail') {
+                validarCorreoElectronico(inputActual.val().trim());
+                if (mailValido) {
+                    crearSiguienteFormulario();
+                } else {
+                    showNotification('Mail no valido', 'red');
+                }
+            } else if (inputActual.attr('id') === 'confirmarPassword') {
+                if (confirmarPasswordValido) {
+                    crearSiguienteFormulario();
+                } else {
+                    showNotification('Las contraseñas no coinciden', 'red');
+                }
+            } else if (inputActual.attr('id') === 'telefono') {
+                if (telefonoValido) {
+                    crearSiguienteFormulario();
+                } else {
+                    showNotification('El telefono no es valido', 'red');
+                }
+            } else {
+                if (comprovarLastChild()) {
+                    crearSiguienteFormulario();
+                }
+            }
+        }
+    }
+});
 
 
-                    function crearSiguienteFormulario() {
+          function crearSiguienteFormulario() {
                     switch (pasoActual) {
                               case 1:
                                         crearFormularioNombre();
                                         break;
                               case 2:
                                         crearFormularioMail();
+                                        showNotification("Nombre valido");
                                         break;
                               case 3:
                                         crearFormularioPassword();
-                                        break; 
+                                        showNotification("Mail valido");
+                                        break;
                               case 4:
-                                        crearFormularioConfirmarPassword();
-                                        break; 
+                                        if (validarPassword($('#password').val().trim())) {
+                                                  crearFormularioConfirmarPassword();
+                                                  showNotification("Contraseña valida");
+                                        } else {
+                                                  showNotification("Contraseña no valida",'red');
+                                                  eliminarFormularios(['confirmarPassword', 'pais', 'prefijoTexto', 'telefono', 'ciudad', 'codigoPostal']);
+                                                  pasoActual = 3; // Mantener el paso actual en contraseña si no es válida
+                                        }
+                                        break;
                               case 5:
                                         crearFormularioPaises();
-                                        break; 
+                                        showNotification("Contraseña validada");
+                                        break;
                               case 6:
                                         crearFormularioCiudad();
-                                        break; 
+                                        showNotification("Telefono valido");
+                                        break;
                               case 7:
                                         crearFormularioCodigoPostal();
-                                        break; 
+                                        showNotification("Ciudad valida");
+                                        break;
                     }
                     pasoActual++;
           }
+
 
 
         });

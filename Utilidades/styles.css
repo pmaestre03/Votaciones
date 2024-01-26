@@ -326,12 +326,17 @@ body {
         
         #notification-container {
           position: fixed;
-          bottom: 10px;
+          top: 100px; /* Cambiado a 'top' para empezar en la parte superior */
           right: 10px;
           max-width: 400px;
           z-index: 9999;
           margin-bottom: 150px;
+          display: flex;
+          flex-direction: column; /* Dirección de flexión normal */
+          max-height: 70vh;
+          overflow-y: auto;
         }
+        
         
         .notification {
           background-color: #4caf50;
