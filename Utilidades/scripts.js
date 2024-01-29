@@ -1,22 +1,25 @@
+var optionNumber = 2;
 $(document).ready(function () {
     var array_opciones_encuesta = [];
     var indice_opciones = 0;
-    var maxOptions = 100;
-    var optionNumber = 1;
-
     // Crear Fecha Inicio Encuesta
     var container_poll = $('<div>').addClass('poll-container');
     var box_poll = $('<div>').attr('id', 'box');
-    var fecha_inicio = $('<h2>').text('Fecha inicio:');
+    var fecha_inicio = $('<label>').text('Fecha inicio:');
     var inputElement = $('<input>').attr({
         type: 'date',
         name: 'fecha_inicio',
         id: 'fecha_inicio'
-    });
-    inputElement.on('input', function () {
+    }).on('input', function () {
         $(this).closest('#box').nextAll('#box').remove();
+    }).keypress(function(event) {
+        if (event.which == 13) {
+            validatePoll("fecha_inicio");
+        }
     });
-    var buttonElement = $('<button>').attr('id', 'validate').text('Validar');
+    var buttonElement = $('<button>').attr({id: 'validate', class: 'button-login'}).text('Validar').click(function() {
+        validatePoll("fecha_inicio");
+    });
     box_poll.append(fecha_inicio, inputElement, buttonElement);
     container_poll.append(box_poll);
     $('.create_poll').append(container_poll);
@@ -28,12 +31,15 @@ $('#validate').click(function(){
 // Crear Fecha Final Encuesta
 function createBoxFinal(){
     var inputElement = $('<div id="box">').append(
-        $('<h2>').text('Fecha Final:'),
+        $('<label>').text('Fecha Final:'),
         $('<input>').attr({ type: 'date', name: 'fecha_final', id: 'fecha_final'}).on('input', function () {
             $(this).closest('#box').nextAll('#box').remove();
-            $(this).css('background-color', '');
+        }).keypress(function(event) {
+            if (event.which == 13) {
+                validatePoll("fecha_final");
+            }
         }),
-        $('<button>').attr({ id: 'validate' }).text('Validar').click(function(){
+        $('<button>').attr({ id: 'validate', class: 'button-login'}).text('Validar').click(function(){
             if (inputElement.next('#box').length === 0) {
                 validatePoll($(this).prev("input[name]").attr("name"));  }  
         })
@@ -45,12 +51,15 @@ function createBoxFinal(){
 // Crear Titulo Encuesta
 function createBoxTitle(){
     var inputElement = $('<div id="box">').append(
-        $('<h2>').text('Titulo encuesta:'),
+        $('<label>').text('Titulo encuesta:'),
         $('<input>').attr({ type: 'text', name: 'titulo', id:'titulo', placeholder: 'TITULO'}).on('input', function () {
             $(this).closest('#box').nextAll('#box').remove();
-            $(this).css('background-color', '');
+        }).keypress(function(event) {
+            if (event.which == 13) {
+                validatePoll("titulo");
+            }
         }),
-        $('<button>').attr({ id: 'validate' }).text('Validar').click(function(){
+        $('<button>').attr({ id: 'validate', class: 'button-login'}).text('Validar').click(function(){
             if (inputElement.next('#box').length === 0) {
                 validatePoll($(this).prev("input[name]").attr("name"));  }  
         })
@@ -59,37 +68,41 @@ function createBoxTitle(){
     $('.poll-container').append(inputElement);
 }
 // Crear Opción 1 Encuesta
-/* function createBoxOption1(){
+function createBoxOption1(){
     var optionDiv = $('<div id="box">').append(
-        $('<h2>').text('Opción encuesta 1:'),
+        $('<label>').text('Opción encuesta 1:'),
         $('<input>').attr({ type: 'text', name: 'opcion1', id: 'opcion', placeholder: 'Opción 1'}).on('input', function () {
             $(this).closest('#box').nextAll('#box').remove();
-            $(this).css('background-color', '');
+        }).keypress(function(event) {
+            if (event.which == 13) {
+                validatePoll("opcion1");
+            }
         }),
-        $('<button>').attr({ id: 'validate' }).text('Añadir').click(function(){
+        $('<button>').attr({ id: 'validate', class: 'add-option button-login'}).text('Añadir opción').click(function(){
             if (optionDiv.next('#box').length === 0) {
                 validatePoll($(this).prev("input[name]").attr("name"));  }  
-        })
+                scrollToBottom();
+            })
     );
 
     $('.poll-container').append(optionDiv);
     
 }
-
-function createBoxOption2(){
+// Crear Opción 2 Encuesta
+/* function createBoxOption2(){
     var optionDiv = $('<div id="box">').append(
-        $('<h2>').text('Opción encuesta 2:'),
-        $('<input>').attr({ type: 'text', name: 'opcion2', placeholder: 'Opción 2'}).on('input', function () {
+        $('<label>').text('Opción encuesta 2:'),
+        $('<input>').attr({ type: 'text', name: 'opcion2', id: 'opcion', placeholder: 'Opción 2'}).on('input', function () {
             $(this).closest('#box').nextAll('#box').remove();
             $(this).css('background-color', '');
         }),
-        $('<button>').attr({ id: 'validate' }).text('Añadir').click(function(){
+        $('<button>').attr({ id: 'validate', class: 'button-login'}).text('Añadir opción').click(function(){
             if (optionDiv.next('#box').length === 0) {
                 validatePoll($(this).prev("input[name]").attr("name"));  }  
         }),
-        $('<button>').attr({ id: 'enviar' }).text('Enviar').click(function(){
+        $('<button>').attr({ id: 'send-poll', class: 'button-login' }).text('Enviar encuesta').click(function(){
             if (optionDiv.next('#box').length === 0) {
-                validatePoll($(this).prev("input[name]").attr("name"));  } 
+                validatePoll("send");  } 
         })
     );
 
@@ -98,50 +111,55 @@ function createBoxOption2(){
 } */
 
 // Función para crear una nueva opción
-function createBoxOption(optionNumber) {
+function createBoxOptions(optionNumber) {
     var optionDiv = $('<div id="box">').append(
-        $('<h2>').text('Opción encuesta ' + optionNumber + ':'),
+        $('<label>').text('Opción encuesta ' + optionNumber + ':'),
         $('<input>').attr({ type: 'text', name: 'opcion' + optionNumber, placeholder: 'Opción ' + optionNumber}).on('input', function () {
             $(this).closest('#box').nextAll('#box').remove();
-            console.log(optionNumber);
-            $(this).css('background-color', '');
-        }),
-        $('<button>').attr({ id: 'validate', class: 'validateOption', 'data-option': optionNumber }).text('Añadir').click(function(){
-            if (optionDiv.next('#box').length === 0) {
-                validatePoll($(this).prev("input[name]").attr("name"));
+            // Habilitar el botón de "Añadir opción" solo en la opción actual
+            $('.add-option').prop('disabled', false);
+            $('.add-option').not('[data-option="' + optionNumber + '"]').prop('disabled', true);
+        }).keypress(function(event) {
+            if (event.which == 13) {
+                validatePoll("opcion" + optionNumber);
+                scrollToBottom();
             }
-            /* var optionNumber = $(this).data('option');
-            if ($('input[name=opcion' + optionNumber + ']').val().trim() === "") {
-                showNotification("La opción " + optionNumber + " no puede estar vacía", 'red');
-            } else {
-                localStorage.setItem('nameOpcion' + optionNumber, $('input[name=opcion' + optionNumber + ']').val());
-                if (optionNumber < maxOptions) {
-                    createBoxOption(optionNumber + 1);
-                }
-            } */
         }),
+        $('<button>').attr({ class: 'add-option button-login', 'data-option': optionNumber }).text('Añadir opción').prop('disabled', true).click(function(){
+            var currentOptionNumber = $(this).data('option');
+            if ($('input[name=opcion' + currentOptionNumber + ']').val().trim() === "") {
+                showNotification("La opción " + currentOptionNumber + " no puede estar vacía", 'red');
+            } else {
+                localStorage.setItem('nameOpcion' + currentOptionNumber, $('input[name=opcion' + currentOptionNumber + ']').val());
+                createBoxOptions(optionNumber + 1);
+                scrollToBottom();
+            }
+        }),
+        $('<button>').attr({ id: 'send-poll', class: 'button-login' }).text('Enviar encuesta').click(function(){
+            if (optionDiv.next('#box').length === 0) {
+                validatePoll("send");  } 
+        })
     );
     $('.poll-container').append(optionDiv);
-}
 
-// Al hacer clic en "Añadir", se crea una nueva opción
-/* $('#validate').click(function() {
-    if (indice_opciones < maxOptions) {
-        indice_opciones++;
-        createBoxOption(indice_opciones);
-    } else {
-        showNotification("Se ha alcanzado el máximo de opciones permitidas.", 'red');
-    }
-}); */
+    // Habilitar el botón de "Añadir opción" solo en la opción actual
+    //$('.add-option').prop('disabled', false);
+    //$('.add-option').not('[data-option="' + optionNumber + '"]').prop('disabled', true);
+}
 
 function validatePoll(inputType){
     console.log(inputType);
     switch(inputType) {
         case "fecha_inicio":
             var nameInicio = $('input[name=fecha_inicio]').val();
+            var dateHoy = new Date();
+            var dateInicio = new Date(nameInicio);
             if (nameInicio.trim()===""){
                 showNotification("La fecha inicial no puede estar vacía", 'red');
             }
+            else if(dateHoy>dateInicio){
+                showNotification("La fecha inicial tiene que ser posterior al dia de hoy", "red");
+            }  
             else{
                 localStorage.setItem('nameInicio',nameInicio);
                 createBoxFinal();
@@ -149,9 +167,15 @@ function validatePoll(inputType){
             break;
         case "fecha_final":
             var nameFinal = $('input[name=fecha_final]').val();
+            var nameInicio = $('input[name=fecha_inicio]').val();
+            var dateInicio = new Date(nameInicio);
+            var dateFinal = new Date(nameFinal);
             if (nameFinal.trim()===""){
                 showNotification("La fecha final no puede estar vacía", 'red');
             }
+            else if(dateFinal<dateInicio){
+                showNotification("La fecha ", "red");
+            } 
             else{
                 localStorage.setItem('nameFinal',nameFinal);
                 createBoxTitle();
@@ -163,9 +187,8 @@ function validatePoll(inputType){
                 showNotification("El titulo no puede estar vacío", 'red');
             }
             else{
-                /* $('input[name=titulo]').css('background-color', '#b4e7b3'); */
                 localStorage.setItem('nameTitulo',nameTitulo);
-                createBoxOption(optionNumber);
+                createBoxOption1();
             }
             break;
 
@@ -175,42 +198,98 @@ function validatePoll(inputType){
                 showNotification("La opción" + optionNumber + "no puede estar vacía", 'red');
             }
             else {
-                /* $('input[name=titulo]').css('background-color', '#b4e7b3'); */
                 localStorage.setItem('nameOpcion' + optionNumber +'',nameOpcion);
                 console.log(optionNumber);
                 optionNumber++;
-                createBoxOption(optionNumber);
+                createBoxOptions(optionNumber);
             }
             break;
 
-/*         case "opcion1":
+         case "opcion1":
             var nameOpcion1 = $('input[name=opcion1]').val();
             if(nameOpcion1.trim()===""){
                 showNotification("La opción 1 no puede estar vacía", 'red');
             }
             else {
                 localStorage.setItem('nameOpcion1',nameOpcion1);
-                createBoxOption2();
+                createBoxOptions(2);
             }
             break;
 
-        case "opcion2":
+        /* case "opcion2":
             var nameOpcion2 = $('input[name=opcion2]').val();
             if(nameOpcion2.trim()===""){
                 showNotification("La opción 2 no puede estar vacía", 'red');
             }
             else {
-                /* $('input[name=titulo]').css('background-color', '#b4e7b3');
                 localStorage.setItem('nameOpcion2',nameOpcion2);
-                createBoxOptions();
+                createBoxOptions(3);
             }
             break; */
+        case "send":
+            var nameOpcion = $('input[name=opcion' + optionNumber + ']').val();
+            if(nameOpcion.trim()===""){
+                showNotification("La opción" + optionNumber + "no puede estar vacía", 'red');
+            }
+            else {
+                localStorage.setItem('nameOpcion' + optionNumber +'',nameOpcion);
+                // Guardar en la BD todo y guardar las imagenes en "uploads"
+                createBoxBD();
+            }
+            break;
         }
     }
 }
 );
 
+function createBoxBD() {
+    var titulo = localStorage.getItem('nameTitulo');
+    var optionsS = localStorage.getItem('opcion');
 
+    var options = JSON.parse(optionsS);
+
+    var start = localStorage.getItem('start');
+    var end = localStorage.getItem('end');
+    var form = $('<form>').attr({
+        action: 'create_poll.php',
+        method: 'POST'
+    });
+
+    var hiddenFields = [
+        { name: 'titulo', value: titulo },
+        { name: 'start', value: start },
+        { name: 'end', value: end }
+    ];
+
+
+    $.each(hiddenFields, function(index, field) {
+        $('<input>').attr({
+            type: 'hidden',
+            name: field.name,
+            value: field.value
+        }).appendTo(form);
+    });
+
+
+    $.each(options, function(index, option) {
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'option[]', 
+            value: option
+        }).appendTo(form);
+    });
+
+    form.append('<h4>Encuesta creada correctamente!!</h4>');
+    form.append($('<button>').attr('type', 'submit').text('Aceptar'));
+
+    var sendDiv = $('<div id="box">').append(form);
+
+    $('.container').append(sendDiv);
+
+    scrollTo('input[name="end"]');
+
+
+}
 
 
 
@@ -282,4 +361,15 @@ function validatePoll(inputType){
 
         notificationDiv.append(closeButton);
         notificationContainer.append(notificationDiv);
+    }
+
+    function scrollTo(element) {
+        $('html, body').animate({
+            scrollTop: $(element).offset().top
+        }, 1200); 
+    }
+    function scrollToBottom() {
+        $('html, body').animate({
+            scrollTop: $(document).height()
+        }, 'slow');
     }
