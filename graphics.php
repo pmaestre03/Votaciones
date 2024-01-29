@@ -20,9 +20,9 @@
         // Realiza la conexión a la base de datos
         try {
             $hostname = "localhost";
-            $dbname = "Votaciones";
-            $username = "xavi";
-            $pw = "Superlocal123@";
+            $dbname = "votaciones";
+            $username = "userProyecto";
+            $pw = "votacionesAXP24";
             $pdo = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $pw);
         } catch (PDOException $e) {
             echo "Failed to get DB handle: " . $e->getMessage() . "\n";
@@ -41,12 +41,14 @@
         // Verifica si el usuario actual es el creador de la encuesta
         if ($encuesta && $encuesta['creador'] == $id_usuario_actual) {
             // Ahora puedes utilizar $encuesta para mostrar la información de la encuesta
-            echo "<h1>Detalles de la Encuesta {$encuesta['titulo_encuesta']}</h1>";
-            echo "<p>Fecha de inicio: {$encuesta['fech_inicio']}</p>";
-            echo "<p>Fecha de fin: {$encuesta['fecha_fin']}</p>";
+            echo "<h1 id='pollName'>Detalles de la Encuesta, {$encuesta['titulo_encuesta']}</h1>";
+            // echo "<div id='dates'><p>Fecha de inicio: {$encuesta['fech_inicio']}</p>";
+            // echo "<p>Fecha de fin: {$encuesta['fecha_fin']}</p></div>";
 
-            // Agrega un contenedor para el gráfico
-            echo '<div style="width: 80%; margin: auto;"><canvas id="graficoBarras"></canvas></div>';
+            echo '<div class="container">';
+
+            // Gráfico de barras a la izquierda
+            echo '<div class="chart-container"><p>Gráfico de Barras</p><canvas id="graficoBarras"></canvas></div>';
 
             echo "
             <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
@@ -57,12 +59,12 @@
                     var chartBar = new Chart(ctxBar, {
                         type: 'bar',
                         data: {
-                            labels: ['Opción 1', 'Opción 2', 'Opción 3'],  // Etiquetas para el eje X
+                            labels: ['Opción 1', 'Opción 2', 'Opción 3'],
                             datasets: [{
                                 label: 'Cantidad de Votos',
-                                data: [10, 20, 15],  // Datos para las barras
-                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                borderColor: 'rgba(75, 192, 192, 1)',
+                                data: [10, 50, 15],
+                                backgroundColor: ['rgba(255, 99, 132)', 'rgba(54, 162, 235)', 'rgba(255, 206, 86)'],
+                                borderColor: ['rgba(255, 99, 132)', 'rgba(54, 162, 235)', 'rgba(255, 206, 86)'],
                                 borderWidth: 1
                             }]
                         },
@@ -76,6 +78,40 @@
                     });
                 });
             </script>";
+
+            // Gráfico de quesos a la derecha
+            echo '<div class="chart-container" id="graficoQueso-container"><p>Gráfico de Anillo</p><canvas id="graficoQueso"></canvas></div>';
+
+            echo "
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Configuración para el gráfico de quesos
+                    var ctxQueso = document.getElementById('graficoQueso').getContext('2d');
+                    var chartQueso = new Chart(ctxQueso, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Opción 1', 'Opción 2', 'Opción 3'],
+                            datasets: [{
+                                label: 'Cantidad de Votos',
+                                data: [10, 20, 15],
+                                backgroundColor: ['rgba(255, 99, 132)', 'rgba(54, 162, 235)', 'rgba(255, 206, 86)'],
+                                borderColor: ['rgba(255, 99, 132)', 'rgba(54, 162, 235)', 'rgba(255, 206, 86)'],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            cutout: '80%',
+                            plugins: {
+                                legend: {
+                                    position: 'bottom',
+                                }
+                            }
+                        }
+                    });
+                });
+            </script>";
+
+            echo '</div>';
             // Resto de la lógica para mostrar gráficos o información adicional
         } else {
             // Manejo de error si el usuario actual no es el creador de la encuesta

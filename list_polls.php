@@ -15,9 +15,9 @@
     
     try {
         $hostname = "localhost";
-        $dbname = "Votaciones";
-        $username = "xavi";
-        $pw = "Superlocal123@";
+        $dbname = "votaciones";
+        $username = "userProyecto";
+        $pw = "votacionesAXP24";
         $pdo = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $pw);
     } catch (PDOException $e) {
         echo "Failed to get DB handle: " . $e->getMessage() . "\n";
@@ -56,7 +56,7 @@
             }
 
             $id_encuesta = $encuesta['id_encuesta'];
-            echo "<td>{$encuesta['id_encuesta']}</td>";
+            // echo "<td>{$encuesta['id_encuesta']}</td>";
 
             echo "<td><button onclick=\"window.location.href='graphics.php?id=$id_encuesta'\">Detalls Enquesta</button></td>";
             echo "</tr>";

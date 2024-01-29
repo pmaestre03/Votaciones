@@ -29,9 +29,9 @@
 
     try {
         $hostname = "localhost";
-        $dbname = "Votaciones";
-        $username = "xavi";
-        $pw = "Superlocal123@";
+        $dbname = "votaciones";
+        $username = "userProyecto";
+        $pw = "votacionesAXP24";
         $pdo = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $pw);
     } catch (PDOException $e) {
         echo "Failed to get DB handle: " . $e->getMessage() . "\n";
@@ -51,6 +51,8 @@
 
         $filas = $query->rowCount();
         if ($filas > 0) {
+
+            $usuario = htmlspecialchars($_POST["username"]);
             // Obt  n el nombre de usuario desde la base de datos
             $row = $query->fetch(PDO::FETCH_ASSOC);
             $nombre_usuario = $row['nombre'];
@@ -59,6 +61,9 @@
             $_SESSION['id_user'] = $row["id_user"]; 
 
             echo "Usuario Correcto: Hola $nombre_usuario";
+
+            registrarEvento("Inicio de sesión por el usuario: $usuario");
+
             header("Location: dashboard.php");
 
             exit();

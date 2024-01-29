@@ -1,6 +1,6 @@
 <?php
 // Conectar a la base de datos
-$conn = mysqli_connect('localhost', 'xavi', 'Superlocal123@', 'Votaciones');
+$conn = mysqli_connect('localhost', 'userProyecto', 'votacionesAXP24', 'votaciones');
 
 // Verificar la conexión
 if (!$conn) {
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Establecer la conexión a la base de datos con PDO
             try {
-                $pdo = new PDO('mysql:host=localhost;dbname=Votaciones', 'xavi', 'Superlocal123@');
+                $pdo = new PDO('mysql:host=localhost;dbname=votaciones', 'userProyecto', 'votacionesAXP24');
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (PDOException $e) {
                 die("Error en la conexión a la base de datos: " . $e->getMessage());
@@ -290,9 +290,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     // Agregar las opciones al select desde la base de datos
                     <?php
-                    $conn = mysqli_connect('localhost', 'xavi', 'Superlocal123@');
-                    mysqli_select_db($conn, 'Votaciones');
-                    $consulta = "SELECT nombre, pref FROM `Votaciones`.`paises`;";
+                    $conn = mysqli_connect('localhost', 'userProyecto', 'votacionesAXP24');
+                    mysqli_select_db($conn, 'votaciones');
+                    $consulta = "SELECT nombre, pref FROM `votaciones`.`paises`;";
                     $resultat = mysqli_query($conn, $consulta);
                     $paises = array();
                     while ($fila = mysqli_fetch_assoc($resultat)) {
