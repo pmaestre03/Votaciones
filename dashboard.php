@@ -12,7 +12,7 @@
         if (isset($_SESSION['usuario'])) {
             
             echo "<div class='user-info'>";
-            echo "Panel de Administraci  n";
+            echo "Panel de Administración";
             echo "</div>";
 
             echo "<div class='dashboard-container'>";

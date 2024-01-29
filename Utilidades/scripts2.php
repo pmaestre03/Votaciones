@@ -1,7 +1,7 @@
 <?php
 function registrarEvento($mensaje) {
-    // Crear el nombre del archivo con el formato "registro_aaaa_mmdd.txt"
-    $nombreArchivo = "Logs/registro" . date("Y-m-d") . ".txt";
+    // Crear el nombre del archivo con el formato "registro_aaaa_mm_dd.txt"
+    $nombreArchivo = "Logs/registro_" . date("Y-m-d") . ".txt";
 
     // Asegurarse de que la carpeta "Logs" exista, si no, crearla
     if (!is_dir("Logs")) {
