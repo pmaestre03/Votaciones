@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,39 +8,20 @@
         <link rel="stylesheet" href="./Utilidades/styles.css?no-cache=<?php echo time(); ?>">
         <script src="Utilidades/scripts.js"></script>
 </head>
+<?php require('Utilidades/scripts2.php')?>
 <body class="create_poll">
 <?php include("Utilidades/conexion.php") ?>
 <?php include("Utilidades/header.php") ?>
 
-<!-- <div class="poll-container">
-<form action="" method="post" id="create_poll">
-          <input type="date" name="fecha_inicio" id="fecha_inicio" required>
-          <input type="date" name="fecha_fin" id="fecha_fin" required>
-          <input type="text" name="titulo_encuesta" id="titulo_encuesta" required>
-          <input type="text" name="opciones_encuesta" id="opciones_encuesta">
-          <button type="button" id="add-option" class="button button-login">Añadir Opción</button>
-
-</form>
-</div> -->
 <div id="notification-container"></div>
-
-<?php include("Utilidades/footer.php") ?>
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-          $fecha_inicio = date("Y-m-d", strtotime($_POST["fecha_inicio"]));
-          $fecha_final = date("Y-m-d", strtotime($_POST["fecha_final"]));
-$encuesta = "INSERT INTO encuestas (titulo, creador, fech_inicio, fecha_final) VALUES ('" . $_POST["titulo"] . "', (SELECT id_user FROM users WHERE email = '" . $_SESSION['email'] . "'), '" .
-
-          //print_r($encuesta);
-           $resultat_enquesta = mysqli_query($conn, $encuesta);
-          foreach ($_POST as $key => $value) {
-                    if (preg_match('/^opcion_encuesta\d+$/', $key)) {
-                              $opciones = "insert into opciones_encuestas(nombre_opciones,id_encuesta) values('" . $value . "',(SELECT max(id_encuesta) from encuestas))";
-                              $resultat_opciones = mysqli_query($conn, $opciones);
-                    }
-          }
-          echo "<script>showNotification('Encuesta creada correctamente.')</script>";
+if (isset($_SESSION['usuario'])) {
+}else {
+        header("Location: ../errores/error403.php");
+            http_response(403);
+            exit;
 }
 ?>
+<?php include("Utilidades/footer.php") ?>
 </body>
 </html>

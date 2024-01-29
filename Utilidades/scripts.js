@@ -59,6 +59,7 @@ function createBoxTitle(){
                 validatePoll("titulo");
             }
         }),
+        $('<input>').attr({ type: 'file', name: 'imgTitulo', accept:"image/*"}),
         $('<button>').attr({ id: 'validate', class: 'button-login'}).text('Validar').click(function(){
             if (inputElement.next('#box').length === 0) {
                 validatePoll($(this).prev("input[name]").attr("name"));  }  
@@ -73,14 +74,18 @@ function createBoxOption1(){
         $('<label>').text('Opción encuesta 1:'),
         $('<input>').attr({ type: 'text', name: 'opcion1', id: 'opcion', placeholder: 'Opción 1'}).on('input', function () {
             $(this).closest('#box').nextAll('#box').remove();
+            // Habilitar el botón de "Añadir opción" solo en la opción actual
+            $('.add-option').prop('disabled', false);
+            $('.add-option').not('[data-option="1"]').prop('disabled', true);
         }).keypress(function(event) {
             if (event.which == 13) {
                 validatePoll("opcion1");
             }
         }),
-        $('<button>').attr({ id: 'validate', class: 'add-option button-login'}).text('Añadir opción').click(function(){
+        $('<input>').attr({ type: 'file', name: 'imgOpcion1', accept:"image/*"}),
+        $('<button>').attr({ id: 'validate', class: 'add-option button-login', 'data-option': '1' }).text('Añadir opción').click(function(){
             if (optionDiv.next('#box').length === 0) {
-                validatePoll($(this).prev("input[name]").attr("name"));  }  
+                validatePoll("opcion1");  }  
                 scrollToBottom();
             })
     );
@@ -88,27 +93,7 @@ function createBoxOption1(){
     $('.poll-container').append(optionDiv);
     
 }
-// Crear Opción 2 Encuesta
-/* function createBoxOption2(){
-    var optionDiv = $('<div id="box">').append(
-        $('<label>').text('Opción encuesta 2:'),
-        $('<input>').attr({ type: 'text', name: 'opcion2', id: 'opcion', placeholder: 'Opción 2'}).on('input', function () {
-            $(this).closest('#box').nextAll('#box').remove();
-            $(this).css('background-color', '');
-        }),
-        $('<button>').attr({ id: 'validate', class: 'button-login'}).text('Añadir opción').click(function(){
-            if (optionDiv.next('#box').length === 0) {
-                validatePoll($(this).prev("input[name]").attr("name"));  }  
-        }),
-        $('<button>').attr({ id: 'send-poll', class: 'button-login' }).text('Enviar encuesta').click(function(){
-            if (optionDiv.next('#box').length === 0) {
-                validatePoll("send");  } 
-        })
-    );
 
-    $('.poll-container').append(optionDiv);
-    
-} */
 
 // Función para crear una nueva opción
 function createBoxOptions(optionNumber) {
@@ -125,6 +110,7 @@ function createBoxOptions(optionNumber) {
                 scrollToBottom();
             }
         }),
+        $('<input>').attr({ type: 'file', name: 'imgOpcion' + optionNumber, accept:"image/*"}),
         $('<button>').attr({ class: 'add-option button-login', 'data-option': optionNumber }).text('Añadir opción').prop('disabled', true).click(function(){
             var currentOptionNumber = $(this).data('option');
             if ($('input[name=opcion' + currentOptionNumber + ']').val().trim() === "") {
@@ -135,16 +121,22 @@ function createBoxOptions(optionNumber) {
                 scrollToBottom();
             }
         }),
-        $('<button>').attr({ id: 'send-poll', class: 'button-login' }).text('Enviar encuesta').click(function(){
-            if (optionDiv.next('#box').length === 0) {
-                validatePoll("send");  } 
+        $('<button>').attr({ id: 'send-poll', class: 'button-login', 'data-option': optionNumber }).text('Enviar encuesta').click(function(){
+            var currentOptionNumber = $(this).data('option');
+            if ($('input[name=opcion' + currentOptionNumber + ']').val().trim() === "") {
+                showNotification("La opción " + currentOptionNumber + " no puede estar vacía", 'red');
+            } else {
+                localStorage.setItem('nameOpcion' + currentOptionNumber, $('input[name=opcion' + currentOptionNumber + ']').val());
+                createBoxBD();
+                scrollToBottom();
+            }
         })
     );
     $('.poll-container').append(optionDiv);
 
     // Habilitar el botón de "Añadir opción" solo en la opción actual
-    //$('.add-option').prop('disabled', false);
-    //$('.add-option').not('[data-option="' + optionNumber + '"]').prop('disabled', true);
+    $('.add-option').prop('disabled', false);
+    $('.add-option').not('[data-option="' + optionNumber + '"]').prop('disabled', true);
 }
 
 function validatePoll(inputType){
@@ -165,6 +157,7 @@ function validatePoll(inputType){
                 createBoxFinal();
             }
             break;
+
         case "fecha_final":
             var nameFinal = $('input[name=fecha_final]').val();
             var nameInicio = $('input[name=fecha_inicio]').val();
@@ -174,13 +167,14 @@ function validatePoll(inputType){
                 showNotification("La fecha final no puede estar vacía", 'red');
             }
             else if(dateFinal<dateInicio){
-                showNotification("La fecha ", "red");
+                showNotification("La fecha final no puede ser inferior a la fecha inicial", "red");
             } 
             else{
                 localStorage.setItem('nameFinal',nameFinal);
                 createBoxTitle();
             }
             break;
+
         case "titulo":
             var nameTitulo = $('input[name=titulo]').val();
             if(nameTitulo.trim()===""){
@@ -188,6 +182,19 @@ function validatePoll(inputType){
             }
             else{
                 localStorage.setItem('nameTitulo',nameTitulo);
+                createBoxOption1();
+            }
+            break;
+
+        case "imgTitulo":
+            var nameTitulo = $('input[name=titulo]').val();
+            var imgTitulo = $('input[name=imgTitulo]').val();
+            if(nameTitulo.trim()===""){
+                showNotification("El titulo no puede estar vacío", 'red');
+            }
+            else{
+                localStorage.setItem('nameTitulo',nameTitulo);
+                localStorage.setItem('imgTitulo',imgTitulo);
                 createBoxOption1();
             }
             break;
@@ -226,6 +233,7 @@ function validatePoll(inputType){
                 createBoxOptions(3);
             }
             break; */
+
         case "send":
             var nameOpcion = $('input[name=opcion' + optionNumber + ']').val();
             if(nameOpcion.trim()===""){
@@ -294,55 +302,6 @@ function createBoxBD() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    var label = $("<label>").attr("for", "opciones_encuesta").text("Opciones Encuesta:");
-    $("form").append(label);
-
-    $("#add-option").click(function () {
-        var option_to_add = $("#opciones_encuesta").val();
-        if (option_to_add !== "") {
-            array_opciones_encuesta.push(option_to_add);
-            sessionStorage.setItem("opciones", JSON.stringify(array_opciones_encuesta));
-            $("form").append('<input style="display: none;" type="text" name="opcion_encuesta' + array_opciones_encuesta.length + '" id="opcion_encuesta' + array_opciones_encuesta.length + '">');
-            $('#opcion_encuesta' + array_opciones_encuesta.length).val(array_opciones_encuesta[indice_opciones]);
-            indice_opciones++;
-            showNotification('Opción añadida correctamente ')
-        } else {
-            showNotification('No se puede dejar en blanco ', 'orange')
-        }
-        $("#opciones_encuesta").val("");
-        if (array_opciones_encuesta.length >= 2 && $("#send-poll").length === 0) {
-            $("form").append('<button type="submit" id="send-poll" class="button button-login">Enviar encuesta</button>');
-        }
-    });
-
-    $("#send-poll").click(function () {
-        array_opciones_encuesta = [];
-        sessionStorage.removeItem("opciones");
-    });
-
-
-
-
     function showNotification(message, bgColor) {
         var notificationContainer = $("#notification-container");
 
@@ -363,11 +322,6 @@ function createBoxBD() {
         notificationContainer.append(notificationDiv);
     }
 
-    function scrollTo(element) {
-        $('html, body').animate({
-            scrollTop: $(element).offset().top
-        }, 1200); 
-    }
     function scrollToBottom() {
         $('html, body').animate({
             scrollTop: $(document).height()

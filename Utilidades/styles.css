@@ -85,7 +85,7 @@ footer {
   color: #fff;
   padding: 10px;
   text-align: center;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 98.95%;
 }
@@ -218,7 +218,7 @@ body.dashboard {
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  /* max-height: 550px; */
+  max-height: 650px;
   overflow-y: auto;
 }
 
