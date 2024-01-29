@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./Utilidades/styles.css?no-cache=<?php echo time(); ?>">
     <title>Login</title>
-    <script src="Utilidades/scripts.js"></script>
+    <script src="./Utilidades/scripts.js"></script>
     <?php require('Utilidades/scripts2.php')?>
 </head>
 <body class="login">
@@ -56,6 +56,9 @@
             // Obt  n el nombre de usuario desde la base de datos
             $row = $query->fetch(PDO::FETCH_ASSOC);
             $nombre_usuario = $row['nombre'];
+            if ($row['token_validado'] === 0) {
+                echo "<script>showNotification('Token no validado','red')</script>";
+        } else {
             $_SESSION['email'] = $row["email"]; 
             $_SESSION['usuario'] = $nombre_usuario;
             $_SESSION['id_user'] = $row["id_user"]; 
@@ -67,6 +70,7 @@
             header("Location: dashboard.php");
 
             exit();
+        }
         } else {
             $usuarioIntentado = htmlspecialchars($_POST["username"]);
 
