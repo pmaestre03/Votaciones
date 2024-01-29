@@ -41,7 +41,7 @@
         $usuario = $_POST["username"];
         $contrasenya = hash('sha512',$_POST["password"]);
         
-        $querystr = "SELECT nombre,email FROM users WHERE email=:usuario AND contrasea_cifrada=:contrasenya";
+        $querystr = "SELECT nombre,email,token_validado FROM users WHERE email=:usuario AND contrasea_cifrada=:contrasenya";
         $query = $pdo->prepare($querystr);
         $query->bindParam(':usuario', $usuario, PDO::PARAM_STR);
         $query->bindParam(':contrasenya', $contrasenya, PDO::PARAM_STR);
@@ -53,14 +53,18 @@
             // Obt  n el nombre de usuario desde la base de datos
             $row = $query->fetch(PDO::FETCH_ASSOC);
             $nombre_usuario = $row['nombre'];
-            $_SESSION['email'] = $row["email"];
-            $_SESSION['usuario'] = $nombre_usuario;
-            echo "Usuario Correcto: Hola $nombre_usuario";
-            header("Location: dashboard.php");
+            if ($row['token_validado'] === 0) {
+                    echo "<script>showNotification('Token no validado','red')</script>";
+            } else {
+                    $_SESSION['email'] = $row["email"];
+                    $_SESSION['usuario'] = $nombre_usuario;
+                    echo "Usuario Correcto: Hola $nombre_usuario";
+                    header("Location: dashboard.php");
+                    exit();
+            }
 
-            exit();
         } else {
-            echo "<script>showNotification('Usuario o contrase  a incorrecto','red')</script>";
+            echo "<script>showNotification('Usuario o contraseña incorrecto','red')</script>";
         }
 
         unset($pdo);

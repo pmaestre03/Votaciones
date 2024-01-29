@@ -77,9 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                                                 $email = $row['email'];
                                                                                 $idUser = $row['id_user'];                                                                                
                                                                                 session_start();
-                                                                                $_SESSION['usuario'] = $nombre_usuario;
-                                                                                $_SESSION['email'] = $email;
-
+                                                                                $_SESSION['redirigido'] = true;         
                                                                                 $token = generateRandomToken();
                                                                                 $validationLink = "https://aws22.ieti.site/validar-email.php?token=$token";
                                                                                 mail($email, 'Validate your token', $validationLink);
@@ -90,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                                                 $queryToken->execute();
 
                                                                                 echo "Usuario Correcto: Hola $nombre_usuario";
-                                                                                header("Location: dashboard.php");
+                                                                                header("Location: index.php");
                                                                                 exit();
                                                             } else {
                                                                                 echo "<script>showNotification('Usuario o contraseña incorrecto','red')</script>";
