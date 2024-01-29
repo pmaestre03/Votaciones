@@ -1,90 +1,111 @@
 <?php
 // Conectar a la base de datos
-$conn = mysqli_connect('localhost', 'super', 'e1ce1uy7nc173?', 'votaciones');
+$conn = mysqli_connect('localhost', 'userProyecto', 'votacionesAXP24', 'votaciones');
 
 // Verificar la conexión
 if (!$conn) {
-          die("La conexión a la base de datos falló: " . mysqli_connect_error());
+                    die("La conexión a la base de datos falló: " . mysqli_connect_error());
 }
 
 // Verificar si el formulario se ha enviado
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-          // Recuperar datos del formulario
-          $nombre = mysqli_real_escape_string($conn, $_POST['nombre']);
-          $prefijo = mysqli_real_escape_string($conn, $_POST['prefijo']);
-          $mail = mysqli_real_escape_string($conn, $_POST['mail']);
-          $password = hash('sha512', $_POST['password']);
-          $pais = mysqli_real_escape_string($conn, $_POST['pais']);
-          $telefono = mysqli_real_escape_string($conn, $_POST['telefono']);
-          $ciudad = mysqli_real_escape_string($conn, $_POST['ciudad']);
-          $codigoPostal = mysqli_real_escape_string($conn, $_POST['codigoPostal']);
 
-          // Consulta SQL para verificar si el correo ya existe
-          $checkQuery = "SELECT COUNT(*) as count FROM users WHERE email = '$mail'";
-          $checkResult = mysqli_query($conn, $checkQuery);
-          $checkData = mysqli_fetch_assoc($checkResult);
+                    function generateRandomToken() {
+                                        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                                        $token = '';
+                                        $length = 32;
+                                        for ($i = 0; $i < $length; $i++) {
+                                                            $token .= $characters[rand(0, strlen($characters) - 1)];
+                                        }
 
-          // Si el correo ya existe, mostrar un mensaje y no realizar la inserción
-          if ($checkData['count'] > 0) {
-                    $mensaje = "El correo electrónico ya ha sido registrado.";
-                    $colorFondo = "red";
-                    echo "<script>var mensajeNotificacion = '$mensaje'; var colorFondo = '$colorFondo';</script>";
-          } else {
-                    // Si el correo no existe, realizar la inserción
-                    // Imprimir el contenido del prefijo para depuración
-                    echo "Contenido del prefijo: ";
-                    var_dump($prefijo);
-
-                    // Consulta SQL para insertar los datos
-                    $insertQuery = "INSERT INTO users (nombre, contrasea_cifrada, email, telefono, nombre_pais, rol, pref, nombre_ciudad, codigo_postal,validado) VALUES ('$nombre', '$password', '$mail', '$telefono', '$pais', 'user', '$prefijo', '$ciudad', '$codigoPostal',0)";
-
-                    // Ejecutar la consulta
-                    if (mysqli_query($conn, $insertQuery)) {
-                              // Realizar la autenticación del usuario recién registrado
-                              $usuario = $mail;  // Utilizar el correo electrónico como nombre de usuario
-                              $contrasenya = $password;  // Utilizar la contraseña cifrada
-
-                              // Establecer la conexión a la base de datos con PDO
-                              try {
-                                        $pdo = new PDO('mysql:host=localhost;dbname=votaciones', 'super', 'e1ce1uy7nc173?');
-                                        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                              } catch (PDOException $e) {
-                                        die("Error en la conexión a la base de datos: " . $e->getMessage());
-                              }
-
-                              $querystr = "SELECT email,nombre FROM users WHERE email=:usuario AND contrasea_cifrada=:contrasenya";
-                              $query = $pdo->prepare($querystr);
-                              $query->bindParam(':usuario', $usuario, PDO::PARAM_STR);
-                              $query->bindParam(':contrasenya', $contrasenya, PDO::PARAM_STR);
-
-                              $query->execute();
-
-                              $filas = $query->rowCount();
-                              if ($filas > 0) {
-                                        // Obtén el nombre de usuario desde la base de datos
-                                        $row = $query->fetch(PDO::FETCH_ASSOC);
-                                        $nombre_usuario = $row['nombre'];
-                                        $email = $row['email'];
-                                        session_start();
-                                        $_SESSION['usuario'] = $nombre_usuario;
-                                        $_SESSION['email'] = $email;
-                                        echo "Usuario Correcto: Hola $nombre_usuario";
-                                        header("Location: dashboard.php");
-                                        exit();
-                              } else {
-                                        echo "<script>showNotification('Usuario o contraseña incorrecto','red')</script>";
-                              }
-
-                              unset($pdo);
-                              unset($query);
-
-                    } else {
-                              echo "Error al insertar datos: " . mysqli_error($conn);
+                                        return $token;
                     }
-          }
 
-          // Cerrar la conexión
-          mysqli_close($conn);
+                    // Recuperar datos del formulario
+                    $nombre = mysqli_real_escape_string($conn, $_POST['nombre']);
+                    $prefijo = mysqli_real_escape_string($conn, $_POST['prefijo']);
+                    $mail = mysqli_real_escape_string($conn, $_POST['mail']);
+                    $password = hash('sha512', $_POST['password']);
+                    $pais = mysqli_real_escape_string($conn, $_POST['pais']);
+                    $telefono = mysqli_real_escape_string($conn, $_POST['telefono']);
+                    $ciudad = mysqli_real_escape_string($conn, $_POST['ciudad']);
+                    $codigoPostal = mysqli_real_escape_string($conn, $_POST['codigoPostal']);
+
+                    // Consulta SQL para verificar si el correo ya existe
+                    $checkQuery = "SELECT COUNT(*) as count FROM users WHERE email = '$mail'";
+                    $checkResult = mysqli_query($conn, $checkQuery);
+                    $checkData = mysqli_fetch_assoc($checkResult);
+
+                    // Si el correo ya existe, mostrar un mensaje y no realizar la inserción
+                    if ($checkData['count'] > 0) {
+                                        $mensaje = "El correo electrónico ya ha sido registrado.";
+                                        $colorFondo = "red";
+                                        echo "<script>var mensajeNotificacion = '$mensaje'; var colorFondo = '$colorFondo';</script>";
+                    } else {
+                                        // Si el correo no existe, realizar la inserción
+                                        // Imprimir el contenido del prefijo para depuración
+                                        echo "Contenido del prefijo: ";
+                                        var_dump($prefijo);
+
+                                        // Consulta SQL para insertar los datos
+                                        $insertQuery = "INSERT INTO users (nombre, contrasea_cifrada, email, telefono, nombre_pais, rol, pref, nombre_ciudad, codigo_postal,token_validado) VALUES ('$nombre', '$password', '$mail', '$telefono', '$pais', 'user', '$prefijo', '$ciudad', '$codigoPostal',0)";
+                                        // Ejecutar la consulta
+                                        if (mysqli_query($conn, $insertQuery)) {
+                                                            // Realizar la autenticación del usuario recién registrado
+                                                            $usuario = $mail;  // Utilizar el correo electrónico como nombre de usuario
+                                                            $contrasenya = $password;  // Utilizar la contraseña cifrada
+                                                            // Establecer la conexión a la base de datos con PDO
+                                                            try {
+                                                                                $pdo = new PDO('mysql:host=localhost;dbname=votaciones', 'userProyecto', 'votacionesAXP24');
+                                                                                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                                                            } catch (PDOException $e) {
+                                                                                die("Error en la conexión a la base de datos: " . $e->getMessage());
+                                                            }
+
+                                                            $querystr = "SELECT id_user,email,nombre FROM users WHERE email=:usuario AND contrasea_cifrada=:contrasenya";
+                                                            $query = $pdo->prepare($querystr);
+                                                            $query->bindParam(':usuario', $usuario, PDO::PARAM_STR);
+                                                            $query->bindParam(':contrasenya', $contrasenya, PDO::PARAM_STR);
+
+                                                            $query->execute();
+
+                                                            $filas = $query->rowCount();
+                                                            if ($filas > 0) {
+                                                                                // Obtén el nombre de usuario desde la base de datos
+                                                                                $row = $query->fetch(PDO::FETCH_ASSOC);
+                                                                                $nombre_usuario = $row['nombre'];
+                                                                                $email = $row['email'];
+                                                                                $idUser = $row['id_user'];                                                                                
+                                                                                session_start();
+                                                                                $_SESSION['usuario'] = $nombre_usuario;
+                                                                                $_SESSION['email'] = $email;
+
+                                                                                $token = generateRandomToken();
+                                                                                $validationLink = "https://aws22.ieti.site/validar-email.php?token=$token";
+                                                                                mail($email, 'Validate your token', $validationLink);
+                                                                                $tokenQuery = "INSERT INTO tokens_emails(user_id,token) VALUES (:id_user,:token)";
+                                                                                $queryToken = $pdo->prepare($tokenQuery);
+                                                                                $queryToken->bindParam(':id_user',$idUser,PDO::PARAM_STR);
+                                                                                $queryToken->bindParam(':token',$token,PDO::PARAM_STR);
+                                                                                $queryToken->execute();
+
+                                                                                echo "Usuario Correcto: Hola $nombre_usuario";
+                                                                                header("Location: dashboard.php");
+                                                                                exit();
+                                                            } else {
+                                                                                echo "<script>showNotification('Usuario o contraseña incorrecto','red')</script>";
+                                                            }
+
+                                                            unset($pdo);
+                                                            unset($query);
+
+                                        } else {
+                                                            echo "Error al insertar datos: " . mysqli_error($conn);
+                                        }
+                    }
+
+                    // Cerrar la conexión
+                    mysqli_close($conn);
 }
 ?>
 
@@ -290,18 +311,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     // Agregar las opciones al select desde la base de datos
                     <?php
-                    $conn = mysqli_connect('localhost', 'super', 'e1ce1uy7nc173?');
+                    $conn = mysqli_connect('localhost', 'userProyecto', 'votacionesAXP24');
                     mysqli_select_db($conn, 'votaciones');
                     $consulta = "SELECT nombre, pref FROM `votaciones`.`paises`;";
                     $resultat = mysqli_query($conn, $consulta);
                     $paises = array();
                     while ($fila = mysqli_fetch_assoc($resultat)) {
-                              $paises[] = $fila;
+                                        $paises[] = $fila;
                     }
                     mysqli_close($conn);
 
                     foreach ($paises as $pais) {
-                              echo 'selectPais.append("<option value=\'" + \'' . $pais['nombre'] . '\' + "\' data-pref=\'" + \'' . $pais['pref'] . '\' + "\'>" + \'' . $pais['nombre'] . '\' + "</option>");';
+                                        echo 'selectPais.append("<option value=\'" + \'' . $pais['nombre'] . '\' + "\' data-pref=\'" + \'' . $pais['pref'] . '\' + "\'>" + \'' . $pais['nombre'] . '\' + "</option>");';
                     }
                     ?>
 
@@ -496,39 +517,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           }
 
           $(document).keypress(function (e) {
-    if (e.which === 13) {
-        e.preventDefault();
-        var inputActual = $('input:focus');
-
-        if (inputActual.val().trim() !== '') {
-            if (inputActual.attr('id') === 'mail') {
-                validarCorreoElectronico(inputActual.val().trim());
-                if (mailValido) {
-                    crearSiguienteFormulario();
-                } else {
-                    showNotification('Mail no valido', 'red');
-                }
-            } else if (inputActual.attr('id') === 'confirmarPassword') {
-                if (confirmarPasswordValido) {
-                    crearSiguienteFormulario();
-                } else {
-                    showNotification('Las contraseñas no coinciden', 'red');
-                }
-            } else if (inputActual.attr('id') === 'telefono') {
-                if (telefonoValido) {
-                    crearSiguienteFormulario();
-                } else {
-                    showNotification('El telefono no es valido', 'red');
-                }
-            } else {
-                if (comprovarLastChild()) {
-                    crearSiguienteFormulario();
-                }
-            }
-        }
-    }
-});
-
+                    if (e.which === 13) {
+                                        e.preventDefault();
+                                        var inputActual = $('input:focus');
+                                        if (inputActual.val().trim() !== '') {
+                                                            if (inputActual.attr('id') === 'mail') {
+                                                                                validarCorreoElectronico(inputActual.val().trim());
+                                                            if (mailValido) {
+                                                                                crearSiguienteFormulario();
+                                                            } else {
+                                                                                showNotification('Mail no válido', 'red');
+                                                            }
+                                                            } else if (inputActual.attr('id') === 'confirmarPassword') {
+                                                                                if (confirmarPasswordValido) {
+                                                                                                    crearSiguienteFormulario();
+                                                                                } else {
+                                                                                                    showNotification('Las contraseñas no coinciden', 'red');
+                                                                                }
+                                                            } else if (inputActual.attr('id') === 'telefono') {
+                                                                                if (telefonoValido) {
+                                                                                                    crearSiguienteFormulario();
+                                                                                } else {
+                                                                                                    showNotification('El telefono no es válido', 'red');
+                                                                                }
+                                                            } else {
+                                                                                if (comprovarLastChild()) {
+                                                                                                    crearSiguienteFormulario();
+                                                                                }
+                                                            }
+                                        }
+                    }
+                    });
 
           function crearSiguienteFormulario() {
                     switch (pasoActual) {
@@ -537,11 +556,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         break;
                               case 2:
                                         crearFormularioMail();
-                                        showNotification("Nombre valido");
+                                        showNotification("Nombre válido");
                                         break;
                               case 3:
                                         crearFormularioPassword();
-                                        showNotification("Mail valido");
+                                        showNotification("Mail válido");
                                         break;
                               case 4:
                                         if (validarPassword($('#password').val().trim())) {
@@ -559,7 +578,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         break;
                               case 6:
                                         crearFormularioCiudad();
-                                        showNotification("Telefono valido");
+                                        showNotification("Telefono válido");
                                         break;
                               case 7:
                                         crearFormularioCodigoPostal();
@@ -568,10 +587,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                     pasoActual++;
           }
-
-
-
-        });
+});
     </script>
 <?php include("Utilidades/footer.php") ?>
 </body>
