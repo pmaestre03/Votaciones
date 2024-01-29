@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Graphics</title>
+    <title>Detalles</title>
     <link rel="stylesheet" href="Utilidades/styles.css?no-cache=<?php echo time(); ?>">
     <script src="Utilidades/scripts.js"></script>
 </head>
