@@ -42,7 +42,7 @@
         $usuario = $_POST["username"];
         $contrasenya = hash('sha512',$_POST["password"]);
         
-        $querystr = "SELECT id_user,nombre,email FROM users WHERE email=:usuario AND contrasea_cifrada=:contrasenya";
+        $querystr = "SELECT nombre,email,token_validado FROM users WHERE email=:usuario AND contrasea_cifrada=:contrasenya";
         $query = $pdo->prepare($querystr);
         $query->bindParam(':usuario', $usuario, PDO::PARAM_STR);
         $query->bindParam(':contrasenya', $contrasenya, PDO::PARAM_STR);

@@ -9,82 +9,101 @@ if (!$conn) {
 
 // Verificar si el formulario se ha enviado
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Recuperar datos del formulario
-    $nombre = mysqli_real_escape_string($conn, $_POST['nombre']);
-    $prefijo = mysqli_real_escape_string($conn, $_POST['prefijo']);
-    $mail = mysqli_real_escape_string($conn, $_POST['mail']);
-    $password = hash('sha512', $_POST['password']);
-    $pais = mysqli_real_escape_string($conn, $_POST['pais']);
-    $telefono = mysqli_real_escape_string($conn, $_POST['telefono']);
-    $ciudad = mysqli_real_escape_string($conn, $_POST['ciudad']);
-    $codigoPostal = mysqli_real_escape_string($conn, $_POST['codigoPostal']);
 
-    // Consulta SQL para verificar si el correo ya existe
-    $checkQuery = "SELECT COUNT(*) as count FROM users WHERE email = '$mail'";
-    $checkResult = mysqli_query($conn, $checkQuery);
-    $checkData = mysqli_fetch_assoc($checkResult);
+                    function generateRandomToken() {
+                                        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                                        $token = '';
+                                        $length = 32;
+                                        for ($i = 0; $i < $length; $i++) {
+                                                            $token .= $characters[rand(0, strlen($characters) - 1)];
+                                        }
 
-    // Si el correo ya existe, mostrar un mensaje y no realizar la inserción
-    if ($checkData['count'] > 0) {
-        $mensaje = "El correo electrónico ya ha sido registrado.";
-        $colorFondo = "red";
-        echo "<script>var mensajeNotificacion = '$mensaje'; var colorFondo = '$colorFondo';</script>";
-    } else {
-        // Si el correo no existe, realizar la inserción
-        // Imprimir el contenido del prefijo para depuración
-        echo "Contenido del prefijo: ";
-        var_dump($prefijo);
+                                        return $token;
+                    }
 
-        // Consulta SQL para insertar los datos
-        $insertQuery = "INSERT INTO users (nombre, contrasea_cifrada, email, telefono, nombre_pais, rol, pref, nombre_ciudad, codigo_postal) VALUES ('$nombre', '$password', '$mail', '$telefono', '$pais', 'user', '$prefijo', '$ciudad', '$codigoPostal')";
+                    // Recuperar datos del formulario
+                    $nombre = mysqli_real_escape_string($conn, $_POST['nombre']);
+                    $prefijo = mysqli_real_escape_string($conn, $_POST['prefijo']);
+                    $mail = mysqli_real_escape_string($conn, $_POST['mail']);
+                    $password = hash('sha512', $_POST['password']);
+                    $pais = mysqli_real_escape_string($conn, $_POST['pais']);
+                    $telefono = mysqli_real_escape_string($conn, $_POST['telefono']);
+                    $ciudad = mysqli_real_escape_string($conn, $_POST['ciudad']);
+                    $codigoPostal = mysqli_real_escape_string($conn, $_POST['codigoPostal']);
 
-        // Ejecutar la consulta
-        if (mysqli_query($conn, $insertQuery)) {
-            // Realizar la autenticación del usuario recién registrado
-            $usuario = $mail;  // Utilizar el correo electrónico como nombre de usuario
-            $contrasenya = $password;  // Utilizar la contraseña cifrada
+                    // Consulta SQL para verificar si el correo ya existe
+                    $checkQuery = "SELECT COUNT(*) as count FROM users WHERE email = '$mail'";
+                    $checkResult = mysqli_query($conn, $checkQuery);
+                    $checkData = mysqli_fetch_assoc($checkResult);
 
-            // Establecer la conexión a la base de datos con PDO
-            try {
-                $pdo = new PDO('mysql:host=localhost;dbname=votaciones', 'userProyecto', 'votacionesAXP24');
-                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            } catch (PDOException $e) {
-                die("Error en la conexión a la base de datos: " . $e->getMessage());
-            }
+                    // Si el correo ya existe, mostrar un mensaje y no realizar la inserción
+                    if ($checkData['count'] > 0) {
+                                        $mensaje = "El correo electrónico ya ha sido registrado.";
+                                        $colorFondo = "red";
+                                        echo "<script>var mensajeNotificacion = '$mensaje'; var colorFondo = '$colorFondo';</script>";
+                    } else {
+                                        // Si el correo no existe, realizar la inserción
+                                        // Imprimir el contenido del prefijo para depuración
+                                        echo "Contenido del prefijo: ";
+                                        var_dump($prefijo);
 
-            $querystr = "SELECT email,nombre FROM users WHERE email=:usuario AND contrasea_cifrada=:contrasenya";
-            $query = $pdo->prepare($querystr);
-            $query->bindParam(':usuario', $usuario, PDO::PARAM_STR);
-            $query->bindParam(':contrasenya', $contrasenya, PDO::PARAM_STR);
+                                        // Consulta SQL para insertar los datos
+                                        $insertQuery = "INSERT INTO users (nombre, contrasea_cifrada, email, telefono, nombre_pais, rol, pref, nombre_ciudad, codigo_postal,token_validado) VALUES ('$nombre', '$password', '$mail', '$telefono', '$pais', 'user', '$prefijo', '$ciudad', '$codigoPostal',0)";
+                                        // Ejecutar la consulta
+                                        if (mysqli_query($conn, $insertQuery)) {
+                                                            // Realizar la autenticación del usuario recién registrado
+                                                            $usuario = $mail;  // Utilizar el correo electrónico como nombre de usuario
+                                                            $contrasenya = $password;  // Utilizar la contraseña cifrada
+                                                            // Establecer la conexión a la base de datos con PDO
+                                                            try {
+                                                                                $pdo = new PDO('mysql:host=localhost;dbname=votaciones', 'userProyecto', 'votacionesAXP24');
+                                                                                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                                                            } catch (PDOException $e) {
+                                                                                die("Error en la conexión a la base de datos: " . $e->getMessage());
+                                                            }
 
-            $query->execute();
+                                                            $querystr = "SELECT id_user,email,nombre FROM users WHERE email=:usuario AND contrasea_cifrada=:contrasenya";
+                                                            $query = $pdo->prepare($querystr);
+                                                            $query->bindParam(':usuario', $usuario, PDO::PARAM_STR);
+                                                            $query->bindParam(':contrasenya', $contrasenya, PDO::PARAM_STR);
 
-            $filas = $query->rowCount();
-            if ($filas > 0) {
-                // Obtén el nombre de usuario desde la base de datos
-                $row = $query->fetch(PDO::FETCH_ASSOC);
-                $nombre_usuario = $row['nombre'];
-                $email = $row['email'];
-                session_start();
-                $_SESSION['usuario'] = $nombre_usuario;
-                $_SESSION['email'] = $email;
-                echo "Usuario Correcto: Hola $nombre_usuario";
-                header("Location: dashboard.php");
-                exit();
-            } else {
-                echo "<script>showNotification('Usuario o contraseña incorrecto','red')</script>";
-            }
+                                                            $query->execute();
 
-            unset($pdo);
-            unset($query);
+                                                            $filas = $query->rowCount();
+                                                            if ($filas > 0) {
+                                                                                // Obtén el nombre de usuario desde la base de datos
+                                                                                $row = $query->fetch(PDO::FETCH_ASSOC);
+                                                                                $nombre_usuario = $row['nombre'];
+                                                                                $email = $row['email'];
+                                                                                $idUser = $row['id_user'];                                                                                
+                                                                                session_start();
+                                                                                $_SESSION['redirigido'] = true;         
+                                                                                $token = generateRandomToken();
+                                                                                $validationLink = "https://aws22.ieti.site/validar-email.php?token=$token";
+                                                                                mail($email, 'Validate your token', $validationLink);
+                                                                                $tokenQuery = "INSERT INTO tokens_emails(user_id,token) VALUES (:id_user,:token)";
+                                                                                $queryToken = $pdo->prepare($tokenQuery);
+                                                                                $queryToken->bindParam(':id_user',$idUser,PDO::PARAM_STR);
+                                                                                $queryToken->bindParam(':token',$token,PDO::PARAM_STR);
+                                                                                $queryToken->execute();
 
-        } else {
-            echo "Error al insertar datos: " . mysqli_error($conn);
-        }
-    }
+                                                                                echo "Usuario Correcto: Hola $nombre_usuario";
+                                                                                header("Location: index.php");
+                                                                                exit();
+                                                            } else {
+                                                                                echo "<script>showNotification('Usuario o contraseña incorrecto','red')</script>";
+                                                            }
 
-    // Cerrar la conexión
-    mysqli_close($conn);
+                                                            unset($pdo);
+                                                            unset($query);
+
+                                        } else {
+                                                            echo "Error al insertar datos: " . mysqli_error($conn);
+                                        }
+                    }
+
+                    // Cerrar la conexión
+                    mysqli_close($conn);
 }
 ?>
 
@@ -126,6 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 showNotification(mensajeNotificacion, colorFondo);
             }
             
+            var pasoActual = 1;
 
             var miFormulario = $('#miFormulario');
             var formularioNombreCreado = false;
@@ -143,13 +163,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             var telefonoValido = false;
             var ciudadValido = false;
             var cpValido = false;
+            var confirmarPasswordValido = false;
 
-           crearFormularioNombre()
+           crearSiguienteFormulario();
 
            function crearFormularioNombre() {
         
                 if (!formNombre) {
-                    var formNombre = $('<div>');
+                    var formNombre = $('<div>',{ id: 'formularioNombre' });
                     formNombre.append($('<label>', { for: 'nombre', text: 'Nombre:' }));
                     formNombre.append($('<input>', { type: 'nombre', id: 'nombre', name: 'nombre' }));
                     formNombre.append($('<img>', { src: 'https://static.vecteezy.com/system/resources/previews/018/824/865/original/green-check-mark-button-without-text-free-png.png', class: 'imagen-correcto', alt: 'Correcto' })); // Agrega la imagen
@@ -161,24 +182,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     if (nombre !== '' && !/^\d+$/.test(nombre)) {
                         nombreValido = true;
-                        crearFormularioMail();
-                        $('.imagen-correcto').show(); // Muestra la imagen cuando el nombre es válido
-                        agregarBotonEnviar()
                     } else {
+                       eliminarFormularios(['mail','password','confirmarPassword','pais','prefijoTexto','telefono','ciudad','codigoPostal'])
                         nombreValido = false;
-                        $('.imagen-correcto').hide(); // Oculta la imagen si el nombre no es válido
+                        pasoActual = 2;
                         eliminarBotonEnviar()
                     }
                 });
                
             }
 
-           
-
-
-            function crearFormularioMail() {
+          function crearFormularioMail() {
                 if (!formularioMailCreado) {
-                    var formularioMail = $('<div>');
+                    var formularioMail = $('<div>',{ id: 'formularioMail' });;
                     formularioMail.append($('<label>', { for: 'mail', text: 'Correo Electrónico:' }));
                     formularioMail.append($('<input>', { type: 'email', id: 'mail', name: 'mail' }));
                     formularioMail.append($('<img>', { src: 'https://static.vecteezy.com/system/resources/previews/018/824/865/original/green-check-mark-button-without-text-free-png.png', class: 'imagen-correcto2', alt: 'Correcto' })); // Ajusta la ruta de la imagen
@@ -203,31 +219,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
             function validarCorreoElectronico(correo) {
-                // Expresión regular para validar un correo electrónico
                 var expresionRegularCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-                // Verificar si el correo electrónico tiene un formato válido
                 var correoValido = expresionRegularCorreo.test(correo);
 
-                // Obtener la imagen de la marca de verificación
                 var imagenCorrecto2 = $('.imagen-correcto2');
 
                 if (correoValido) {
                     mailValido = true;
-                    imagenCorrecto2.show(); // Mostrar la imagen si el correo es válido
-                    crearFormularioPassword();
-                    agregarBotonEnviar()
                 } else {
                     mailValido = false;
-                    imagenCorrecto2.hide(); // Ocultar la imagen si el correo no es válido
+                    eliminarFormularios(['password','confirmarPassword','pais','prefijoTexto','telefono','ciudad','codigoPostal']);
                     eliminarBotonEnviar()
+                    pasoActual = 3;
                 }
             }
 
 
-            function crearFormularioPassword() {
+          function crearFormularioPassword() {
                 if (!formularioPasswordCreado) {
-                    var formularioPassword = $('<div>');
+                    var formularioPassword = $('<div>',{ id: 'formularioPassword' });
                     formularioPassword.append($('<label>', { for: 'password', text: 'Contraseña:' }));
                     formularioPassword.append($('<input>', { type: 'password', id: 'password', name: 'password' }));
                     formularioPassword.append($('<img>', { src: 'https://static.vecteezy.com/system/resources/previews/018/824/865/original/green-check-mark-button-without-text-free-png.png', class: 'imagen-correcto3', alt: 'Correcto' }));
@@ -240,19 +251,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $('#password').on('input', function () {
                         var password = $(this).val().trim();
 
-                        if (password !== '') {
+                        if (validarPassword(password)) {
                             imagenCorrecto3.show(); 
-                            crearFormularioConfirmarPassword();
                         }else{
-                            imagenCorrecto3.hide();
+                            eliminarFormularios(['confirmarPassword','pais','prefijoTexto','telefono','ciudad','codigoPostal'])
+                            pasoActual = 4;
                         }
                     });
                 }
-            }
+          }
+
+          function validarPassword(password) {
+                    var longitudMinima = 8;
+                    var tieneNumero = /\d/.test(password);
+                    var tieneMayuscula = /[A-Z]/.test(password);
+                    var tieneMinuscula = /[a-z]/.test(password);
+                    var tieneCaracterEspecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+                    return password.length >= longitudMinima && tieneNumero && tieneMayuscula && tieneMinuscula && tieneCaracterEspecial;
+          }
 
             function crearFormularioConfirmarPassword() {
                 if (!formularioConfirmarPasswordCreado) {
-                    var formularioConfirmarPassword = $('<div>');
+                    var formularioConfirmarPassword = $('<div>',{ id: 'formularioConfirmarPassword' });
                     formularioConfirmarPassword.append($('<label>', { for: 'confirmarPassword', text: 'Confirmar Contraseña:' }));
                     formularioConfirmarPassword.append($('<input>', { type: 'password', id: 'confirmarPassword', name: 'confirmarPassword' }));
                     formularioConfirmarPassword.append($('<img>', { src: 'https://static.vecteezy.com/system/resources/previews/018/824/865/original/green-check-mark-button-without-text-free-png.png', class: 'imagen-correcto4', alt: 'Correcto' }));
@@ -269,19 +290,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         if (confirmarPassword === password) {
                             // Añadir clase y atributo readonly a los campos de contraseña
+                            confirmarPasswordValido = true;
                             $('#password').addClass('campo-desabilitado').attr('readonly', true);
                             $('#confirmarPassword').addClass('campo-desabilitado').attr('readonly', true);
-                            imagenCorrecto4.show(); 
-                            crearFormularioPaises();
                         }
                     });
                 }
             }
 
-
             function crearFormularioPaises() {
                 if (!formularioPaisesCreado) {
-                    var formularioPaises = $('<div>');
+                    var formularioPaises = $('<div>',{ id: 'formularioPaises' });
                     formularioPaises.append($('<label>', { for: 'pais', text: 'Selecciona un país:' }));
                     var selectPais = $('<select>', { id: 'pais', name: 'pais' });
 
@@ -296,12 +315,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $resultat = mysqli_query($conn, $consulta);
                     $paises = array();
                     while ($fila = mysqli_fetch_assoc($resultat)) {
-                        $paises[] = $fila;
+                                        $paises[] = $fila;
                     }
                     mysqli_close($conn);
 
                     foreach ($paises as $pais) {
-                        echo 'selectPais.append("<option value=\'" + \'' . $pais['nombre'] . '\' + "\' data-pref=\'" + \'' . $pais['pref'] . '\' + "\'>" + \'' . $pais['nombre'] . '\' + "</option>");';
+                                        echo 'selectPais.append("<option value=\'" + \'' . $pais['nombre'] . '\' + "\' data-pref=\'" + \'' . $pais['pref'] . '\' + "\'>" + \'' . $pais['nombre'] . '\' + "</option>");';
                     }
                     ?>
 
@@ -313,8 +332,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $('#pais').on('change', function () {
                         var selectedPais = $(this).val();
                         if (selectedPais !== '') {
-                            crearFormularioTelefono(selectedPais);
-                            
+                              crearFormularioTelefono(selectedPais);
                             // Eliminar la opción "Selecciona un país" después de la selección
                             $(this).find('option[value=""]').remove();
                         }
@@ -332,14 +350,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 
-
             function crearFormularioTelefono(selectedPais) {
                 if (!formularioTelefonoCreado) {
-                    var formularioTelefono = $('<div>');
+                    var formularioTelefono = $('<div>',{ id: 'formularioTelefono' });
                     formularioTelefono.append($('<label>', { for: 'telefono', text: 'Teléfono:' }));
-                    
 
-                   
                     // Input para el prefijo (no editable por el usuario)
                     var inputPrefijo = $('<input>', { type: 'text', id: 'prefijoTexto', name: 'prefijo', readonly: true });
 
@@ -381,13 +396,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         if (regexNumeros.test(telefono) && telefono.length >= longitudMinima && telefono.length <= longitudMaxima) {
                             telefonoValido = true;
-                            imagenCorrecto5.show();
-                            crearFormularioCiudad();
-                            agregarBotonEnviar()
                         }else{
-                            telefonoValido = false;
-                            imagenCorrecto5.hide();
-                            eliminarBotonEnviar()
+                              telefonoValido =  false
+                            eliminarFormularios(['ciudad','codigoPostal'])
+                            pasoActual = 6;
                         }
                     });
                 }
@@ -397,13 +409,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             function crearFormularioCiudad() {
                 if (!formularioCiudadCreado) {
-                    var formularioCiudad = $('<div>');
+                    var formularioCiudad = $('<div>',{ id: 'formularioCiudad' });
                     formularioCiudad.append($('<label>', { for: 'ciudad', text: 'Ciudad:' }));
                     formularioCiudad.append($('<input>', { type: 'text', id: 'ciudad', name: 'ciudad' }));
                     formularioCiudad.append($('<img>', { src: 'https://static.vecteezy.com/system/resources/previews/018/824/865/original/green-check-mark-button-without-text-free-png.png', class: 'imagen-correcto8', alt: 'Correcto' })); // Ajusta la ruta de la imagen
                     miFormulario.append(formularioCiudad);
                     formularioCiudadCreado = true;
-
 
                     $('#ciudad').on('input', function () {
                         var imagenCorrecto8 = $('.imagen-correcto8');
@@ -411,17 +422,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         if (ciudad !== '') {
                             ciudadValido = true;
-                            imagenCorrecto8.show();
-                            crearFormularioCodigoPostal();
-                            agregarBotonEnviar()
                         }else{
                             ciudadValido = false;
-                            imagenCorrecto8.hide();
+                            eliminarFormularios(['codigoPostal'])
                             eliminarBotonEnviar()
+                            pasoActual = 7;
                         }
                     });
-                }
-            }
+                    }         
+          }
 
             function crearFormularioCodigoPostal() {
                 if (!formularioCodigoPostalCreado) {
@@ -439,13 +448,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         // Verificar si el código postal tiene solo números
                         var regexNumeros = /^\d+$/;
 
-                        if (nuevoCodigoPostal !== '' && regexNumeros.test(nuevoCodigoPostal)) {
-                            cpValido = true;
-                            imagenCorrecto9.show()
-                            agregarBotonEnviar()
+                    if (nuevoCodigoPostal !== '' && regexNumeros.test(nuevoCodigoPostal)) {
+                              cpValido = true;
+                              if (!botonSubmitCreado) {
+                                        var botonSubmit = $('<button>', { type: 'submit', text: 'Enviar', class: 'enviar-registro' });
+                                        miFormulario.append(botonSubmit);
+                                        botonSubmitCreado = true;
+                              }
                         } else {
                             cpValido = false;
-                            imagenCorrecto9.hide()
                             eliminarBotonEnviar()
                         }
                     });
@@ -454,42 +465,127 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
-           
-
-            function agregarBotonEnviar() {
-                if (nombreValido && mailValido && telefonoValido && ciudadValido && cpValido) {
-                    if (!botonSubmitCreado) {
-                        var botonSubmit = $('<button>', { type: 'submit', text: 'Enviar', class: 'enviar-registro' });
-                        miFormulario.append(botonSubmit);
-                        botonSubmitCreado = true;
-                    }
-                }
-            }
+          
+          
 
             function eliminarBotonEnviar() {
-                if (botonSubmitCreado) {
                     miFormulario.find('button[type="submit"]').remove();
                     botonSubmitCreado = false;
-                }
             }
 
-            function eliminarFormularios(formularios) {
-                for (var i = 0; i < formularios.length; i++) {
-                    $('#' + formularios[i]).closest('form').remove();
-                }
+            function eliminarFormularios(camposAEliminar) {
+                    for (var i = 0; i < camposAEliminar.length; i++) {
+                              var formularioPadre = $('#' + camposAEliminar[i]).closest('div[id^="formulario"]');
+                              formularioPadre.remove();
+                    }
 
-                formularioMailCreado = false;
-                formularioPasswordCreado = false;
-                formularioConfirmarPasswordCreado = false;
-                formularioPaisesCreado = false;
-                formularioTelefonoCreado = false;
-                formularioCiudadCreado = false;
-                formularioCodigoPostalCreado = false;
+                    formularioMailCreado = false;
+                    formularioPasswordCreado = false;
+                    formularioConfirmarPasswordCreado = false;
+                    formularioPaisesCreado = false;
+                    formularioTelefonoCreado = false;
+                    formularioCiudadCreado = false;
+                    formularioCodigoPostalCreado = false;
+                    botonSubmitCreado = false;
 
-                eliminarBotonEnviar();
-            }
+                    pasoActual = camposAEliminar.includes('password') ? 3 : pasoActual;
 
-        });
+                    if (camposAEliminar.includes('codigoPostal')) {
+                              $('#miFormulario').find('div[id^="formularioCodigoPostal"]').remove();
+                              eliminarBotonEnviar();
+                    }
+          }
+
+          function eliminarFormularioPrefijo() {
+                    var formularioPadre = $('#prefijo').closest('form');
+                    var etiquetaPadre = formularioPadre.find('label[for="prefijo"]');
+                    formularioPadre.find('#prefijoTexto').remove();
+                    formularioPadre.find('#prefijo').remove();
+                    etiquetaPadre.remove();
+
+                    formularioPaisesCreado = false;
+                    formularioTelefonoCreado = false;
+
+                    eliminarBotonEnviar();
+          }
+
+          function comprovarLastChild() {
+                    var lastInput = $("#miFormulario :input:last");
+                    return lastInput.length > 0 && lastInput.val().trim() !== '';
+          }
+
+          $(document).keypress(function (e) {
+                    if (e.which === 13) {
+                                        e.preventDefault();
+                                        var inputActual = $('input:focus');
+                                        if (inputActual.val().trim() !== '') {
+                                                            if (inputActual.attr('id') === 'mail') {
+                                                                                validarCorreoElectronico(inputActual.val().trim());
+                                                            if (mailValido) {
+                                                                                crearSiguienteFormulario();
+                                                            } else {
+                                                                                showNotification('Mail no válido', 'red');
+                                                            }
+                                                            } else if (inputActual.attr('id') === 'confirmarPassword') {
+                                                                                if (confirmarPasswordValido) {
+                                                                                                    crearSiguienteFormulario();
+                                                                                } else {
+                                                                                                    showNotification('Las contraseñas no coinciden', 'red');
+                                                                                }
+                                                            } else if (inputActual.attr('id') === 'telefono') {
+                                                                                if (telefonoValido) {
+                                                                                                    crearSiguienteFormulario();
+                                                                                } else {
+                                                                                                    showNotification('El telefono no es válido', 'red');
+                                                                                }
+                                                            } else {
+                                                                                if (comprovarLastChild()) {
+                                                                                                    crearSiguienteFormulario();
+                                                                                }
+                                                            }
+                                        }
+                    }
+                    });
+
+          function crearSiguienteFormulario() {
+                    switch (pasoActual) {
+                              case 1:
+                                        crearFormularioNombre();
+                                        break;
+                              case 2:
+                                        crearFormularioMail();
+                                        showNotification("Nombre válido");
+                                        break;
+                              case 3:
+                                        crearFormularioPassword();
+                                        showNotification("Mail válido");
+                                        break;
+                              case 4:
+                                        if (validarPassword($('#password').val().trim())) {
+                                                  crearFormularioConfirmarPassword();
+                                                  showNotification("Contraseña valida");
+                                        } else {
+                                                  showNotification("Contraseña no valida",'red');
+                                                  eliminarFormularios(['confirmarPassword', 'pais', 'prefijoTexto', 'telefono', 'ciudad', 'codigoPostal']);
+                                                  pasoActual = 3; // Mantener el paso actual en contraseña si no es válida
+                                        }
+                                        break;
+                              case 5:
+                                        crearFormularioPaises();
+                                        showNotification("Contraseña validada");
+                                        break;
+                              case 6:
+                                        crearFormularioCiudad();
+                                        showNotification("Telefono válido");
+                                        break;
+                              case 7:
+                                        crearFormularioCodigoPostal();
+                                        showNotification("Ciudad valida");
+                                        break;
+                    }
+                    pasoActual++;
+          }
+});
     </script>
 <?php include("Utilidades/footer.php") ?>
 </body>
