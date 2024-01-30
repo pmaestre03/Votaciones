@@ -4,7 +4,7 @@ $conn = mysqli_connect('localhost', 'userProyecto', 'votacionesAXP24', 'votacion
 
 // Verificar la conexión
 if (!$conn) {
-                    die("La conexión a la base de datos falló: " . mysqli_connect_error());
+    die("La conexión a la base de datos falló: " . mysqli_connect_error());
 }
 
 // Verificar si el formulario se ha enviado

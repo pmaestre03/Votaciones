@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./Utilidades/styles.css?no-cache=<?php echo time(); ?>">
     <title>Login</title>
-    <script src="Utilidades/scripts.js"></script>
+    <script src="./Utilidades/scripts.js"></script>
+    <?php require('Utilidades/scripts2.php')?>
 </head>
 <body class="login">
     <?php include("Utilidades/header.php") ?>
@@ -16,10 +17,10 @@
             <label for="username">Correo:</label>
             <input type="text" id="username" name="username" required>
 
-            <label for="password">Contrase  a:</label>
+            <label for="password">Contraseña:</label>
             <input type="password" id="password" name="password" required>
 
-            <button type="submit" class="button button-login">Iniciar Sesi  n</button>
+            <button type="submit" class="button button-login">Iniciar Sesión</button>
         </form>
     </div>
     <div id="notification-container"></div>
@@ -50,21 +51,32 @@
 
         $filas = $query->rowCount();
         if ($filas > 0) {
+
+            $usuario = htmlspecialchars($_POST["username"]);
             // Obt  n el nombre de usuario desde la base de datos
             $row = $query->fetch(PDO::FETCH_ASSOC);
             $nombre_usuario = $row['nombre'];
             if ($row['token_validado'] === 0) {
-                    echo "<script>showNotification('Token no validado','red')</script>";
-            } else {
-                    $_SESSION['email'] = $row["email"];
-                    $_SESSION['usuario'] = $nombre_usuario;
-                    echo "Usuario Correcto: Hola $nombre_usuario";
-                    header("Location: dashboard.php");
-                    exit();
-            }
-
+                echo "<script>showNotification('Token no validado','red')</script>";
         } else {
+            $_SESSION['email'] = $row["email"]; 
+            $_SESSION['usuario'] = $nombre_usuario;
+            $_SESSION['id_user'] = $row["id_user"]; 
+
+            echo "Usuario Correcto: Hola $nombre_usuario";
+
+            registrarEvento("Inicio de sesión por el usuario: $usuario");
+
+            header("Location: dashboard.php");
+
+            exit();
+        }
+        } else {
+            $usuarioIntentado = htmlspecialchars($_POST["username"]);
+
             echo "<script>showNotification('Usuario o contraseña incorrecto','red')</script>";
+                  
+            registrarEvento("Intento de inicio de sesión fallido por el usuario: $usuarioIntentado");
         }
 
         unset($pdo);

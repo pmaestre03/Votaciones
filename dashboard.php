@@ -12,7 +12,7 @@
         if (isset($_SESSION['usuario'])) {
             
             echo "<div class='user-info'>";
-            echo "Panel de Administraci  n";
+            echo "Panel de Administración";
             echo "</div>";
 
             echo "<div class='dashboard-container'>";
@@ -51,9 +51,11 @@
                 echo '</script>';
 
             echo "</div>";
+            
         } else {
             //header("HTTP/1.1 403 Forbidden");
             header("Location: ../errores/error403.php");
+            http_response(403);
             exit;
 }
         ?>
