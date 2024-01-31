@@ -608,7 +608,7 @@ body.graphics {
 }
 
 #graficoQueso-container {
-  width: 30%; /* Ajusta el ancho del gráfico de quesos según tus necesidades */
+  width: 30%;
   padding: 20px;
   box-sizing: border-box;
 }
@@ -621,24 +621,24 @@ body.graphics {
 /* invite.php */
 
 .invite-form {
-  max-width: 800px; /* Limitar el ancho del formulario para que no se extienda demasiado */
-  margin: 50px auto; /* Centrar el formulario en la página */
-  padding: 20px; /* Agregar espacio interno al formulario */
-  border: 1px solid #ddd; /* Agregar un borde al formulario */
-  border-radius: 10px; /* Agregar bordes redondeados */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Agregar sombra al formulario */
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .invite-form label {
   display: block;
-  margin: 10px 0 5px; /* Espaciado entre etiquetas */
+  margin: 10px 0 5px;
 }
 
 .invite-form input {
-  width: 100%; /* Hacer que el campo de entrada ocupe el ancho completo */
-  padding: 10px; /* Agregar espacio interno al campo de entrada */
-  margin: 5px 0 20px; /* Ajustar márgenes para el campo de entrada */
-  box-sizing: border-box; /* Incluir el relleno y el borde en el ancho total */
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 20px;
+  box-sizing: border-box;
 }
 
 .invite-form button {
@@ -651,12 +651,11 @@ body.graphics {
   display: inline-block;
   font-size: 16px;
   cursor: pointer;
-  width: 100%; /* Hacer que el botón ocupe el ancho completo */
-  margin-top: 20px; /* Ajustar margen superior para el botón */
-  border-radius: 5px; /* Agregar bordes redondeados al botón */
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 5px;
 }
 
-/* Estilo adicional para la notificación */
 #notification-container {
   text-align: center;
   margin-top: 20px;

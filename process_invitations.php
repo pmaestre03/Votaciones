@@ -1,5 +1,5 @@
 <!-- procesar_invitaciones.php -->
-<?php
+<?php include("Utilidades/header.php") ?><?php
 
 // Verificar la sesión
 if (!isset($_SESSION['usuario'])) {
