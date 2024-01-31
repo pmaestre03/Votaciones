@@ -21,17 +21,24 @@ if (!isset($_SESSION['email'])) {
         exit;
 }
 
-// Tabla email_invitacion
+// Create Tabla email_invitacion
 // -user_email PK
-// Tabla votaciones_por_usuario
+
+// Update Tabla votaciones_por_usuario
 // -registro (boolean) 
-// -user_email FK de la tabla email_invitacion(user_email)
-// Tabla invitacion
+// -user_email FK de la tabla invitacion(user_email)
+
+// Create Tabla invitacion
 // -id_invitacion PK
 // -id_encuesta FK de la tabla encuestas(id_encuesta)
 // -user_email FK de la tabla email_invitacion(user_email)
-// -token
+// -email FK de la tabla user(email)
+// -token FK de la tabla encuestas(token)
 // -token_activo (BOOLEAN)
+
+// UpdateTabla encuestas
+// token
+
 // Mostrar encuestas habilitadas (en la tabla de encuestas columna:habilitada)
 // Si esta activa se podra votar
 /* if ($fechaActual >= $inicioEncuesta && $fechaActual <= $finEncuesta) {

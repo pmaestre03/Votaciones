@@ -60,7 +60,7 @@
                 // echo "<td>{$encuesta['id_encuesta']}</td>";
 
                 echo "<td><button onclick=\"window.location.href='graphics.php?id=$id_encuesta'\">Detalls Enquesta</button></td>";
-                echo "<td><button onclick=\"window.location.href='invite_poll.php?id=$id_encuesta'\">Invitaciones</button></td>";
+                echo "<td><button onclick=\"window.location.href='invite.php?id=$id_encuesta'\">Invitaciones</button></td>";
                 echo "</tr>";
                 
 

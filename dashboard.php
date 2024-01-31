@@ -29,7 +29,7 @@
                     echo '});';
                 echo '</script>';
 
-                echo "<div class='dashboard-box' id='invitePolls'>";
+                /* echo "<div class='dashboard-box' id='invitePolls'>";
                     echo "<h2>Invitaciones</h2>";
                 echo "</div>";
 
@@ -39,7 +39,7 @@
                     echo '        window.location.href = "invite_poll.php";';
                     echo '    });';
                     echo '});';
-                echo '</script>';
+                echo '</script>'; */
                 // echo "<div class='dashboard-box'>";
                 //     echo "<h2>Editar Encuestas</h2>";
                 // echo "</div>";
