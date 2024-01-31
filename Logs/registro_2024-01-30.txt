@@ -1,4 +1,5 @@
-2024-01-30 15:31:16 - Inicio de sesión por el usuario: marcelo@gmail.com
-2024-01-30 15:55:38 - Inicio de sesión por el usuario: marcelo@gmail.com
-2024-01-30 16:44:18 - Inicio de sesión por el usuario: marcelo@gmail.com
-2024-01-30 18:18:31 - Inicio de sesión por el usuario: marcelo@gmail.com
+2024-01-30 15:54:28 - Inicio de sesión por el usuario: paco@paco.com
+2024-01-30 15:55:11 - Inicio de sesión por el usuario: paco@paco.com
+2024-01-30 15:57:00 - Inicio de sesión por el usuario: paco@paco.com
+2024-01-30 16:12:18 - Inicio de sesión por el usuario: paco@paco.com
+2024-01-30 16:26:45 - Inicio de sesión por el usuario: paco@paco.com
