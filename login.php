@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $contrasenya = hash('sha512', $_POST["password"]);
         $_SESSION['password_form'] = $contrasenya;
 
-        $querystr = "SELECT nombre,email,token_validado,condiciones_aceptadas FROM users WHERE email=:usuario AND contrasea_cifrada=:contrasenya";
+        $querystr = "SELECT id_user,nombre,email,token_validado,condiciones_aceptadas FROM users WHERE email=:usuario AND contrasea_cifrada=:contrasenya";
         $query = $pdo->prepare($querystr);
         $query->bindParam(':usuario', $usuario, PDO::PARAM_STR);
         $query->bindParam(':contrasenya', $contrasenya, PDO::PARAM_STR);
@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $_SESSION['email2'] = $row["email"];
             $_SESSION['usuario2'] = $row['nombre'];
-//            $_SESSION['id_user2'] = $row["id_user"];
+            $_SESSION['id_user'] = $row["id_user"];
             $condiciones_aceptadas = $row['condiciones_aceptadas'];
             $_SESSION['condiciones_aceptadas'] = $condiciones_aceptadas;
             if ($condiciones_aceptadas == 0 && $row['token_validado'] == 1) {

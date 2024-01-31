@@ -10,3 +10,6 @@
 2024-01-31 10:31:06 - Condiciones rechazadas por el usuario: Pau1
 2024-01-31 10:31:28 - Condiciones aceptadas por el usuario: 
 2024-01-31 12:47:09 - El usuario: aaa@aaa.com ha sido creado correctamente
+2024-01-31 16:27:23 - Condiciones aceptadas por el usuario: 
+2024-01-31 16:29:05 - Intento de inicio de sesión fallido por el usuario: paco@paco.com
+2024-01-31 16:29:09 - Inicio de sesión por el usuario: paco@paco.com
