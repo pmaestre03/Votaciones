@@ -1,3 +1,4 @@
+<?php require('Utilidades/scripts2.php') ?>
 <?php
 // Conectar a la base de datos
 $conn = mysqli_connect('localhost', 'userProyecto', 'votacionesAXP24', 'votaciones');

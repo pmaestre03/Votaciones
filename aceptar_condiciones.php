@@ -1,6 +1,6 @@
 <?php
-if ($_SESSION['condiciones_aceptadas'] = 1) {
-    header("Location: dashboard.php");
+if ($_SESSION['condiciones_aceptadas'] == 1) {
+    header('Location: dashboard.php');
     exit();
 }
 
@@ -13,6 +13,7 @@ if ($_SESSION['condiciones_aceptadas'] = 1) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
 <link rel="stylesheet" href="./Utilidades/styles.css?no-cache=<?php echo time(); ?>">
+<?php require('Utilidades/scripts2.php') ?>
 </head>
 <body>
 <?php include("Utilidades/header.php") ?>
@@ -42,9 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['accept-conditions'])) {
         $correo = $_SESSION['user_form'] ?? "";
         $contrasenya = $_SESSION['password_form'] ?? "";
-        echo $_SESSION['email2'];
-        echo $_SESSION['usuario2'];
-        echo $_SESSION['id_user2'];
         if (isset($_SESSION['email2'], $_SESSION['usuario2'])) {
             $_SESSION['email'] = $_SESSION['email2'];
             $_SESSION['usuario'] = $_SESSION['usuario2'];
@@ -62,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
     } elseif (isset($_POST['reject-conditions'])) {
-        registrarEvento("Condiciones rechazadas por el usuario: $usuario");
+        registrarEvento("Condiciones rechazadas por el usuario: ".$_SESSION['usuario2']);
                         session_unset();
                         session_destroy();
                         header("Location: index.php");

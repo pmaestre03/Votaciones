@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $_SESSION['email2'] = $row["email"];
             $_SESSION['usuario2'] = $row['nombre'];
-            $_SESSION['id_user2'] = $row["id_user"];
+//            $_SESSION['id_user2'] = $row["id_user"];
             $condiciones_aceptadas = $row['condiciones_aceptadas'];
             $_SESSION['condiciones_aceptadas'] = $condiciones_aceptadas;
             if ($condiciones_aceptadas == 0 && $row['token_validado'] == 1) {
@@ -71,8 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         echo "<script>showNotification('Token no validado','red')</script>";
                 } else {
                         $_SESSION['email'] = $row["email"];
-                        $_SESSION['usuario'] = $nombre_usuario;
-                        $_SESSION['id_user'] = $row["id_user"];
+                        $_SESSION['usuario'] = $row['nombre'];;
                         echo "Usuario Correcto: Hola $nombre_usuario";
                         registrarEvento("Inicio de sesión por el usuario: $usuario");
                         header("Location: dashboard.php");
