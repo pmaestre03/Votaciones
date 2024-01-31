@@ -55,22 +55,28 @@
             $usuario = htmlspecialchars($_POST["username"]);
             // Obt  n el nombre de usuario desde la base de datos
             $row = $query->fetch(PDO::FETCH_ASSOC);
+            $condiciones_aceptadas = $row['condiciones_aceptadas'];
             $nombre_usuario = $row['nombre'];
-            if ($row['token_validado'] === 0) {
-                echo "<script>showNotification('Token no validado','red')</script>";
-        } else {
-            $_SESSION['email'] = $row["email"]; 
-            $_SESSION['usuario'] = $nombre_usuario;
-            $_SESSION['id_user'] = $row["id_user"]; 
+            if ($condiciones_aceptadas == 0) {
+                header("Location: aceptar_condiciones.php");
+                exit();
+            } else {
+                if ($row['token_validado'] === 0) {
+                    echo "<script>showNotification('Token no validado','red')</script>";
+                } else {
+                    $_SESSION['email'] = $row["email"]; 
+                    $_SESSION['usuario'] = $nombre_usuario;
+                    $_SESSION['id_user'] = $row["id_user"]; 
 
-            echo "Usuario Correcto: Hola $nombre_usuario";
+                    echo "Usuario Correcto: Hola $nombre_usuario";
 
-            registrarEvento("Inicio de sesión por el usuario: $usuario");
+                    registrarEvento("Inicio de sesión por el usuario: $usuario");
 
-            header("Location: dashboard.php");
+                    header("Location: dashboard.php");
 
-            exit();
-        }
+                    exit();
+                }
+            }
         } else {
             $usuarioIntentado = htmlspecialchars($_POST["username"]);
 

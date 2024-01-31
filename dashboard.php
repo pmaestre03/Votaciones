@@ -29,10 +29,17 @@
                     echo '});';
                 echo '</script>';
 
-                // echo "<div class='dashboard-box'>";
-                //     echo "<h2>Invitaciones</h2>";
-                // echo "</div>";
+                echo "<div class='dashboard-box' id='invitePolls'>";
+                    echo "<h2>Invitaciones</h2>";
+                echo "</div>";
 
+                echo '<script>';
+                    echo '$(document).ready(function() {';
+                    echo '    $("#invitePolls").on("click", function() {';
+                    echo '        window.location.href = "invite_poll.php";';
+                    echo '    });';
+                    echo '});';
+                echo '</script>';
                 // echo "<div class='dashboard-box'>";
                 //     echo "<h2>Editar Encuestas</h2>";
                 // echo "</div>";
@@ -46,6 +53,18 @@
                     echo '$(document).ready(function() {';
                     echo '    $("#listPolls").on("click", function() {';
                     echo '        window.location.href = "list_polls.php";';
+                    echo '    });';
+                    echo '});';
+                echo '</script>';
+
+                echo "<div class='dashboard-box' id='votePolls'>";
+                    echo "<h2>Votar Encuestas</h2>";
+                echo "</div>";
+
+                echo '<script>';
+                    echo '$(document).ready(function() {';
+                    echo '    $("#votePolls").on("click", function() {';
+                    echo '        window.location.href = "vote_poll.php";';
                     echo '    });';
                     echo '});';
                 echo '</script>';
