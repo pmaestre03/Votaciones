@@ -15,7 +15,7 @@
         session_start();
 
         if (isset($_SESSION['usuario'])) {
-            // Si el usuario est   logueado
+            // Si el usuario esta logueado
             echo "<button class='button button-signup' id='none'>Bienvenido, " . $_SESSION['usuario'] . "</button>";
             //redireccion boton signup
             echo '<script>';

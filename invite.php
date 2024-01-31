@@ -1,6 +1,6 @@
 <!-- invite.php -->
-<?php
-session_start();
+<?php include("Utilidades/header.php") ?><?php
+
 
 // Verificar la sesión
 if (!isset($_SESSION['usuario'])) {
@@ -38,16 +38,16 @@ if (isset($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enviar Invitaciones - <?php echo $datos_encuesta['titulo_encuesta']; ?></title>
+    <title>Enviar Invitaciones</title>
     <link rel="stylesheet" href="./Utilidades/styles.css?no-cache=<?php echo time(); ?>">
     <script src="./Utilidades/scripts.js"></script>
 </head>
-<body class="index">
-    <?php include("Utilidades/header.php") ?>
+
+<body class="invite">
+    
     <div id="notification-container"></div>
 
-    <!-- Formulario para ingresar correos electrónicos -->
-    <form method="post" action="process_invitations.php">
+    <form method="post" action="process_invitations.php" class="invite-form">
         <input type="hidden" name="id_encuesta" value="<?php echo $id_encuesta; ?>">
         <label for="emails">Direcciones de correo electrónico (separadas por coma):</label>
         <input type="text" id="emails" name="emails" required>
