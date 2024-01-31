@@ -46,7 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_SESSION['email2'], $_SESSION['usuario2'])) {
             $_SESSION['email'] = $_SESSION['email2'];
             $_SESSION['usuario'] = $_SESSION['usuario2'];
-            $_SESSION['id_user'] = $_SESSION['id_user2'];
             $_SESSION['condiciones_aceptadas'] = 1;
             $updateQuery = "UPDATE users SET condiciones_aceptadas = 1 WHERE email=:usuario";
             $updateStatement = $pdo->prepare($updateQuery);

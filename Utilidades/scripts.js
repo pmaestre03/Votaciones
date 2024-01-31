@@ -265,7 +265,7 @@ function showNotification(message, bgColor) {
     });
 
     notificationDiv.append(closeButton);
-    notificationContainer.append(notificationDiv);
+    notificationContainer.prepend(notificationDiv);
 }
 
 function scrollToBottom() {
