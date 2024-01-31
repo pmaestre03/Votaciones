@@ -33,13 +33,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $codigoPostal = mysqli_real_escape_string($conn, $_POST['codigoPostal']);
 
         // Consulta SQL para verificar si el correo ya existe
-        $checkQuery = "SELECT COUNT(*) as count FROM users WHERE email = '$mail'";
+        $checkQuery = "SELECT COUNT(*) as count FROM users WHERE email = '$mail' OR telefono = '$telefono' ";
         $checkResult = mysqli_query($conn, $checkQuery);
         $checkData = mysqli_fetch_assoc($checkResult);
 
         // Si el correo ya existe, mostrar un mensaje y no realizar la inserción
         if ($checkData['count'] > 0) {
-                            $mensaje = "El correo electrónico ya ha sido registrado.";
+                            $mensaje = "El correo electrónico o el teléfono ya ha sido registrado.";
                             $colorFondo = "red";
                             echo "<script>var mensajeNotificacion = '$mensaje'; var colorFondo = '$colorFondo';</script>";
         } else {
