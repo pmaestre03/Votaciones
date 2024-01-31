@@ -16,14 +16,14 @@ $(document).ready(function () {
         id: 'fecha_inicio'
     }).on('input', function () {
         $(this).closest('#box').nextAll('#box').remove();
-        $('.button-login').hide();
-        $('.button-login[data-option="101"]').show();
+        $('.borrar').hide();
+        $('.borrar[data-option="101"]').show();
     }).keypress(function(event) {
         if (event.which == 13) {
             validatePoll("fecha_inicio");
         }
     });
-    var buttonElement = $('<button>').attr({id: 'validate', class: 'button-login', 'data-option': '101'}).text('Validar').click(function() {
+    var buttonElement = $('<button>').attr({id: 'validate', class: 'borrar button-login', 'data-option': '101'}).text('Validar').click(function() {
     });
     box_poll.append(fecha_inicio, inputElement, buttonElement);
     container_poll.append(box_poll);
@@ -39,14 +39,14 @@ function createBoxFinal(){
         $('<label>').text('Fecha Final:'),
         $('<input>').attr({ type: 'date', name: 'fecha_final', id: 'fecha_final'}).on('input', function () {
             $(this).closest('#box').nextAll('#box').remove();
-            $('.button-login').hide();
-            $('.button-login[data-option="102"]').show();
+            $('.borrar').hide();
+            $('.borrar[data-option="102"]').show();
         }).keypress(function(event) {
             if (event.which == 13) {
                 validatePoll("fecha_final");
             }
         }),
-        $('<button>').attr({ id: 'validate', class: 'button-login', 'data-option': '102'}).text('Validar').click(function(){
+        $('<button>').attr({ id: 'validate', class: 'borrar button-login', 'data-option': '102'}).text('Validar').click(function(){
             if (inputElement.next('#box').length === 0) {
                 validatePoll($(this).prev("input[name]").attr("name"));  }  
         })
@@ -61,19 +61,19 @@ function createBoxTitle(){
         $('<label>').text('Titulo encuesta:'),
         $('<input>').attr({ type: 'file', name: 'imgTitulo', accept:"image/*"}).on('input', function () {
             $(this).closest('#box').nextAll('#box').remove();
-            $('.button-login').hide();
-            $('.button-login[data-option="103"]').show();
+            $('.borrar').hide();
+            $('.borrar[data-option="103"]').show();
         }),
         $('<input>').attr({ type: 'text', name: 'titulo', id:'titulo', placeholder: 'TITULO'}).on('input', function () {
             $(this).closest('#box').nextAll('#box').remove();
-            $('.button-login').hide();
-            $('.button-login[data-option="103"]').show();
+            $('.borrar').hide();
+            $('.borrar[data-option="103"]').show();
         }).keypress(function(event) {
             if (event.which == 13) {
                 validatePoll('titulo');
             }
         }),
-        $('<button>').attr({ id: 'validate', class: 'button-login', 'data-option': '103'}).text('Validar').click(function(){
+        $('<button>').attr({ id: 'validate', class: 'borrar button-login', 'data-option': '103'}).text('Validar').click(function(){
             if (inputElement.next('#box').length === 0) {
                 validatePoll('titulo');  }  
         })
@@ -153,8 +153,8 @@ function validatePoll(inputType){
             }
             else if((dateInicio)=>dateHoy){
                 localStorage.setItem('nameInicio',nameInicio);
-                $('.button-login').hide();
-                $('.button-login[data-option="102"]').show();
+                $('.borrar').hide();
+                $('.borrar[data-option="102"]').show();
                 createBoxFinal();
             }
             else{
@@ -175,8 +175,8 @@ function validatePoll(inputType){
             } 
             else{
                 localStorage.setItem('nameFinal',nameFinal);
-                $('.button-login').hide();
-                $('.button-login[data-option="103"]').show();
+                $('.borrar').hide();
+                $('.borrar[data-option="103"]').show();
                 createBoxTitle();
             }
             break;
@@ -189,7 +189,7 @@ function validatePoll(inputType){
             }
             else{
                 localStorage.setItem('nameTitulo',nameTitulo);
-                $('.button-login').hide();
+                $('.borrar').hide();
                 createBoxOptions(1);
             }
             break;
