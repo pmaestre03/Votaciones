@@ -59,6 +59,7 @@
             if ($row['token_validado'] === 0) {
                 echo "<script>showNotification('Token no validado','red')</script>";
         } else {
+            
             $_SESSION['email'] = $row["email"]; 
             $_SESSION['usuario'] = $nombre_usuario;
             $_SESSION['id_user'] = $row["id_user"]; 
