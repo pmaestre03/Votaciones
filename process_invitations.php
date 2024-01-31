@@ -1,6 +1,5 @@
 <!-- procesar_invitaciones.php -->
 <?php
-session_start();
 
 // Verificar la sesión
 if (!isset($_SESSION['usuario'])) {
