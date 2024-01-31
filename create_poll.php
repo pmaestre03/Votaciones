@@ -18,7 +18,7 @@
 if (isset($_SESSION['usuario'])) {
 }else {
         header("Location: ../errores/error403.php");
-            http_response(403);
+            //http_response(403);
             exit;
 }
 ?>

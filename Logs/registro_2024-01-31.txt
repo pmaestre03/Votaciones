@@ -1,0 +1,4 @@
+2024-01-31 09:06:42 - Intento de inicio de sesión fallido por el usuario: asa
+2024-01-31 09:07:35 - Inicio de sesión por el usuario: pau1@gmail.com
+2024-01-31 09:08:04 - Inicio de sesión por el usuario: pau1@gmail.com
+2024-01-31 09:08:26 - Inicio de sesión por el usuario: pau1@gmail.com
