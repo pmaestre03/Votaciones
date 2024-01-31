@@ -1,6 +1,5 @@
-<!-- invite.php -->
-<?php include("Utilidades/header.php") ?><?php
-
+<?php
+include("Utilidades/header.php");
 
 // Verificar la sesión
 if (!isset($_SESSION['usuario'])) {
@@ -12,27 +11,67 @@ if (!isset($_SESSION['usuario'])) {
 if (isset($_GET['id'])) {
     $id_encuesta = intval($_GET['id']);
 
-    try {
-        $hostname = "localhost";
-        $dbname = "votaciones";
-        $username = "userProyecto";
-        $pw = "votacionesAXP24";
-        $pdo = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $pw);
-    } catch (PDOException $e) {
-        echo "Failed to get DB handle: " . $e->getMessage() . "\n";
-        exit;
+    // Obtener los correos electrónicos del formulario
+    if (isset($_POST['emails'])) {
+        $emails = $_POST['emails'];
+        $email_array = explode(',', $emails);
+        
+        try {
+            $hostname = "localhost";
+            $dbname = "votaciones";
+            $username = "userProyecto";
+            $pw = "votacionesAXP24";
+            $pdo = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $pw);
+        } catch (PDOException $e) {
+            echo "Failed to get DB handle: " . $e->getMessage() . "\n";
+            exit;
+        }
+
+        // Procesar cada correo electrónico
+        foreach ($email_array as $email) {
+            $email = trim($email); // Limpiar espacios en blanco alrededor del correo electrónico
+
+            // Verificar si el correo electrónico existe en la tabla users
+            $consulta_user = 'SELECT id_user FROM users WHERE email = :email';
+            $stmt_user = $pdo->prepare($consulta_user);
+            $stmt_user->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt_user->execute();
+            $user = $stmt_user->fetch(PDO::FETCH_ASSOC);
+
+            // Insertar datos en la tabla invitacion y email_invitacion
+            $consulta_invitacion = 'INSERT INTO invitacion (id_encuesta, id_user, user_email, email, encuesta_activa) VALUES (:id_encuesta, :id_user, NULL, :email, TRUE)';
+            $stmt_invitacion = $pdo->prepare($consulta_invitacion);
+            $stmt_invitacion->bindParam(':id_encuesta', $id_encuesta, PDO::PARAM_INT);
+
+            if ($user) {
+                // Si el correo electrónico existe en la tabla users, obtener su ID de usuario
+                $id_user = $user['id_user'];
+                $stmt_invitacion->bindParam(':id_user', $id_user, PDO::PARAM_INT);
+            } else {
+                // Si el correo electrónico no existe en la tabla users, dejar el id_user como NULL
+                $stmt_invitacion->bindValue(':id_user', NULL, PDO::PARAM_NULL);
+
+                // Insertar el correo en la tabla email_invitacion
+                $consulta_email_invitacion = 'INSERT INTO email_invitacion (user_email) VALUES (:email)';
+                $stmt_email_invitacion = $pdo->prepare($consulta_email_invitacion);
+                $stmt_email_invitacion->bindParam(':email', $email, PDO::PARAM_STR);
+                $stmt_email_invitacion->execute();
+            }
+
+            $stmt_invitacion->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt_invitacion->execute();
+
+            if (!$stmt_invitacion->execute()) {
+                $error_info = $stmt_invitacion->errorInfo();
+                echo "Error al ejecutar la consulta: " . $error_info[2];
+            }
+        }
+
+        unset($pdo);
     }
-
-    // Consulta SQL para obtener la información de la encuesta
-    $consulta_encuesta = 'SELECT id_encuesta, titulo_encuesta FROM encuestas WHERE id_encuesta = :id_encuesta';
-    $stmt_encuesta = $pdo->prepare($consulta_encuesta);
-    $stmt_encuesta->bindParam(':id_encuesta', $id_encuesta, PDO::PARAM_INT);
-    $stmt_encuesta->execute();
-
-    $datos_encuesta = $stmt_encuesta->fetch(PDO::FETCH_ASSOC);
-
-    if ($datos_encuesta) {
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -47,7 +86,7 @@ if (isset($_GET['id'])) {
     
     <div id="notification-container"></div>
 
-    <form method="post" action="process_invitations.php" class="invite-form">
+    <form method="post" action="" class="invite-form">
         <input type="hidden" name="id_encuesta" value="<?php echo $id_encuesta; ?>">
         <label for="emails">Direcciones de correo electrónico (separadas por coma):</label>
         <input type="text" id="emails" name="emails" required>
@@ -57,15 +96,3 @@ if (isset($_GET['id'])) {
     <?php include("Utilidades/footer.php") ?>
 </body>
 </html>
-<?php
-    } else {
-        echo "Error: No se encontró la encuesta con el ID proporcionado.";
-    }
-
-    unset($pdo);
-    unset($stmt_encuesta);
-
-} else {
-    echo "Error: No se proporcionó el parámetro 'id' para la encuesta.";
-}
-?>

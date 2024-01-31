@@ -1,6 +1,6 @@
 <!-- procesar_invitaciones.php -->
 <?php
-
+session_start();
 // Verificar la sesión
 if (!isset($_SESSION['usuario'])) {
     header("Location: ../errores/error403.php");
@@ -28,7 +28,7 @@ if (isset($_POST['id_encuesta'])) {
         // Aquí debes personalizar el contenido del correo electrónico
         $asunto = "Invitación a la encuesta";
         $mensaje = "¡Hola!\n\nHas sido invitado a participar en la encuesta. Haz clic en el siguiente enlace para votar:\n";
-        $mensaje .= "https://tudominio.com/votar.php?id_encuesta={$id_encuesta}&correo={$correo}";
+        $mensaje .= "https://localhost/votar.php?id_encuesta={$id_encuesta}&correo={$correo}";
 
         // Enviar el correo electrónico
         $enviado = mail($correo, $asunto, $mensaje);
