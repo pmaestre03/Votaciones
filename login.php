@@ -63,20 +63,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['id_user'] = $row["id_user"];
             $condiciones_aceptadas = $row['condiciones_aceptadas'];
             $_SESSION['condiciones_aceptadas'] = $condiciones_aceptadas;
+            if ($row['token_validado'] == 0) {
+                echo "<script>showNotification('Token no validado','red')</script>";
+            }
             if ($condiciones_aceptadas == 0 && $row['token_validado'] == 1) {
                 header("Location: aceptar_condiciones.php");
                 exit();
-            } else {
-                if ($row['token_validado'] === 0) {
-                        echo "<script>showNotification('Token no validado','red')</script>";
-                } else {
+            } 
+            if ($condiciones_aceptadas == 1 && $row['token_validado'] == 1) {
                         $_SESSION['email'] = $row["email"];
                         $_SESSION['usuario'] = $row['nombre'];;
-                        echo "Usuario Correcto: Hola $nombre_usuario";
+                        //echo "Usuario Correcto: Hola $nombre_usuario";
                         registrarEvento("Inicio de sesión por el usuario: $usuario");
+                        //echo console.log($row['token_validado']);
                         header("Location: dashboard.php");
                         exit();
-                }
             }     
         } else {
                             $usuarioIntentado = htmlspecialchars($_POST["username"]);

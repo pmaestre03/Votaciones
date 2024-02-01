@@ -6,7 +6,7 @@
     <title>Tu Sitio Web</title>
     <link rel="stylesheet" href="styles.css?no-cache=<?php echo time(); ?>">
     <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
-
+    
 </head>
 <body class="header">
     <header class="header">

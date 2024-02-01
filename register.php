@@ -1,4 +1,4 @@
-<?php require('Utilidades/scripts2.php') ?>
+<?php require('Utilidades/scripts2.php')?>
 <?php
 // Conectar a la base de datos
 $conn = mysqli_connect('localhost', 'userProyecto', 'votacionesAXP24', 'votaciones');
@@ -50,8 +50,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             // Consulta SQL para insertar los datos
                             $insertQuery = "INSERT INTO users (nombre, contrasea_cifrada, email, telefono, nombre_pais, rol, pref, nombre_ciudad, codigo_postal) VALUES ('$nombre', '$password', '$mail', '$telefono', '$pais', 'user', '$prefijo', '$ciudad', '$codigoPostal')";
+                            
                             // Ejecutar la consulta
                             if (mysqli_query($conn, $insertQuery)) {
+
                                                 // Realizar la autenticación del usuario recién registrado
                                                 $usuario = $mail;  // Utilizar el correo electrónico como nombre de usuario
                                                 $contrasenya = $password;  // Utilizar la contraseña cifrada
@@ -89,6 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                                     $queryToken->execute();
                                                                     registrarEvento("El usuario: $usuario ha sido creado correctamente");
                                                                     echo "Usuario Correcto: Hola $nombre_usuario";
+                                                                    //echo "<script>showNotification('Usuario creado correctamente, comprueba tu correo para confirmar la cuenta')</script>";
                                                                     header("Location: index.php");
                                                                     exit();
                                                 } else {

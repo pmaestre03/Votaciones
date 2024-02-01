@@ -19,8 +19,13 @@ $(document).ready(function () {
         $('.borrar').hide();
         $('.borrar[data-option="101"]').show();
     }).keypress(function(event) {
-        if (event.which == 13) {
-            validatePoll("fecha_inicio");
+        var currentBox = $(this).closest('#box');
+        if (event.which == 13 || event.which == 9) {
+            if (currentBox.next('#box').length) {
+            } else {
+                validatePoll('fecha_inicio');
+                scrollToBottom();
+            }
         }
     });
     var buttonElement = $('<button>').attr({id: 'validate', class: 'borrar button-login', 'data-option': '101'}).text('Validar').click(function() {
@@ -42,8 +47,13 @@ function createBoxFinal(){
             $('.borrar').hide();
             $('.borrar[data-option="102"]').show();
         }).keypress(function(event) {
-            if (event.which == 13) {
-                validatePoll("fecha_final");
+            var currentBox = $(this).closest('#box');
+            if (event.which == 13 || event.which == 9) {
+                if (currentBox.next('#box').length) {
+                } else {
+                    validatePoll('fecha_final');
+                    scrollToBottom();
+                }
             }
         }),
         $('<button>').attr({ id: 'validate', class: 'borrar button-login', 'data-option': '102'}).text('Validar').click(function(){
@@ -69,8 +79,13 @@ function createBoxTitle(){
             $('.borrar').hide();
             $('.borrar[data-option="103"]').show();
         }).keypress(function(event) {
-            if (event.which == 13) {
-                validatePoll('titulo');
+            var currentBox = $(this).closest('#box');
+            if (event.which == 13 || event.which == 9) {
+                if (currentBox.next('#box').length) {
+                } else {
+                    validatePoll('titulo');
+                    scrollToBottom();
+                }
             }
         }),
         $('<button>').attr({ id: 'validate', class: 'borrar button-login', 'data-option': '103'}).text('Validar').click(function(){
@@ -98,9 +113,13 @@ function createBoxOptions(optionNumber) {
             $('.add-option').hide();
             $('.add-option[data-option="' + optionNumber + '"]').show();
         }).keypress(function(event) {
-            if (event.which == 13) {
-                createBoxOptions(optionNumber + 1);
-                scrollToBottom();
+            var currentBox = $(this).closest('#box');
+            if (event.which == 13 || event.which == 9) {
+                if (currentBox.next('#box').length) {
+                } else {
+                    createBoxOptions(optionNumber + 1);
+                    scrollToBottom();
+                }
             }
         }),
         $('<button>').attr({ class: 'add-option button-login', 'data-option': optionNumber }).text('Añadir opción').prop('disabled', false).click(function(){
@@ -183,7 +202,6 @@ function validatePoll(inputType){
 
         case "titulo":
             var nameTitulo = $('input[name=titulo]').val();
-            var imgTitulo = $('input[name=imgTitulo]').val();
             if(nameTitulo.trim()===""){
                 showNotification("El titulo no puede estar vacío", 'red');
             }
@@ -233,12 +251,16 @@ function createBoxBD() {
         }).appendTo(form);
     });
 
+    var inputImgTitulo = $('input[name="imgTitulo"]');
+    inputImgTitulo.css('display', 'none');
+    form.append(inputImgTitulo.clone());
+
     //agregar inputs de imagen al form
     for (var i = 1; i <= options.length; i++) {
         // Obtener el input de tipo file correspondiente
         var inputFile = $('input[name="imgOpcion' + i + '"]');
         inputFile.addClass('hidden');
-        inputFile.css('display', 'none')
+        inputFile.css('display', 'none');
         // Clonar y agregar el input de tipo file al formulario
         form.append(inputFile.clone());
     }

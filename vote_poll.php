@@ -59,8 +59,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt_insert_voto->execute();
 
             $pdo->commit();
-
-            echo "¡Tu voto ha sido registrado con éxito!";
+            header("Location: index.php");
+            exit;
         } catch (PDOException $e) {
             // Rollback de la transacción en caso de error
             $pdo->rollback();

@@ -1,21 +1,18 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enviar Invitaciones</title>
-    <link rel="stylesheet" href="./Utilidades/styles.css?no-cache=<?php echo time(); ?>">
-    <script src="./Utilidades/scripts.js"></script>
-</head>
+<script src="./Utilidades/scripts.js"></script>
 <?php
 include("Utilidades/header.php");
+// Obtener el ID de la encuesta desde la URL
+if (isset($_GET['id'])) {
+    $_SESSION['id_encuesta'] = intval($_GET['id']);
+}
+
 ?>
 <body class="invite">
     
     <div id="notification-container"></div>
 
     <form method="post" action="" class="invite-form">
-        <input type="hidden" name="id_encuesta" value="<?php echo $id_encuesta; ?>">
+        <input type="hidden" name="id_encuesta" value="<?php $_SESSION['id_encuesta'] ?>">
         <label for="emails">Direcciones de correo electrónico (separadas por coma):</label>
         <input type="text" id="emails" name="emails" required>
         <button type="submit" class="invite-button">Enviar Invitaciones</button>
@@ -25,19 +22,22 @@ include("Utilidades/header.php");
 </body>
 </html>
 <?php
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-require "vendor/autoload.php";
 
+require "vendor/autoload.php";
+require 'PHPMailer-master/src/Exception.php';
+require 'PHPMailer-master/src/PHPMailer.php';
+require 'PHPMailer-master/src/SMTP.php';
 // Verificar la sesión
 if (!isset($_SESSION['usuario'])) {
     header("Location: ../errores/error403.php");
     exit;
 }
 
-// Obtener el ID de la encuesta desde la URL
-if (isset($_GET['id'])) {
-    $id_encuesta = intval($_GET['id']);
+
+
 
     // Obtener los correos electrónicos del formulario
     if (isset($_POST['emails'])) {
@@ -77,15 +77,15 @@ if (isset($_GET['id'])) {
                 $token = uniqid();
 
                 // Crear enlace de votación con el token
-                $voting_link = "https://localhost/votaciones/vote_poll.php?token=$token";
+                $voting_link = "https://aws22.ieti.site/vote_poll.php?token=$token";
             
                 // Agregar destinatario y contenido del mensaje
                 $mail->AddAddress($email);
                 $subjectmail = "Invitado a VotaPAX";
                 $mail->Subject = $subjectmail;
-                $bodymail = "¡Hola! Has sido invitado a votar en nuestra encuesta. Para votar, haz clic en el siguiente enlace:'$voting_link'";
-                $mail->Body = $bodymail;
-
+                $bodymail = "¡Hola! Has sido invitado a votar en nuestra encuesta. Para votar, haz clic en el siguiente enlace:' <a href='$voting_link'>Enlace</a>'";
+                //$mail->Body = $bodymail;
+                $mail->MsgHTML($bodymail);
                 // Enviar correo electrónico
                 if (!$mail->Send()) {
                     echo "Error al enviar correo a: $email<br>";
@@ -101,7 +101,7 @@ if (isset($_GET['id'])) {
                         // Dejar el user_email como NULL
                         $consulta_invitacion_user = 'INSERT INTO invitacion (id_encuesta, id_user, user_email, email, token_activo, token) VALUES (:id_encuesta, :id_user, NULL, :email, TRUE, :token)';
                         $stmt_invitacion = $pdo->prepare($consulta_invitacion_user);
-                        $stmt_invitacion->bindParam(':id_encuesta', $id_encuesta, PDO::PARAM_INT);
+                        $stmt_invitacion->bindParam(':id_encuesta', $_SESSION['id_encuesta'], PDO::PARAM_INT);
                         
                         // Obtener su ID de usuario
                         $id_user = $user['id_user'];
@@ -120,7 +120,7 @@ if (isset($_GET['id'])) {
                         // Dejar el id_user y el email como NULL
                         $consulta_invitacion = 'INSERT INTO invitacion (id_encuesta, id_user, user_email, email, token_activo, token) VALUES (:id_encuesta, NULL, :email, NULL, TRUE, :token)';
                         $stmt_invitacion = $pdo->prepare($consulta_invitacion);
-                        $stmt_invitacion->bindParam(':id_encuesta', $id_encuesta, PDO::PARAM_INT);
+                        $stmt_invitacion->bindParam(':id_encuesta', $_SESSION['id_encuesta'], PDO::PARAM_INT);
                         $stmt_invitacion->bindParam(':email', $email, PDO::PARAM_STR);
                         $stmt_invitacion->bindParam(':token', $token, PDO::PARAM_STR);
                         $stmt_invitacion->execute();
@@ -133,5 +133,4 @@ if (isset($_GET['id'])) {
             $error = "Error: " . $e->getMessage();
         }
     }
-}
 ?>
