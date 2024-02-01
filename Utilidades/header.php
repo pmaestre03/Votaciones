@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="styles.css?no-cache=<?php echo time(); ?>">
     <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
     
-    <?php require('scripts2.php')?>
 </head>
 <body class="header">
     <header class="header">
