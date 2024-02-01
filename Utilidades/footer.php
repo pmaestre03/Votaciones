@@ -10,9 +10,9 @@
     <footer>
         <div class="footer-content">
             <div class="contact-list">
-                <p class="contact">Pau <img src="imagenes/Mail.png" width="40px" height="40px"><a href="mailto:maestrep15@gmail.com">maestrep15@gmail.com</a></p>
-                <p class="contact">Xavi <img src="imagenes/Mail.png" width="40px" height="40px"> <a href="mailto:xaavii0711@gmail.com"> xaavii0711@gmail.com</a></p>
-                <p class="contact">Aleix <img src="imagenes/Mail.png" width="40px" height="40px"> <a href="mailto:navioaleix@gmail.com"> navioaleix@gmail.com</a></p>
+                <p class="contact">Pau <img src="imagenes/Mail.png" width="40px" height="40px"><a href="mailto:maestrep15@gmail.com">pmaestrefernandez.cf@iesesteveterradas.cat</a></p>
+                <p class="contact">Xavi <img src="imagenes/Mail.png" width="40px" height="40px"> <a href="mailto:xaavii0711@gmail.com"> jmartinezlozano.cf@iesesteveterradas.cat</a></p>
+                <p class="contact">Marcelo <img src="imagenes/Mail.png" width="40px" height="40px"> <a href="mailto:navioaleix@gmail.com">mgonzalezramirez.cf@iesesteveterradas.cat</a></p>
             </div>
             <div class="footer-links">
                 <p><a href="http://www.iesesteveterradas.cat" target="_blank"><u>www.iesesteveterradas.cat</u></a></p>
