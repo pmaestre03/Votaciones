@@ -69,7 +69,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($condiciones_aceptadas == 0 && $row['token_validado'] == 1) {
                 header("Location: aceptar_condiciones.php");
                 exit();
-            } else {
+            } 
+            if ($condiciones_aceptadas == 1 && $row['token_validado'] == 1) {
                         $_SESSION['email'] = $row["email"];
                         $_SESSION['usuario'] = $row['nombre'];;
                         echo "Usuario Correcto: Hola $nombre_usuario";
