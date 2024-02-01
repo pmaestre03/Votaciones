@@ -6,6 +6,7 @@
     <title>Enviar Invitaciones</title>
     <link rel="stylesheet" href="./Utilidades/styles.css?no-cache=<?php echo time(); ?>">
     <script src="./Utilidades/scripts.js"></script>
+    <?php require('Utilidades/scripts2.php')?>
 </head>
 <?php
 include("Utilidades/header.php");
@@ -89,6 +90,7 @@ if (isset($_GET['id'])) {
                 // Enviar correo electrónico
                 if (!$mail->Send()) {
                     echo "Error al enviar correo a: $email<br>";
+                    registrarEvento($mail);
                 } else {
                     // Verificar si el correo electrónico existe en la tabla users
                     $consulta_user = 'SELECT id_user FROM users WHERE email = :email';
