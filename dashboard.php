@@ -57,7 +57,7 @@
                     echo '});';
                 echo '</script>';
 
-                echo "<div class='dashboard-box' id='votePolls'>";
+                /* echo "<div class='dashboard-box' id='votePolls'>";
                     echo "<h2>Votar Encuestas</h2>";
                 echo "</div>";
 
@@ -65,6 +65,18 @@
                     echo '$(document).ready(function() {';
                     echo '    $("#votePolls").on("click", function() {';
                     echo '        window.location.href = "vote_poll.php";';
+                    echo '    });';
+                    echo '});';
+                echo '</script>'; */
+
+                echo "<div class='dashboard-box' id='listVote'>";
+                    echo "<h2>Listar Votos realizados/pendientes</h2>";
+                echo "</div>";
+
+                echo '<script>';
+                    echo '$(document).ready(function() {';
+                    echo '    $("#listVote").on("click", function() {';
+                    echo '        window.location.href = "list_vote.php";';
                     echo '    });';
                     echo '});';
                 echo '</script>';

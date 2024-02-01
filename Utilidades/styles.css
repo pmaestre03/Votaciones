@@ -662,3 +662,13 @@ body.graphics {
   text-align: center;
   margin-top: 20px;
 }
+
+/* VOTE_POLL.php */
+.box_img_vote {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  margin: 0px auto 80px auto;
+  text-align: center;
+  padding: 30px;
+}
