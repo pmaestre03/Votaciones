@@ -47,7 +47,7 @@ if (isset($_POST['id_encuesta'])) {
             echo "Error: No se pudo enviar la invitación a $correo";
         }
 
-        sleep(300);
+        //sleep(300);
     }
 
     // Redirigir de nuevo a la página de detalles de la encuesta después de enviar invitaciones
