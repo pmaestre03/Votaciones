@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                                     $queryToken->bindParam(':id_user',$idUser,PDO::PARAM_STR);
                                                                     $queryToken->bindParam(':token',$token,PDO::PARAM_STR);
                                                                     $queryToken->execute();
-                                                                    //registrarEvento("El usuario: $usuario ha sido creado correctamente");
+                                                                    registrarEvento("El usuario: $usuario ha sido creado correctamente");
                                                                     echo "Usuario Correcto: Hola $nombre_usuario";
                                                                     //echo "<script>showNotification('Usuario creado correctamente, comprueba tu correo para confirmar la cuenta')</script>";
                                                                     header("Location: index.php");
