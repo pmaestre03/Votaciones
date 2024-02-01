@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['id_user'] = $row["id_user"];
             $condiciones_aceptadas = $row['condiciones_aceptadas'];
             $_SESSION['condiciones_aceptadas'] = $condiciones_aceptadas;
-            if ($row['token_validado'] == 0) {
+            if ($row['token_validado'] == 0 && $condiciones_aceptadas == 0) {
                 echo "<script>showNotification('Token no validado','red')</script>";
             }
             if ($condiciones_aceptadas == 0 && $row['token_validado'] == 1) {
