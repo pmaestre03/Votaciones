@@ -48,7 +48,7 @@ if (!isset($_SESSION['usuario'])) {
         $mail = new PHPMailer();
         $mail->IsSMTP();
         $mail->Mailer = "smtp";
-        $mail->SMTPDebug  = 2;  
+        $mail->SMTPDebug  = 0;  
         $mail->SMTPAuth   = TRUE;
         $mail->SMTPSecure = "tls";
         $mail->Port       = 587;
