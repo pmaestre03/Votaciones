@@ -27,6 +27,9 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 require "vendor/autoload.php";
+require 'PHPMailer-master/src/Exception.php';
+require 'PHPMailer-master/src/PHPMailer.php';
+require 'PHPMailer-master/src/SMTP.php';
 // Verificar la sesión
 if (!isset($_SESSION['usuario'])) {
     header("Location: ../errores/error403.php");
