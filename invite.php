@@ -49,7 +49,7 @@ if (isset($_GET['id'])) {
         $mail = new PHPMailer();
         $mail->IsSMTP();
         $mail->Mailer = "smtp";
-        $mail->SMTPDebug  = 0;  
+        $mail->SMTPDebug  = 2;  
         $mail->SMTPAuth   = TRUE;
         $mail->SMTPSecure = "tls";
         $mail->Port       = 587;
