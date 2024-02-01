@@ -35,10 +35,10 @@
         $encuestas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             if ($encuestas) {
-            echo "<h2>Encuestas creadas</h2>";
+            echo "<div class='user-info'>Encuestas creadas</div>";
             echo "<div class='center'>";
             echo "<table border='1'>";
-            echo "<tr><th>T  tulo de la Encuesta</th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Estado</th><th></th>";
+            echo "<tr><th>Título de la Encuesta</th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Estado</th><th></th><th></th>";
             foreach ($encuestas as $encuesta) {
                 echo "<tr>";
                 echo "<td>{$encuesta['titulo_encuesta']}</td>";
@@ -59,7 +59,9 @@
                 $id_encuesta = $encuesta['id_encuesta'];
                 // echo "<td>{$encuesta['id_encuesta']}</td>";
 
-                echo "<td><button onclick=\"window.location.href='graphics.php?id=$id_encuesta'\">Detalls Enquesta</button></td>";
+                echo "<td><button onclick=\"window.location.href='graphics.php?id=$id_encuesta'\">Detalles Encuesta</button></td>";
+                echo "<td><button onclick=\"window.location.href='invite.php?id=$id_encuesta'\">Enviar Invitaciones</button></td>";
+
                 echo "</tr>";
                 
 

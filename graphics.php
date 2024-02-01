@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +12,6 @@
     <?php
     // Obtén el ID del usuario actual desde la sesión
     $id_usuario_actual = $_SESSION['id_user'];
-
     // Obtén el id_encuesta desde la URL
     if (isset($_GET['id'])) {
         $id_encuesta = intval($_GET['id']);  // Asegúrate de que sea un entero
@@ -37,6 +36,7 @@
 
         // Obtén los resultados
         $encuesta = $stmt->fetch(PDO::FETCH_ASSOC);
+
 
         // Verifica si el usuario actual es el creador de la encuesta
         if ($encuesta && $encuesta['creador'] == $id_usuario_actual) {

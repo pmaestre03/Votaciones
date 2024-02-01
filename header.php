@@ -1,14 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Sitio Web</title>
+
+<body class="header">
     <link rel="stylesheet" href="Utilidades/styles.css">
     <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
 
-</head>
-<body class="header">
     <header class="header">
         
         <?php
@@ -100,5 +94,3 @@
         ?>
 
     </header>
-</body>
-</html>
