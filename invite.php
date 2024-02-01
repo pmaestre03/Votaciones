@@ -26,9 +26,10 @@ include("Utilidades/header.php");
 </body>
 </html>
 <?php
+require "vendor/autoload.php";
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-require "vendor/autoload.php";
+
 
 // Verificar la sesión
 if (!isset($_SESSION['usuario'])) {
