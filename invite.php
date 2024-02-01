@@ -16,7 +16,7 @@ include("Utilidades/header.php");
     <div id="notification-container"></div>
 
     <form method="post" action="" class="invite-form">
-        <input type="hidden" name="id_encuesta" value="<?php echo $id_encuesta; ?>">
+        <input type="hidden" name="id_encuesta" value="7">
         <label for="emails">Direcciones de correo electrónico (separadas por coma):</label>
         <input type="text" id="emails" name="emails" required>
         <button type="submit" class="invite-button">Enviar Invitaciones</button>
