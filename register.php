@@ -89,7 +89,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                                     $queryToken->execute();
                                                                     registrarEvento("El usuario: $usuario ha sido creado correctamente");
                                                                     echo "Usuario Correcto: Hola $nombre_usuario";
-                                                                    header("Location: index.php");
+                                                                    echo "<script>showNotification('Usuario creado correctamente, comprueba tu correo para confirmar la cuenta')</script>";
+                                                                    //header("Location: index.php");
                                                                     exit();
                                                 } else {
                                                                     echo "<script>showNotification('Usuario o contraseña incorrecto','red')</script>";
