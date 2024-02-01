@@ -1,4 +1,4 @@
-<?php require('Utilidades/scripts2.php') ?>
+<?php require('Utilidades/scripts2.php')?>
 <?php
 // Conectar a la base de datos
 $conn = mysqli_connect('localhost', 'userProyecto', 'votacionesAXP24', 'votaciones');
@@ -89,6 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                                     $queryToken->execute();
                                                                     registrarEvento("El usuario: $usuario ha sido creado correctamente");
                                                                     echo "Usuario Correcto: Hola $nombre_usuario";
+                                                                    //echo "<script>showNotification('Usuario creado correctamente, comprueba tu correo para confirmar la cuenta')</script>";
                                                                     header("Location: index.php");
                                                                     exit();
                                                 } else {
