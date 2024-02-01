@@ -90,7 +90,7 @@ if (isset($_GET['id'])) {
                 // Enviar correo electrónico
                 if (!$mail->Send()) {
                     echo "Error al enviar correo a: $email<br>";
-                    registrarEvento($mail);
+                    registrarEvento("Envio de mails fallidos");
                 } else {
                     // Verificar si el correo electrónico existe en la tabla users
                     $consulta_user = 'SELECT id_user FROM users WHERE email = :email';
