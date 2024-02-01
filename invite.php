@@ -1,4 +1,4 @@
-
+<script src="./Utilidades/scripts.js"></script>
 <?php
 include("Utilidades/header.php");
 // Obtener el ID de la encuesta desde la URL
