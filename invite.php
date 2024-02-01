@@ -84,9 +84,9 @@ if (isset($_GET['id'])) {
                 $mail->AddAddress($email);
                 $subjectmail = "Invitado a VotaPAX";
                 $mail->Subject = $subjectmail;
-                $bodymail = "¡Hola! Has sido invitado a votar en nuestra encuesta. Para votar, haz clic en el siguiente enlace:'$voting_link'";
-                $mail->Body = $bodymail;
-                registrarEvento("$mail");
+                $bodymail = "¡Hola! Has sido invitado a votar en nuestra encuesta. Para votar, haz clic en el siguiente enlace:' <a href='$voting_link'>Enlace</a>'";
+                //$mail->Body = $bodymail;
+                $mail->MsgHTML($bodymail);
                 // Enviar correo electrónico
                 if (!$mail->Send()) {
                     echo "Error al enviar correo a: $email<br>";
