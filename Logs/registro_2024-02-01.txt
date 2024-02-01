@@ -1,1 +1,6 @@
 2024-02-01 06:58:39 - Inicio de sesión por el usuario: marcelogr2004@gmail.com
+2024-02-01 19:26:15 - Inicio de sesión por el usuario: paco@paco.com
+2024-02-01 20:09:57 - Inicio de sesión por el usuario: paco@paco.com
+2024-02-01 20:31:47 - Inicio de sesión por el usuario: paco@paco.com
+2024-02-01 20:32:11 - Intento de inicio de sesión fallido por el usuario: pmaestrefernandez.cf@iesesteveterradas.cat
+2024-02-01 20:41:54 - Condiciones aceptadas por el usuario: 
