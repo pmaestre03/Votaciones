@@ -9,6 +9,10 @@
     <?php require('Utilidades/scripts2.php')?>
 </head>
 <?php
+// Obtener el ID de la encuesta desde la URL
+if (isset($_GET['id'])) {
+    $id_encuesta = intval($_GET['id']);
+}
 include("Utilidades/header.php");
 ?>
 <body class="invite">
@@ -16,7 +20,7 @@ include("Utilidades/header.php");
     <div id="notification-container"></div>
 
     <form method="post" action="" class="invite-form">
-        <input type="hidden" name="id_encuesta" value="<?php $_GET['id'] ?>">
+        <input type="hidden" name="id_encuesta" value="<?php $id_encuesta ?>">
         <label for="emails">Direcciones de correo electrónico (separadas por coma):</label>
         <input type="text" id="emails" name="emails" required>
         <button type="submit" class="invite-button">Enviar Invitaciones</button>
@@ -37,9 +41,8 @@ if (!isset($_SESSION['usuario'])) {
     exit;
 }
 
-// Obtener el ID de la encuesta desde la URL
-if (isset($_GET['id'])) {
-    $id_encuesta = intval($_GET['id']);
+
+
 
     // Obtener los correos electrónicos del formulario
     if (isset($_POST['emails'])) {
@@ -135,5 +138,4 @@ if (isset($_GET['id'])) {
             $error = "Error: " . $e->getMessage();
         }
     }
-}
 ?>
