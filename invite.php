@@ -86,11 +86,10 @@ if (isset($_GET['id'])) {
                 $mail->Subject = $subjectmail;
                 $bodymail = "¡Hola! Has sido invitado a votar en nuestra encuesta. Para votar, haz clic en el siguiente enlace:'$voting_link'";
                 $mail->Body = $bodymail;
-
+                registrarEvento("$mail");
                 // Enviar correo electrónico
                 if (!$mail->Send()) {
                     echo "Error al enviar correo a: $email<br>";
-                    registrarEvento("Envio de mails fallidos");
                 } else {
                     // Verificar si el correo electrónico existe en la tabla users
                     $consulta_user = 'SELECT id_user FROM users WHERE email = :email';
