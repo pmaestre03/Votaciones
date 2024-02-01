@@ -9,6 +9,7 @@
 <body class="dashboard">
 <?php include("Utilidades/header.php") ?>
     <?php
+        echo $_SESSION['token'];
         if (isset($_SESSION['usuario'])) {
             
             echo "<div class='user-info'>";
