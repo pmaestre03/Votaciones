@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enviar Invitaciones</title>
-    <link rel="stylesheet" href="./Utilidades/styles.css?no-cache=<?php echo time(); ?>">
-    <script src="./Utilidades/scripts.js"></script>
-    <?php require('Utilidades/scripts2.php')?>
-</head>
+
 <?php
 include("Utilidades/header.php");
 // Obtener el ID de la encuesta desde la URL
