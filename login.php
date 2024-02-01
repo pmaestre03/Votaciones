@@ -73,9 +73,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($condiciones_aceptadas == 1 && $row['token_validado'] == 1) {
                         $_SESSION['email'] = $row["email"];
                         $_SESSION['usuario'] = $row['nombre'];;
-                        echo "Usuario Correcto: Hola $nombre_usuario";
+                        //echo "Usuario Correcto: Hola $nombre_usuario";
                         registrarEvento("Inicio de sesión por el usuario: $usuario");
-                        echo console.log($row['token_validado']);
+                        //echo console.log($row['token_validado']);
                         header("Location: dashboard.php");
                         exit();
             }     
