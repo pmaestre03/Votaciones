@@ -1,0 +1,13 @@
+2024-01-31 02:35:37 - Inicio de sesión por el usuario: marcelogr2004@gmail.com
+2024-01-31 02:36:04 - Inicio de sesión por el usuario: marcelogr2004@gmail.com
+2024-01-31 02:45:35 - Intento de inicio de sesión fallido por el usuario: marcelomarcelogr2004@gmail.com
+2024-01-31 02:45:51 - Inicio de sesión por el usuario: marcelogr2004@gmail.com
+2024-01-31 09:48:50 - Inicio de sesión por el usuario: marc@gmail.com
+2024-01-31 09:54:14 - Intento de inicio de sesión fallido por el usuario: marcelo@gmail.com
+2024-01-31 09:54:33 - Intento de inicio de sesión fallido por el usuario: marcelo@gmail.com
+2024-01-31 09:56:06 - Intento de inicio de sesión fallido por el usuario: marcelo@gmail.com
+2024-01-31 09:56:22 - Intento de inicio de sesión fallido por el usuario: marcelo@gmail.com
+2024-01-31 09:57:16 - Intento de inicio de sesión fallido por el usuario: marcelo@gmail.com
+2024-01-31 09:57:38 - Intento de inicio de sesión fallido por el usuario: marcelo@gmail.com
+2024-01-31 09:57:56 - Intento de inicio de sesión fallido por el usuario: marcelo@gmail.com
+2024-01-31 09:58:58 - Inicio de sesión por el usuario: marcelogr2004@gmail.com

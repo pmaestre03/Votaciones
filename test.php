@@ -7,7 +7,7 @@
 </head>
 <body>
     <?php
-    $conn = mysqli_connect('localhost', 'root', '','votaciones');
+    $conn = mysqli_connect('localhost', 'userProyecto', 'votacionesAXP24','votaciones');
 
     if(!$conn){
         die("no". mysql_Error());
