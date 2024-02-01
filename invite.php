@@ -9,11 +9,12 @@
     <?php require('Utilidades/scripts2.php')?>
 </head>
 <?php
+include("Utilidades/header.php");
 // Obtener el ID de la encuesta desde la URL
 if (isset($_GET['id'])) {
     $_SESSION['id_encuesta'] = intval($_GET['id']);
 }
-include("Utilidades/header.php");
+
 ?>
 <body class="invite">
     
