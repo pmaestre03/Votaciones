@@ -77,7 +77,7 @@ if (!isset($_SESSION['usuario'])) {
                 $token = uniqid();
 
                 // Crear enlace de votación con el token
-                $voting_link = "https://aws22.ieti.site/Votaciones/vote_poll.php?token=$token";
+                $voting_link = "https://aws22.ieti.site/vote_poll.php?token=$token";
             
                 // Agregar destinatario y contenido del mensaje
                 $mail->AddAddress($email);
