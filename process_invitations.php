@@ -22,9 +22,9 @@ if (isset($_POST['id_encuesta'])) {
         echo "Failed to get DB handle: " . $e->getMessage() . "\n";
         exit;
     }
-
+    $correos_a_enviar = array_slice($correos_destinatarios, 0, 5);
     // Lógica para enviar invitaciones a cada correo electrónico
-    foreach ($correos_destinatarios as $correo) {
+    foreach ($correos_a_enviar as $correo) {
         // Aquí debes personalizar el contenido del correo electrónico
         $asunto = "Invitación a la encuesta";
         $mensaje = "¡Hola!\n\nHas sido invitado a participar en la encuesta. Haz clic en el siguiente enlace para votar:\n";
@@ -32,11 +32,13 @@ if (isset($_POST['id_encuesta'])) {
 
         // Enviar el correo electrónico
         $enviado = mail($correo, $asunto, $mensaje);
-        echo $enviado;
+        // echo $enviado;
         // Puedes realizar acciones adicionales según si el correo se envió correctamente
         if ($enviado) {
             // Actualizar el estado de la invitación en la base de datos
-            $stmt_update = $pdo->prepare("UPDATE invitaciones SET estado = 'enviado' WHERE id_encuesta = :id_encuesta AND correo_destinatario = :correo");
+            // UPDATE invitaciones SET estado = 'enviado' WHERE id_encuesta = :id_encuesta AND correo_destinatario = :correo
+            // INSERT INTO invitaciones(id_encuesta,correo_destinatario,estado) VALUES(:id_encuesta,:correo,'enviado')
+            $stmt_update = $pdo->prepare("INSERT INTO invitaciones(id_encuesta,correo_destinatario,estado) VALUES(:id_encuesta,:correo,'enviado')");
             $stmt_update->bindParam(':id_encuesta', $id_encuesta, PDO::PARAM_INT);
             $stmt_update->bindParam(':correo', $correo, PDO::PARAM_STR);
             $stmt_update->execute();
@@ -44,6 +46,8 @@ if (isset($_POST['id_encuesta'])) {
             // Manejar el caso en el que el correo no se pudo enviar
             echo "Error: No se pudo enviar la invitación a $correo";
         }
+
+        sleep(300);
     }
 
     // Redirigir de nuevo a la página de detalles de la encuesta después de enviar invitaciones

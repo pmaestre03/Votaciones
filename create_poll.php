@@ -81,7 +81,7 @@ if (isset($_SESSION['usuario'])) {
                                     }
                                 } else {
                                     $_SESSION['error'] = "Solo se permiten archivos JPG, JPEG, PNG y GIF.";
-                                    custom_log('Error subida imagen', "El usuario $email ha intentado subir un fichero no valido");
+                                    registrarEvento('Error subida imagen: El usuario $email ha intentado subir un fichero no valido');
 
                                     header('Location: create_poll.php');
                                     $target_file = NULL;
