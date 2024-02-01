@@ -1,22 +1,16 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Sitio Web</title>
+
+<body class="header">
     <link rel="stylesheet" href="Utilidades/styles.css">
     <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
 
-</head>
-<body class="header">
     <header class="header">
-
+        
         <?php
         session_start();
 
         if (isset($_SESSION['usuario'])) {
             // Si el usuario está logueado
-            echo "<button class='button button-signup' id='signupButton'>Bienvenido, " . $_SESSION['usuario'] . "</button>";
+            echo "<button class='button' id='signupButton'>SIGNUP</button>";
             //redireccion boton signup
             echo '<script>';
             echo '$(document).ready(function() {';
@@ -26,11 +20,10 @@
             echo '});';
             echo '</script>';
 
-            echo '<h1 class="title">VotaPAX</h1>';
+            echo "<h1>VotaPAX</h1>";
             echo '<div class="button-container">';
 
-            echo '<button class="button button-secund" id="homeButton"><img src="./imagenes/home.png"></button>';
-
+            echo '<button class="button button-secund" id="homeButton">HOME</button>';
             //redireccion boton home
             echo '<script>';
             echo '$(document).ready(function() {';
@@ -40,7 +33,7 @@
             echo '});';
             echo '</script>';
 
-            echo '<button class="button button-secund" id="dashboardButton">Mi Área</button>';
+            echo '<button class="button button-secund" id="dashboardButton">DASHBOARD</button>';
             //redireccion boton home
             echo '<script>';
             echo '$(document).ready(function() {';
@@ -50,7 +43,7 @@
             echo '});';
             echo '</script>';
 
-            echo '<button class="button button-login" id="logoutButton"> <a href="logout.php">Cerrar Sesión</a></button>';
+            echo '<button class="button button-login" id="logoutButton">Hola, ' . $_SESSION['usuario'] . ' <a href="logout.php">Logout</a></button>';
             //redireccion boton logout
             echo '<script>';
             echo '$(document).ready(function() {';
@@ -63,7 +56,7 @@
             echo '</div>';
         } else {
             // Si el usuario no está logueado
-            echo "<button class='button' id='signupButton'>Crear Cuenta</button>";
+            echo "<button class='button' id='signupButton'>SIGNUP</button>";
             //redireccion boton signup
             echo '<script>';
             echo '$(document).ready(function() {';
@@ -73,10 +66,10 @@
             echo '});';
             echo '</script>';
 
-            echo '<h1 class="title_logout">VotaPAX</h1>';
+            echo "<h1>VotaPAX</h1>";
             echo '<div class="button-container">';
 
-            echo '<button class="button button-secund" id="homeButton"><img src="./imagenes/home.png"></button>';
+            echo '<button class="button button-secund" id="homeButton">HOME</button>';
             //redireccion boton home
             echo '<script>';
             echo '$(document).ready(function() {';
@@ -86,7 +79,7 @@
             echo '});';
             echo '</script>';
 
-            echo '<button class="button button-login" id="loginButton">Iniciar Sesión</button>';
+            echo '<button class="button button-login" id="loginButton">LOGIN</button>';
             //redireccion boton login
             echo '<script>';
             echo '$(document).ready(function() {';
@@ -101,5 +94,3 @@
         ?>
 
     </header>
-</body>
-</html>
