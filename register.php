@@ -118,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Formulario Dinámico</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<link rel="stylesheet" href="./Utilidades/styles.css">
+<link rel="stylesheet" href="./Utilidades/styles.css?no-cache=<?php echo time(); ?>">
 <script src="./Utilidades/scripts.js"></script>
 
 </head>

@@ -1,4 +1,5 @@
 <script src="./Utilidades/scripts.js"></script>
+<link rel="stylesheet" href="Utilidades/styles.css?no-cache=<?php echo time(); ?>">
 <?php
 include("Utilidades/header.php");
 // Obtener el ID de la encuesta desde la URL

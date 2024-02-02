@@ -150,9 +150,52 @@ body.index {
 }
 
 .contenedor_indice {
-                    margin-top: 5%;
+                    margin-top: 5%; 
+}
+.papeletas {
+                    position: absolute;
+                    pointer-events: none;
+                    z-index: -999;
+}
+.papeleta1 {
+                    left:  50px;
+                    width: 100px;
+                    animation: papeletas 43s linear infinite;
+}
+.papeleta2 {
+                    left:  350px;
+                    width: 100px;
+                    animation: papeletas 20s linear infinite;
+}
+.papeleta3 {
+                    left: 650px;
+                    width: 100px;
+                    animation: papeletas 15s linear infinite;
+}
+.papeleta4 {
+                    right:  650px;
+                    width: 100px;
+                    animation: papeletas 56s linear infinite;
+}
+.papeleta5 {
+                    right:  350px;
+                    width: 100px;
+                    animation: papeletas 7s linear infinite;
+}
+.papeleta6 {
+                    right:  50px;
+                    width: 100px;
+                    animation: papeletas 26s linear infinite;
 }
 
+@keyframes papeletas {
+                    0% {
+                        top: -30%;
+                    }
+                    100% {
+                        top: 85%;
+                    }
+                  }
 .parrafo_indice {
                     font-size: 20px;
 }
@@ -786,3 +829,50 @@ body.graphics {
                     padding: 30px;
 }
 
+
+.publica {
+                    background-color: green;
+}
+
+.oculta {
+                    background-color: lightgray;
+}
+
+.finalizada {
+                    background-color: red;
+}
+
+.privada {
+                    background-color: blue;
+                    color: white;
+}
+
+#visibilidad_encuesta, #visibilidad_respuestas,#bloqueo {
+                    width: calc(100% - 30px);
+                    padding: 10px;
+                    margin-right: 10px;
+                    margin-bottom: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    box-sizing: border-box;
+                    appearance: none;
+                    background: url("https://cdn2.iconfinder.com/data/icons/flags/flags/16/GB.png") no-repeat right center;
+                    background-size: 20px;
+                    cursor: pointer;
+}
+                
+#visibilidad_encuesta::-ms-expand, #visibilidad_respuestas::-ms-expand,#bloqueo::-ms-expand {
+display: none;
+}
+
+#visibilidad_encuesta option[value=""],#visibilidad_respuestas option[value=""],#bloqueo option[value=""]{
+display: none;
+}
+
+#visibilidad_encuesta:focus, #visibilidad_respuestas:focus,#bloqueo:focus {
+border: 1px solid #4caf50;
+}
+
+#visibilidad_encuesta:hover, #visibilidad_respuestas:hover,#bloqueo {
+border: 1px solid #4caf50;
+}
