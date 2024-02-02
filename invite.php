@@ -53,9 +53,9 @@ if (!isset($_SESSION['usuario'])) {
         $mail->SMTPSecure = "tls";
         $mail->Port       = 587;
         $mail->Host       = "smtp.gmail.com";
-        $mail->Username   = "mgonzalezramirez.cf@iesesteveterradas.cat";
+        $mail->Username   = "votapax@gmail.com";
         $mail->Password   = "PlataNoEs18";
-        $mail->SetFrom("mgonzalezramirez.cf@iesesteveterradas.cat", "VotaPAX");
+        $mail->SetFrom("votapax@gmail.com", "VotaPAX");
 
         try {
             $hostname = "localhost";
@@ -98,6 +98,11 @@ if (!isset($_SESSION['usuario'])) {
                     $user = $stmt_user->fetch(PDO::FETCH_ASSOC);
                 
                     if ($user) { // Si el correo electrónico existe en la tabla users
+                        // Insertar el correo en la tabla email_invitacion
+                        $consulta_email = 'INSERT INTO email_invitacion (user_email) VALUES (:email)';
+                        $stmt_email = $pdo->prepare($consulta_email);
+                        $stmt_email->bindParam(':email', $email, PDO::PARAM_STR);
+                        $stmt_email->execute();
                         // Dejar el user_email como NULL
                         $consulta_invitacion_user = 'INSERT INTO invitacion (id_encuesta, id_user, user_email, email, token_activo, token) VALUES (:id_encuesta, :id_user, NULL, :email, TRUE, :token)';
                         $stmt_invitacion = $pdo->prepare($consulta_invitacion_user);

@@ -33,25 +33,11 @@
         $consulta_encuestas = "SELECT invitacion.id_encuesta, encuestas.titulo_encuesta, invitacion.token_activo
                                FROM invitacion
                                INNER JOIN encuestas ON invitacion.id_encuesta = encuestas.id_encuesta
-                               WHERE invitacion.id_user = :id_user";
-        if (isset($consulta_encuestas)) {
-            $stmt_encuestas = $pdo->prepare($consulta_encuestas);
-            $stmt_encuestas->bindParam(':id_user', $id_user, PDO::PARAM_INT);
-            $stmt_encuestas->execute();
-        } else {
-            $consulta_encuestas = "SELECT invitacion.id_encuesta, encuestas.titulo_encuesta, invitacion.token_activo
-                                FROM invitacion
-                                INNER JOIN encuestas ON invitacion.id_encuesta = encuestas.id_encuesta
-                                WHERE invitacion.user_email = :user_email";
-            $stmt_encuestas = $pdo->prepare($consulta_encuestas);
-            $stmt_encuestas->bindParam(':user_email', $user_email, PDO::PARAM_INT);
-            $stmt_encuestas->execute();
-        }
-
-        
-        /* $stmt_encuestas = $pdo->prepare($consulta_encuestas);
+                               WHERE invitacion.id_user = :id_user or invitacion.user_email = :user_email";
+        $stmt_encuestas = $pdo->prepare($consulta_encuestas);
         $stmt_encuestas->bindParam(':id_user', $id_user, PDO::PARAM_INT);
-        $stmt_encuestas->execute(); */
+        $stmt_encuestas->bindParam(':user_email', $user_email, PDO::PARAM_INT);
+        $stmt_encuestas->execute();
 
         echo "<div class='user-info'>Encuestas Realizadas y Pendientes</div>";
         echo "<div class='center'>";
