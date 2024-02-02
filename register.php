@@ -48,14 +48,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             echo "Contenido del prefijo: ";
                             var_dump($prefijo);
 
-                            // Consulta SQL para insertar los datos
                             $insertQuery = "INSERT INTO users (nombre, contrasea_cifrada, email, telefono, nombre_pais, rol, pref, nombre_ciudad, codigo_postal) VALUES ('$nombre', '$password', '$mail', '$telefono', '$pais', 'user', '$prefijo', '$ciudad', '$codigoPostal')";
-                            // Ejecutar la consulta
+
                             if (mysqli_query($conn, $insertQuery)) {
-                                                // Realizar la autenticación del usuario recién registrado
-                                                $usuario = $mail;  // Utilizar el correo electrónico como nombre de usuario
-                                                $contrasenya = $password;  // Utilizar la contraseña cifrada
-                                                // Establecer la conexión a la base de datos con PDO
+                                                $usuario = $mail; 
+                                                $contrasenya = $password;  
                                                 try {
                                                                     $pdo = new PDO('mysql:host=localhost;dbname=votaciones', 'userProyecto', 'votacionesAXP24');
                                                                     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -76,7 +73,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                                     $row = $query->fetch(PDO::FETCH_ASSOC);
                                                                     $nombre_usuario = $row['nombre'];
                                                                     $email = $row['email'];
-                                                                    $idUser = $row['id_user'];                                                                                
+                                                                    $idUser = $row['id_user'];
+                                                                    $searchInvite = "SELECT user_email from invitacion where user_email='$email'";
+                                                                                if (mysqli_query($conn, $searchInvite)) {
+                                                                                                    $updateInvite = "UPDATE invitacion SET email='$email ',id_user=$idUser where user_email='$email '";
+                                                                                                    mysqli_query($conn,$updateInvite);
+                                                                                }
                                                                     session_start();
                                                                     $_SESSION['redirigido'] = true;         
                                                                     $token = generateRandomToken();

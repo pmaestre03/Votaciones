@@ -4,3 +4,9 @@
 2024-02-02 16:04:22 - Inicio de sesión por el usuario: pmaestrefernandez.cf@iesesteveterradas.cat
 2024-02-02 16:08:41 - Inicio de sesión por el usuario: pmaestrefernandez.cf@iesesteveterradas.cat
 2024-02-02 16:38:16 - El usuario: hola@gmail.cpm ha sido creado correctamente
+2024-02-02 18:38:56 - Inicio de sesión por el usuario: pmaestrefernandez.cf@iesesteveterradas.cat
+2024-02-02 18:54:37 - Inicio de sesión por el usuario: pmaestrefernandez.cf@iesesteveterradas.cat
+2024-02-02 18:59:52 - El usuario: pau@gmail.com ha sido creado correctamente
+2024-02-02 19:10:18 - El usuario: pau@gmail.com ha sido creado correctamente
+2024-02-02 19:11:13 - El usuario: pau@gmail.com ha sido creado correctamente
+2024-02-02 19:12:14 - Condiciones aceptadas por el usuario: 
