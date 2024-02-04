@@ -28,7 +28,7 @@ session_destroy();
     <div class="logout-container">
         <p>Hasta pronto, <?php echo $nombreUsuario; ?></p>
     </div>
-
+    <?php registrarEvento("Sesión cerrada por el usuario: ".$_SESSION['email']); ?>
     <?php include("Utilidades/footer.php") ?>
 </body>
 </html>

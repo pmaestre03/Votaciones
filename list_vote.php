@@ -41,14 +41,14 @@
         echo "<div class='user-info'>Encuestas Realizadas y Pendientes</div>";
         echo "<div class='center'>";
         echo "<table>";
-        echo "<tr><th>Título de la Encuesta</th><th>Estado</th></tr>";
+        echo "<tr><th>Título de la Encuesta</th><th>Estado</th><th></th></tr>";
 
         // Mostrar cada encuesta junto con su estado
         while ($row = $stmt_encuestas->fetch(PDO::FETCH_ASSOC)) {
             $id_encuesta = $row['id_encuesta'];
             $titulo_encuesta = $row['titulo_encuesta'];
             $token_activo = $row['token_activo'];
-
+            $_SESSION['id_encuesta'] = $id_encuesta;
             echo "<tr>";
             echo "<td>$titulo_encuesta</td>";
             echo "<td>";
@@ -58,9 +58,9 @@
                 echo "Realizada";
             }
             echo "</td>";
+            echo "<td><button onclick=\"window.location.href='confirm_password.php'\">Ver Voto</button></td>";
             echo "</tr>";
         }
-
         echo "</table>";
         echo "</div>";
     } else {

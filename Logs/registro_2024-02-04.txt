@@ -1,0 +1,8 @@
+2024-02-04 14:08:18 - Intento de inicio de sesión fallido por el usuario: pmaestrefernandez.cf@iesesteveterradas.cat
+2024-02-04 14:09:57 - El usuario: pmaestrefernandez.cf@iesesteveterradas.cat ha sido creado correctamente
+2024-02-04 18:53:43 - Condiciones aceptadas por el usuario: 
+2024-02-04 19:02:30 - El usuario: maestrepau478@gmail.com ha sido creado correctamente
+2024-02-04 19:04:10 - Condiciones aceptadas por el usuario: 
+2024-02-04 19:31:48 - Condiciones rechazadas por el usuario: 
+2024-02-04 19:40:48 - Inicio de sesión por el usuario: pmaestrefernandez.cf@iesesteveterradas.cat
+2024-02-04 20:26:01 - Inicio de sesión por el usuario: pmaestrefernandez.cf@iesesteveterradas.cat

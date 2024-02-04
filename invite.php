@@ -1,5 +1,5 @@
 <script src="./Utilidades/scripts.js"></script>
-<link rel="stylesheet" href="Utilidades/styles.css?no-cache=<?php echo time(); ?>">
+<link rel="stylesheet" href="./Utilidades/styles.css?no-cache=<?php echo time(); ?>">
 <?php
 include("Utilidades/header.php");
 // Obtener el ID de la encuesta desde la URL
@@ -18,7 +18,6 @@ if (isset($_GET['id'])) {
         <input type="text" id="emails" name="emails" required>
         <button type="submit" class="invite-button">Enviar Invitaciones</button>
     </form>
-
     <?php include("Utilidades/footer.php") ?>
 </body>
 </html>
@@ -54,9 +53,9 @@ if (!isset($_SESSION['usuario'])) {
         $mail->SMTPSecure = "tls";
         $mail->Port       = 587;
         $mail->Host       = "smtp.gmail.com";
-        $mail->Username   = "mgonzalezramirez.cf@iesesteveterradas.cat";
-        $mail->Password   = "PlataNoEs18";
-        $mail->SetFrom("mgonzalezramirez.cf@iesesteveterradas.cat", "VotaPAX");
+        $mail->Username   = "pmaestrefernandez.cf@iesesteveterradas.cat";
+        $mail->Password   = "Paumf26!!11";
+        $mail->SetFrom("pmaestrefernandez.cf@iesesteveterradas.cat", "VotaPAX");
 
         try {
             $hostname = "localhost";

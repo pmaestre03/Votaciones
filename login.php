@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -57,7 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($filas > 0) {
             $usuario = htmlspecialchars($_POST["username"]);
             $row = $query->fetch(PDO::FETCH_ASSOC);
-
             $_SESSION['email2'] = $row["email"];
             $_SESSION['usuario2'] = $row['nombre'];
             $_SESSION['id_user'] = $row["id_user"];

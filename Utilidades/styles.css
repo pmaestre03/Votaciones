@@ -876,3 +876,11 @@ border: 1px solid #4caf50;
 #visibilidad_encuesta:hover, #visibilidad_respuestas:hover,#bloqueo {
 border: 1px solid #4caf50;
 }
+
+.button-reject[type="submit"] {
+    background-color: #ff0000d5;
+}
+
+.button-reject:hover[type="submit"] {
+    background-color: #c00101;
+}

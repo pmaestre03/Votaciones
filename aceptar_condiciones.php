@@ -1,9 +1,10 @@
 <?php
+session_start(); // Asegúrate de iniciar la sesión
 if ($_SESSION['condiciones_aceptadas'] == 1) {
     header('Location: dashboard.php');
     exit();
 }
-
+//var_dump($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -23,12 +24,12 @@ if ($_SESSION['condiciones_aceptadas'] == 1) {
         <button type="submit" class="button button-login" name="accept-conditions">Aceptar</button>
     </form>
         <form method="post">
-        <button type="submit" class="button button-login" name="reject-conditions">Rechazar</button>
+        <button type="submit" class="button button-reject" name="reject-conditions">Rechazar</button>
     </form>
 </div>
 
 <?php
-session_start(); // Asegúrate de iniciar la sesión
+
 try {
     $hostname = "localhost";
     $dbname = "votaciones";

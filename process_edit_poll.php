@@ -8,6 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } elseif ($_POST["bloqueo"] == 'accesible') {
                     $bloqueo = 0;
     }
+    registrarEvento("Encuesta editada por el usuario: ".$_SESSION['email']);
     $visibilidadEncuesta = $_POST["visibilidad_encuesta"];
     $visibilidadRespuestas = $_POST["visibilidad_respuestas"];
 
