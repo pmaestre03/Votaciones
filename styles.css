@@ -268,7 +268,7 @@ label {
   font-size: 18px;
 }
 
-input {
+.username, .password {
   padding: 15px;
   margin-bottom: 20px;
   border: 2px solid #ccc;
@@ -664,40 +664,75 @@ body.graphics {
   margin-top: 20px;
 }
 
-/* vote_poll.php */
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-}
+/* vote_poll.css */
 
-.box_img_vote {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px; /* Ajusta según sea necesario */
-}
-
-input[type="radio"] {
-  margin-right: 5px;
+.user-info {
+  margin-bottom: 0px;;
 }
 
 .box_img_vote img {
-  height: 100px;
-  width: 100px;
-  margin-left: 10px; /* Ajusta según sea necesario */
+  max-width: 200px;
+  max-height: 200px; 
+  margin: 0 auto;
+}
+#formVote {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 150px;
+  margin-top: 0px;
 }
 
-button {
+#formVote table {
+  border-collapse: collapse;
+  width: 200px;
+  margin: 10px;
+}
+  
+#formVote table th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+#formVote table th{
+  background-color: #f2f2f2;
+  
+}
+
+#labelVote {
+  text-align: center;
+  display: grid;
+  font-size: 26px;
+}
+
+#formVote table img {
+  max-width: 200px;
+  max-height: 200px; 
+  height: auto;
+  margin-top: 0;
+}
+
+#buttonVote {
   background-color: #4caf50;
   color: white;
-  padding: 10px 20px;
+  padding: 10px 10px;
   border: none;
   cursor: pointer;
   font-size: 1em;
   margin-top: 10px;
+  width: 500px;
 }
 
-button:hover {
+#buttonVote:hover {
   background-color: #45a049;
 }
+
+.box_img_vote {
+  margin-bottom: 0;
+  margin-top: 0px;
+  text-align: center;
+}
+

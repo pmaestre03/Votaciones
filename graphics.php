@@ -29,21 +29,41 @@
         }
 
         // Consulta para obtener información específica de la encuesta
-        $query = 'SELECT * FROM encuestas WHERE id_encuesta = :id_encuesta';
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(':id_encuesta', $id_encuesta, PDO::PARAM_INT);
-        $stmt->execute();
+        $queryEncuesta = 'SELECT * FROM encuestas WHERE id_encuesta = :id_encuesta';
+        $stmtEncuesta = $pdo->prepare($queryEncuesta);
+        $stmtEncuesta->bindParam(':id_encuesta', $id_encuesta, PDO::PARAM_INT);
+        $stmtEncuesta->execute();
 
-        // Obtén los resultados
-        $encuesta = $stmt->fetch(PDO::FETCH_ASSOC);
-
+        // Obtén los resultados de la encuesta
+        $encuesta = $stmtEncuesta->fetch(PDO::FETCH_ASSOC);
 
         // Verifica si el usuario actual es el creador de la encuesta
         if ($encuesta && $encuesta['creador'] == $id_usuario_actual) {
             // Ahora puedes utilizar $encuesta para mostrar la información de la encuesta
             echo "<h1 id='pollName'>Detalles de la Encuesta, {$encuesta['titulo_encuesta']}</h1>";
-            // echo "<div id='dates'><p>Fecha de inicio: {$encuesta['fech_inicio']}</p>";
-            // echo "<p>Fecha de fin: {$encuesta['fecha_fin']}</p></div>";
+
+            // Consulta para obtener votaciones de la encuesta
+            $queryVotaciones = 'SELECT opciones_encuestas.nombre_opciones, COUNT(votaciones_por_usuario.id_voto) as cantidad FROM opciones_encuestas LEFT JOIN votaciones_por_usuario ON opciones_encuestas.id_opciones_encuesta = votaciones_por_usuario.id_opciones_encuesta WHERE opciones_encuestas.id_encuesta = :id_encuesta GROUP BY opciones_encuestas.nombre_opciones;';
+            $stmtVotaciones = $pdo->prepare($queryVotaciones);
+            $stmtVotaciones->bindParam(':id_encuesta', $id_encuesta, PDO::PARAM_INT);
+            $stmtVotaciones->execute();
+
+            // Obtén los resultados de las votaciones
+            $votaciones = $stmtVotaciones->fetchAll(PDO::FETCH_ASSOC);
+
+            // Convierte los resultados de votaciones en arrays para usar en los gráficos
+            $labels = array_column($votaciones, 'nombre_opciones');
+            $data = array_column($votaciones, 'cantidad');
+
+            // Conjunto de colores para ambos gráficos
+            $colores = [
+                'rgba(255, 99, 132, 0.8)',
+                'rgba(54, 162, 235, 0.8)',
+                'rgba(255, 206, 86, 0.8)',
+                'rgba(75, 192, 192, 0.8)',
+                'rgba(153, 102, 255, 0.8)',
+                'rgba(255, 159, 64, 0.8)'
+            ];
 
             echo '<div class="container">';
 
@@ -59,19 +79,22 @@
                     var chartBar = new Chart(ctxBar, {
                         type: 'bar',
                         data: {
-                            labels: ['Opción 1', 'Opción 2', 'Opción 3'],
+                            labels: " . json_encode($labels) . ",
                             datasets: [{
                                 label: 'Cantidad de Votos',
-                                data: [10, 50, 15],
-                                backgroundColor: ['rgba(255, 99, 132)', 'rgba(54, 162, 235)', 'rgba(255, 206, 86)'],
-                                borderColor: ['rgba(255, 99, 132)', 'rgba(54, 162, 235)', 'rgba(255, 206, 86)'],
+                                data: " . json_encode($data) . ",
+                                backgroundColor: " . json_encode($colores) . ",
+                                borderColor: 'rgba(255, 255, 255, 1)',
                                 borderWidth: 1
                             }]
                         },
                         options: {
                             scales: {
                                 y: {
-                                    beginAtZero: true
+                                    beginAtZero: true,
+                                    precision: 0,
+                                    stepSize: 1,
+                                    max: 20
                                 }
                             }
                         }
@@ -79,33 +102,24 @@
                 });
             </script>";
 
-            // Gráfico de quesos a la derecha
-            echo '<div class="chart-container" id="graficoQueso-container"><p>Gráfico de Anillo</p><canvas id="graficoQueso"></canvas></div>';
+            // Gráfico de pastel a la derecha
+            echo '<div class="chart-container" id="graficoQueso-container"><p>Gráfico de Pastel</p><canvas id="graficoPastel"></canvas></div>';
 
             echo "
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
-                    // Configuración para el gráfico de quesos
-                    var ctxQueso = document.getElementById('graficoQueso').getContext('2d');
-                    var chartQueso = new Chart(ctxQueso, {
-                        type: 'doughnut',
+                    // Configuración para el gráfico de pastel
+                    var ctxPie = document.getElementById('graficoPastel').getContext('2d');
+                    var chartPie = new Chart(ctxPie, {
+                        type: 'pie',
                         data: {
-                            labels: ['Opción 1', 'Opción 2', 'Opción 3'],
+                            labels: " . json_encode($labels) . ",
                             datasets: [{
-                                label: 'Cantidad de Votos',
-                                data: [10, 20, 15],
-                                backgroundColor: ['rgba(255, 99, 132)', 'rgba(54, 162, 235)', 'rgba(255, 206, 86)'],
-                                borderColor: ['rgba(255, 99, 132)', 'rgba(54, 162, 235)', 'rgba(255, 206, 86)'],
+                                data: " . json_encode($data) . ",
+                                backgroundColor: " . json_encode($colores) . ",
+                                borderColor: 'rgba(255, 255, 255, 1)',
                                 borderWidth: 1
                             }]
-                        },
-                        options: {
-                            cutout: '80%',
-                            plugins: {
-                                legend: {
-                                    position: 'bottom',
-                                }
-                            }
                         }
                     });
                 });
@@ -115,7 +129,6 @@
             // Resto de la lógica para mostrar gráficos o información adicional
         } else {
             // Manejo de error si el usuario actual no es el creador de la encuesta
-            //ESTARIA BIEN ERROR APACHE
             echo "<p>Error: No tienes permisos para acceder a esta encuesta.</p>";
             echo "<script>showNotification('No tienes permisos para acceder a esta encuesta','red')</script>";
         }
@@ -123,8 +136,6 @@
         unset($pdo);
     } else {
         // Manejo de error si no se proporcionó el parámetro 'id'
-
-        //ESTARIA BIEN ERROR APACHE
         echo "Error: No se proporcionó el parámetro 'id'.";
     }
     ?>

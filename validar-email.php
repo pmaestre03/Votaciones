@@ -24,6 +24,4 @@ if ($result && mysqli_num_rows($result) > 0) {
     echo "Token no válido o expirado.";
 }
 
-
-
 ?>
