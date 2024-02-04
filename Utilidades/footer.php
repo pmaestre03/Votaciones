@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="styles.css?no-cache=<?php echo time(); ?>">
 </head>
 <body>
+    <div class="gif-container">
+        <img src="imagenes/VOTEPAX.gif" alt="Descripción del GIF">
+    </div>
     <footer>
         <div class="footer-content">
             <div class="contact-list">
