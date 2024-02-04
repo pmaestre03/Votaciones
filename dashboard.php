@@ -82,6 +82,19 @@
                     echo '});';
                 echo '</script>';
 
+                echo "<div class='dashboard-box' id='votePolls'>";
+                    echo "<h2>Cambiar contraseña</h2>";
+                echo "</div>";
+
+                echo '<script>';
+                    echo '$(document).ready(function() {';
+                    echo '    $("#votePolls").on("click", function() {';
+                    echo '        window.location.href = "change_password.php";';
+                    echo '    });';
+                    echo '});';
+                echo '</script>';
+
+
             echo "</div>";
             
         } else {

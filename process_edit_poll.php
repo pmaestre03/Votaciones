@@ -1,3 +1,4 @@
+<?php require('Utilidades/scripts2.php') ?>
 <?php
 session_start();
 $id_encuesta = $_SESSION["id_encuesta"];

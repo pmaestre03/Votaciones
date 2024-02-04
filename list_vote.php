@@ -48,7 +48,6 @@
             $id_encuesta = $row['id_encuesta'];
             $titulo_encuesta = $row['titulo_encuesta'];
             $token_activo = $row['token_activo'];
-            $_SESSION['id_encuesta'] = $id_encuesta;
             echo "<tr>";
             echo "<td>$titulo_encuesta</td>";
             echo "<td>";
@@ -58,7 +57,7 @@
                 echo "Realizada";
             }
             echo "</td>";
-            echo "<td><button onclick=\"window.location.href='confirm_password.php'\">Ver Voto</button></td>";
+            echo "<td><button onclick=\"window.location.href='confirm_password.php?id_encuesta=$id_encuesta'\">Ver Voto</button></td>";
             echo "</tr>";
         }
         echo "</table>";

@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="./Utilidades/styles.css?no-cache=<?php echo time(); ?>">
 <script src="Utilidades/scripts.js"></script>
 <?php require('Utilidades/scripts2.php')?>
+<body>
 <div id="notification-container"></div>
 <div class="login-container" id="loginContainer">
 <form method="post">
@@ -21,11 +22,12 @@ try {
     echo "Failed to get DB handle: " . $e->getMessage() . "\n";
     exit;
 }
+$_SESSION['id_encuesta'] = $_GET['id_encuesta'];
 //$_SESSION['email']
 if ($_SERVER["REQUEST_METHOD"] == "POST") { 
     $password = $_POST['confirm_password'];
     $email = $_SESSION['email'];
-
+    
     $password_cifrada = hash('sha512', $_POST["confirm_password"]);
 
     $querystr = "SELECT * FROM users WHERE email=:email AND contrasea_cifrada=:password_cifrada";
@@ -39,11 +41,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($filas > 0) {
         registrarEvento("Contraseña confirmada por el usuario: ".$_SESSION['email']);
+        $_SESSION['password_confirmada'] = true;
         header("Location: view_vote.php");
     } else {
+        
         echo "<script>showNotification('Usuario o contraseña incorrecto','red')</script>"; 
     }
 }
 ?>
 </div>
 <?php include("Utilidades/footer.php") ?>
+</body>

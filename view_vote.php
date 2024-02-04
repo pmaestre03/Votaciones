@@ -1,8 +1,18 @@
+<?php
+session_start(); // Asegúrate de iniciar la sesión
+if ($_SESSION['password_confirmada'] == false) {
+    header('Location: list_vote.php');
+    exit();
+}
+//var_dump($_SESSION);
+?>
+
 <?php include("Utilidades/conexion.php") ?>
 <?php include("Utilidades/header.php") ?>
 <link rel="stylesheet" href="./Utilidades/styles.css?no-cache=<?php echo time(); ?>">
 <script src="Utilidades/scripts.js"></script>
 <?php require('Utilidades/scripts2.php')?>
+<body>
 <div id="notification-container"></div>
 <div class="login-container">
     
@@ -65,3 +75,4 @@ try {
 }
 ?>
 </div>
+</body>

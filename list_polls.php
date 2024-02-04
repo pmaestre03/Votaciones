@@ -85,7 +85,11 @@
                 // echo "<td>{$encuesta['id_encuesta']}</td>";
 
                 echo "<td><button onclick=\"window.location.href='graphics.php?id=$id_encuesta'\">Detalles Encuesta</button></td>";
-                echo "<td><button onclick=\"window.location.href='invite.php?id=$id_encuesta'\">Enviar Invitaciones</button></td>";
+                if ($encuesta['bloqueada'] == 1) {
+                    echo "<td><button disabled>Enviar Invitaciones</button></td>";
+                } elseif ($encuesta['bloqueada'] == 0) {
+                    echo "<td><button onclick=\"window.location.href='invite.php?id=$id_encuesta'\">Enviar Invitaciones</button></td>";
+                }
                 echo "<td><button onclick=\"window.location.href='edit_poll.php'\">Editar Encuesta</button></td>";
                 echo "</tr>";
                 

@@ -6,3 +6,22 @@
 2024-02-04 19:31:48 - Condiciones rechazadas por el usuario: 
 2024-02-04 19:40:48 - Inicio de sesión por el usuario: pmaestrefernandez.cf@iesesteveterradas.cat
 2024-02-04 20:26:01 - Inicio de sesión por el usuario: pmaestrefernandez.cf@iesesteveterradas.cat
+2024-02-04 20:56:20 - Contraseña confirmada por el usuario: pmaestrefernandez.cf@iesesteveterradas.cat
+2024-02-04 20:56:31 - Contraseña confirmada por el usuario: pmaestrefernandez.cf@iesesteveterradas.cat
+2024-02-04 20:56:41 - Contraseña confirmada por el usuario: pmaestrefernandez.cf@iesesteveterradas.cat
+2024-02-04 21:00:29 - Contraseña confirmada por el usuario: pmaestrefernandez.cf@iesesteveterradas.cat
+2024-02-04 21:00:46 - Contraseña confirmada por el usuario: pmaestrefernandez.cf@iesesteveterradas.cat
+2024-02-04 21:03:54 - Encuesta editada por el usuario: pmaestrefernandez.cf@iesesteveterradas.cat
+2024-02-04 21:03:59 - Encuesta editada por el usuario: pmaestrefernandez.cf@iesesteveterradas.cat
+2024-02-04 21:23:37 - Cambio de contraseña incorrecto por el usuario: 
+2024-02-04 21:23:37 - Cambio de contraseña realizada por el usuario: pmaestrefernandez.cf@iesesteveterradas.cat
+2024-02-04 21:24:01 - Cambio de contraseña incorrecto por el usuario: 
+2024-02-04 21:24:15 - Cambio de contraseña realizada por el usuario: pmaestrefernandez.cf@iesesteveterradas.cat
+2024-02-04 21:25:27 - Cambio de contraseña incorrecto por el usuario: pmaestrefernandez.cf@iesesteveterradas.cat
+2024-02-04 21:25:34 - Cambio de contraseña incorrecto por el usuario: 
+2024-02-04 21:33:59 - Cambio de contraseña incorrecto por el usuario: 
+2024-02-04 21:35:36 - Cambio de contraseña incorrecto por el usuario: 
+2024-02-04 21:36:12 - Cambio de contraseña incorrecto por el usuario: 
+2024-02-04 21:37:12 - Cambio de contraseña incorrecto por el usuario: 
+2024-02-04 21:37:27 - Cambio de contraseña realizada por el usuario: pmaestrefernandez.cf@iesesteveterradas.cat
+2024-02-04 21:37:47 - Cambio de contraseña realizada por el usuario: pmaestrefernandez.cf@iesesteveterradas.cat
