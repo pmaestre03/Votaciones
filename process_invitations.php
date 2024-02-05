@@ -1,4 +1,5 @@
 <?php
+session_start();
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 require "vendor/autoload.php";
@@ -6,9 +7,20 @@ require 'PHPMailer-master/src/Exception.php';
 require 'PHPMailer-master/src/PHPMailer.php';
 require 'PHPMailer-master/src/SMTP.php';
 
-$send_password = 'votacionesAXP24';
-
-$query_5 = "SELECT user_email FROM invitacion LIMIT 5";
+try {
+    $hostname = "localhost";
+    $dbname = "votaciones";
+    $username = "userProyecto";
+    $pw = "votacionesAXP24";
+    $pdo = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $pw);
+} catch (PDOException $e) {
+    echo "Failed to get DB handle: " . $e->getMessage() . "\n";
+    exit;
+}
+if (isset($_SESSION['id_encuesta'])) {
+    $id_encuesta = $_SESSION['id_encuesta'];
+    
+$query_5 = "SELECT user_email FROM email_invitacion LIMIT 5";
 $stmt_email = $pdo->prepare($query_5);
 $stmt_email->execute();
 $email_array = $stmt_email->fetchAll(PDO::FETCH_ASSOC);
@@ -16,9 +28,10 @@ $email_array = $stmt_email->fetchAll(PDO::FETCH_ASSOC);
 foreach ($email_array as $email_row) {
     $email = trim($email_row);
 
-    $query_token = "SELECT token FROM invitacion WHERE user_email = :email";
+    $query_token = "SELECT token FROM invitacion WHERE user_email = :email AND id_encuesta = :id_encuesta";
     $stmt_token = $pdo->prepare($query_token);
     $stmt_token->bindParam(':email', $email, PDO::PARAM_STR);
+    $stmt_token->bindParam(':id_encuesta', $id_encuesta, PDO::PARAM_STR);
     $stmt_token->execute();
     $token_row = $stmt_token->fetch(PDO::FETCH_ASSOC);
     $token = $token_row['token'];
@@ -32,9 +45,9 @@ foreach ($email_array as $email_row) {
     $mail->SMTPSecure = "tls";
     $mail->Port       = 587;
     $mail->Host       = "smtp.gmail.com";
-    $mail->Username   = "votapax@gmail.com";
-    $mail->Password   = $send_password;
-    $mail->SetFrom("votapax@gmail.com", "VotaPAX");
+    $mail->Username   = "mgonzalezramirez.cf@iesesteveterradas.cat";
+    $mail->Password   = "PlataNoEs18";
+    $mail->SetFrom("mgonzalezramirez.cf@iesesteveterradas.cat", "VotaPAX");
 
     $mail->AddAddress($email);
     $subjectmail = "Invitado a VotaPAX";
@@ -53,5 +66,5 @@ foreach ($email_array as $email_row) {
 }
 header("Location: index.php");
 exit;
-
+}
 ?>

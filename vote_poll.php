@@ -105,55 +105,65 @@ if(isset($_GET['token'])) {
         $stmt_encuesta_activa = $pdo->prepare($consulta_encuesta_activa);
         $stmt_encuesta_activa->bindParam(':id_encuesta', $id_encuesta, PDO::PARAM_INT);
         $stmt_encuesta_activa->execute();
-        
-        // Consulta SQL para la información de la encuesta y lass opciones
-        $consulta_encuesta = 'SELECT encuestas.titulo_encuesta, encuestas.imagen_titulo, opciones_encuestas.nombre_opciones, opciones_encuestas.imagen_opciones
-                            FROM invitacion
-                            INNER JOIN encuestas ON invitacion.id_encuesta = encuestas.id_encuesta
-                            INNER JOIN opciones_encuestas ON encuestas.id_encuesta = opciones_encuestas.id_encuesta
-                            WHERE invitacion.token = :token';
-        $stmt_encuesta = $pdo->prepare($consulta_encuesta);
-        $stmt_encuesta->bindParam(':token', $token, PDO::PARAM_STR);
-        $stmt_encuesta->execute();
 
-        // Verificar si se encontró un resultado válido
-        if($stmt_encuesta->rowCount() > 0) {
-           
-            $rows = $stmt_encuesta->fetchAll(PDO::FETCH_ASSOC);
+        if($stmt_encuesta_activa->rowCount() > 0) {
+            $encuesta_activa_row = $stmt_encuesta_activa->fetch(PDO::FETCH_ASSOC);
+            $encuesta_activa = $encuesta_activa_row['encuesta_activa'];
 
-            if (!empty($rows)) {
-                $row = $rows[0];
-            
-                $titulo_encuesta = $row['titulo_encuesta'];
-                $imagen_titulo = $row['imagen_titulo'];
-             // Mostrar el título de la encuesta y su imageb
-                echo '<div class="user-info">' . $titulo_encuesta . '</div>';
-                if (isset($imagen_titulo)) {
-                    echo '<div class="box_img_vote">';
-                    echo '<img src="' . $imagen_titulo . '" alt="Imagen de la encuesta">';
-                    echo '</div>';
+            if ($encuesta_activa == 1) {
+                // Consulta SQL para la información de la encuesta y lass opciones
+                $consulta_encuesta = 'SELECT encuestas.titulo_encuesta, encuestas.imagen_titulo, opciones_encuestas.nombre_opciones, opciones_encuestas.imagen_opciones
+                                    FROM invitacion
+                                    INNER JOIN encuestas ON invitacion.id_encuesta = encuestas.id_encuesta
+                                    INNER JOIN opciones_encuestas ON encuestas.id_encuesta = opciones_encuestas.id_encuesta
+                                    WHERE invitacion.token = :token';
+                $stmt_encuesta = $pdo->prepare($consulta_encuesta);
+                $stmt_encuesta->bindParam(':token', $token, PDO::PARAM_STR);
+                $stmt_encuesta->execute();
+
+                // Verificar si se encontró un resultado válido
+                if($stmt_encuesta->rowCount() > 0) {
+                
+                    $rows = $stmt_encuesta->fetchAll(PDO::FETCH_ASSOC);
+
+                    if (!empty($rows)) {
+                        $row = $rows[0];
+                    
+                        $titulo_encuesta = $row['titulo_encuesta'];
+                        $imagen_titulo = $row['imagen_titulo'];
+                    // Mostrar el título de la encuesta y su imageb
+                        echo '<div class="user-info">' . $titulo_encuesta . '</div>';
+                        if (isset($imagen_titulo)) {
+                            echo '<div class="box_img_vote">';
+                            echo '<img src="' . $imagen_titulo . '" alt="Imagen de la encuesta">';
+                            echo '</div>';
+                        }
+                    }
+
+                    // Mostrar las opciones de la encuesta junto con sus imágenes
+                    echo '<form method="post" action="">';
+                    foreach ($rows as $row) {
+                        $nombre_opcion = $row['nombre_opciones'];
+                        $imagen_opcion = $row['imagen_opciones'];
+
+                        echo '<input type="radio" name="opcion_votada" value="' . $nombre_opcion . '">';
+                        echo '<label for="' . $nombre_opcion . '">' . $nombre_opcion . '</label>';
+                        if (isset($imagen_opcion)) {
+                            echo '<div class="box_img_vote">';
+                            echo '<img src="' . $imagen_opcion . '" alt="Imagen de la opción">';
+                            echo '</div>';
+                        }
+                    }
+                    echo '<button type="submit">Votar</button>';
+                    echo '</form>';
+                } else {
+                    // No se encontró ninguna encuesta asociada al token
+                    echo 'No hay ninguna encuesta asociada a este token.';
                 }
+            } else {
+                header("Location: index.php");
+                exit;
             }
-
-            // Mostrar las opciones de la encuesta junto con sus imágenes
-            echo '<form method="post" action="">';
-            foreach ($rows as $row) {
-                $nombre_opcion = $row['nombre_opciones'];
-                $imagen_opcion = $row['imagen_opciones'];
-
-                echo '<input type="radio" name="opcion_votada" value="' . $nombre_opcion . '">';
-                echo '<label for="' . $nombre_opcion . '">' . $nombre_opcion . '</label>';
-                if (isset($imagen_opcion)) {
-                    echo '<div class="box_img_vote">';
-                    echo '<img src="' . $imagen_opcion . '" alt="Imagen de la opción">';
-                    echo '</div>';
-                }
-            }
-            echo '<button type="submit">Votar</button>';
-            echo '</form>';
-        } else {
-            // No se encontró ninguna encuesta asociada al token
-            echo 'No hay ninguna encuesta asociada a este token.';
         }
     }else {
         // El token no es valido
