@@ -31,37 +31,44 @@ try {
     echo "Failed to get DB handle: " . $e->getMessage() . "\n";
     exit;
 }
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if ($_POST['new_password'] === $_POST['old_password']) {
-        echo "<script>showNotification('La nueva contraseña no debe coincidir con la anterior','red')</script>";
-        registrarEvento("Cambio de contraseña incorrecto por el usuario: $email");
-    } else{
-        $hashed_old_password = hash('sha512', $_POST['old_password']);
-        $hashed_new_password = hash('sha512', $_POST['new_password']);
-        $hashed_repeat_new_password = hash('sha512', $_POST['repeat_new_password']);
-        $email = $_SESSION['email'];
-        $querystr = "SELECT * FROM users WHERE email=:email AND contrasea_cifrada=:hashed_old_password";
-        $query = $pdo->prepare($querystr);
-        $query->bindParam(':email', $email , PDO::PARAM_STR);
-        $query->bindParam(':hashed_old_password', $hashed_old_password, PDO::PARAM_STR);
-        $query->execute();
-
-        $filas = $query->rowCount();
-
-        if ($filas > 0) {
-            $updateQuery = "UPDATE users SET contrasea_cifrada=:hashed_new_password WHERE email=:email";
-            $updateStatement = $pdo->prepare($updateQuery);
-            $updateStatement->bindParam(':hashed_new_password', $hashed_new_password, PDO::PARAM_STR);
-            $updateStatement->bindParam(':email', $email, PDO::PARAM_STR);
-            $updateStatement->execute();
-            echo "<script>showNotification('Cambio de contraseña correcto')</script>";
-            registrarEvento("Cambio de contraseña realizada por el usuario: $email");
-        } else {
-            echo "<script>showNotification('Contraseña actual incorrecta','red')</script>";
+if (isset($_SESSION['email'])) {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if ($_POST['new_password'] === $_POST['old_password']) {
+            echo "<script>showNotification('La nueva contraseña no debe coincidir con la anterior','red')</script>";
             registrarEvento("Cambio de contraseña incorrecto por el usuario: $email");
+        } else{
+            $hashed_old_password = hash('sha512', $_POST['old_password']);
+            $hashed_new_password = hash('sha512', $_POST['new_password']);
+            $hashed_repeat_new_password = hash('sha512', $_POST['repeat_new_password']);
+            $email = $_SESSION['email'];
+            $querystr = "SELECT * FROM users WHERE email=:email AND contrasea_cifrada=:hashed_old_password";
+            $query = $pdo->prepare($querystr);
+            $query->bindParam(':email', $email , PDO::PARAM_STR);
+            $query->bindParam(':hashed_old_password', $hashed_old_password, PDO::PARAM_STR);
+            $query->execute();
+    
+            $filas = $query->rowCount();
+    
+            if ($filas > 0) {
+                $updateQuery = "UPDATE users SET contrasea_cifrada=:hashed_new_password WHERE email=:email";
+                $updateStatement = $pdo->prepare($updateQuery);
+                $updateStatement->bindParam(':hashed_new_password', $hashed_new_password, PDO::PARAM_STR);
+                $updateStatement->bindParam(':email', $email, PDO::PARAM_STR);
+                $updateStatement->execute();
+                echo "<script>showNotification('Cambio de contraseña correcto')</script>";
+                registrarEvento("Cambio de contraseña realizada por el usuario: $email");
+            } else {
+                echo "<script>showNotification('Contraseña actual incorrecta','red')</script>";
+                registrarEvento("Cambio de contraseña incorrecto por el usuario: $email");
+            }
         }
-    }
-}   
+    }   
+} else {
+    header("Location: ../errores/error403.php");
+    http_response(403);
+    exit;
+}
+
 
 ?>
 <script>

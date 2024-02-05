@@ -24,30 +24,37 @@ try {
 }
 $_SESSION['id_encuesta'] = $_GET['id_encuesta'];
 //$_SESSION['email']
-if ($_SERVER["REQUEST_METHOD"] == "POST") { 
-    $password = $_POST['confirm_password'];
-    $email = $_SESSION['email'];
-    
-    $password_cifrada = hash('sha512', $_POST["confirm_password"]);
-
-    $querystr = "SELECT * FROM users WHERE email=:email AND contrasea_cifrada=:password_cifrada";
-    $query = $pdo->prepare($querystr);
-    $query->bindParam(':email', $email, PDO::PARAM_STR);
-    $query->bindParam(':password_cifrada', $password_cifrada, PDO::PARAM_STR);
-
-    $query->execute();
-
-    $filas = $query->rowCount();
-
-    if ($filas > 0) {
-        registrarEvento("Contraseña confirmada por el usuario: ".$_SESSION['email']);
-        $_SESSION['password_confirmada'] = true;
-        header("Location: view_vote.php");
-    } else {
+if (isset($_SESSION['email'])) {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") { 
+        $password = $_POST['confirm_password'];
+        $email = $_SESSION['email'];
         
-        echo "<script>showNotification('Usuario o contraseña incorrecto','red')</script>"; 
+        $password_cifrada = hash('sha512', $_POST["confirm_password"]);
+
+        $querystr = "SELECT * FROM users WHERE email=:email AND contrasea_cifrada=:password_cifrada";
+        $query = $pdo->prepare($querystr);
+        $query->bindParam(':email', $email, PDO::PARAM_STR);
+        $query->bindParam(':password_cifrada', $password_cifrada, PDO::PARAM_STR);
+
+        $query->execute();
+
+        $filas = $query->rowCount();
+
+        if ($filas > 0) {
+            registrarEvento("Contraseña confirmada por el usuario: ".$_SESSION['email']);
+            $_SESSION['password_confirmada'] = true;
+            header("Location: view_vote.php");
+        } else {
+            
+            echo "<script>showNotification('Usuario o contraseña incorrecto','red')</script>"; 
+        }
     }
+}   else {
+    header("Location: ../errores/error403.php");
+    http_response(403);
+    exit;
 }
+
 ?>
 </div>
 <?php include("Utilidades/footer.php") ?>

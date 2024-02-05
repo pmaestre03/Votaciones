@@ -7,11 +7,12 @@
 <?php 
 
 try {
-                    $pdo = new PDO('mysql:host=localhost;dbname=votaciones', 'userProyecto', 'votacionesAXP24');
-                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo = new PDO('mysql:host=localhost;dbname=votaciones', 'userProyecto', 'votacionesAXP24');
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-                    die("Error en la conexión a la base de datos: " . $e->getMessage());
+    die("Error en la conexión a la base de datos: " . $e->getMessage());
 }
+if (isset($_SESSION['id_encuesta'])) {
 $id_encuesta = $_SESSION["id_encuesta"];
 $find_poll = "SELECT titulo_encuesta,estado_enunciado,estado_respuestas,bloqueada FROM encuestas where id_encuesta=:id_encuesta";
 $query = $pdo->prepare($find_poll);
@@ -20,9 +21,14 @@ $query->execute();
 $filas = $query->rowCount();
 
 if ($filas > 0) {
-                    $row = $query->fetch(PDO::FETCH_ASSOC);
-                    $titulo_encuesta = $row['titulo_encuesta'];
-                    echo "<h1>".$titulo_encuesta."</h1>";
+    $row = $query->fetch(PDO::FETCH_ASSOC);
+    $titulo_encuesta = $row['titulo_encuesta'];
+    echo "<h1>".$titulo_encuesta."</h1>";
+}
+} else {
+    header("Location: ../errores/error403.php");
+    http_response(403);
+    exit;
 }
 ?>
 <label for="bloqueo">Disponibilidad:</label>
