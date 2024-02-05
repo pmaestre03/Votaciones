@@ -60,14 +60,17 @@ try {
             foreach ($result as $row) {
                 $opciones_encuesta_id = $row['opciones_encuesta_id'];
                 //echo $opciones_encuesta_id;
-                $querystr = "SELECT nombre_opciones FROM opciones_encuestas WHERE id_opciones_encuesta=:opciones_encuesta_id";
+                $querystr = "SELECT nombre_opciones,imagen_opciones FROM opciones_encuestas WHERE id_opciones_encuesta=:opciones_encuesta_id";
                 $query = $pdo->prepare($querystr);
                 $query->bindParam(':opciones_encuesta_id', $opciones_encuesta_id ,PDO::PARAM_STR);
                 $query->execute();
                 $result = $query->fetchAll(PDO::FETCH_ASSOC);
                 if (count($result) > 0) {
                     foreach ($result as $row) {
-                        echo '<h2> Tu voto ha sido: '.$row['nombre_opciones'].'</h2>';
+                                        echo '<br><h2>Tu voto ha sido:<br> '.$row['nombre_opciones'].'</h2><br>';
+                                        if ($row['imagen_opciones']!='NULL') {
+                                                            echo "<img src='./".$row['imagen_opciones']."' width=500px>";
+                                        }
                     }
             }
         }

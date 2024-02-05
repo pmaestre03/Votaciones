@@ -5,13 +5,14 @@
 <div class="login-container">
                 <form method="post" action="process_edit_poll.php">
 <?php 
-
+session_start();
 try {
     $pdo = new PDO('mysql:host=localhost;dbname=votaciones', 'userProyecto', 'votacionesAXP24');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     die("Error en la conexión a la base de datos: " . $e->getMessage());
 }
+$_SESSION["id_encuesta"] = $_GET['id_encuesta'];
 if (isset($_SESSION['id_encuesta'])) {
 $id_encuesta = $_SESSION["id_encuesta"];
 $find_poll = "SELECT titulo_encuesta,estado_enunciado,estado_respuestas,bloqueada FROM encuestas where id_encuesta=:id_encuesta";

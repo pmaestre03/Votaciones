@@ -53,10 +53,13 @@
 
                 if ($fechaActual >= $inicioEncuesta && $fechaActual <= $finEncuesta) {
                 echo "<td class='publica'>Activa</td>"; 
+                $inactiva = false;
                 } if ($fechaActual < $inicioEncuesta) {
                 echo "<td class='oculta'>No Activa</td>";
+                $inactiva = true;
                 } if ($fechaActual > $finEncuesta){
                 echo "<td class='finalizada'>Finalizada</td>";
+                $inactiva = true;
                 }
 
                 if ($encuesta['bloqueada'] == 1) {
@@ -81,21 +84,17 @@
                     echo "<td class='publica'>Publica</td>";
                 }
                 $id_encuesta = $encuesta['id_encuesta'];
-                $_SESSION["id_encuesta"] = $id_encuesta;
                 // echo "<td>{$encuesta['id_encuesta']}</td>";
 
                 echo "<td><button onclick=\"window.location.href='graphics.php?id=$id_encuesta'\">Detalles Encuesta</button></td>";
-                if ($encuesta['bloqueada'] == 1) {
+                if ($encuesta['bloqueada'] == 1 || $inactiva == true) {
                     echo "<td><button disabled>Enviar Invitaciones</button></td>";
-                } elseif ($encuesta['bloqueada'] == 0) {
+                } elseif ($encuesta['bloqueada'] == 0  || $inactiva == false) {
                     echo "<td><button onclick=\"window.location.href='invite.php?id=$id_encuesta'\">Enviar Invitaciones</button></td>";
                 }
-                echo "<td><button onclick=\"window.location.href='edit_poll.php'\">Editar Encuesta</button></td>";
+                echo "<td><button onclick=\"window.location.href='edit_poll.php?id_encuesta=$id_encuesta'\">Editar Encuesta</button></td>";
                 echo "</tr>";
-                
-
             }
-
             echo "</table>";
             echo "</div>";
         } else {
@@ -106,7 +105,6 @@
         unset($stmt);
         
     }else {
-            //header("HTTP/1.1 403 Forbidden");
             header("Location: ../errores/error403.php");
             http_response(403);
             exit;
