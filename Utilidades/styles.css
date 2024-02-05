@@ -3,6 +3,8 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  overflow-y: auto;
+  margin-bottom: 150px;
 }
 
 header {
@@ -73,6 +75,11 @@ h1 {
 
 /* footer.php */
 
+.gif-container {
+  text-align: center;
+}
+
+
 body.footer {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -85,16 +92,9 @@ footer {
   color: #fff;
   padding: 0 10px;
   text-align: center;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 98.95%;
-}
-
-.gif-container {
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
 }
 
 .footer-content {
@@ -146,12 +146,16 @@ footer {
   color: white;
 }
 
+
+
 /* index.php */
 
 body.index {
   text-align: center;
   margin: 0;
   padding: 0;
+  overflow-y: auto;
+  margin-bottom: 150px;
 }
 
 .contenedor_indice {
@@ -167,6 +171,8 @@ body.dashboard {
   font-family: Arial, sans-serif;
   width: 100%;
   margin: 0;
+  overflow-y: auto;
+  margin-bottom: 150px;
 }
 
 .user-info {
@@ -225,17 +231,21 @@ body.dashboard {
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-
   max-height: 650px;
   overflow-y: auto;
 }
 
+.poll-container label {
+  margin-top: 25px;
+}
 /* login.php */
 
 body.login {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  overflow-y: auto;
+  margin-bottom: 150px;
 }
 
 .content-paragraph {
@@ -273,7 +283,7 @@ label {
   font-size: 18px;
 }
 
-input {
+.username, .password {
   padding: 15px;
   margin-bottom: 20px;
   border: 2px solid #ccc;
@@ -303,6 +313,8 @@ body.logout {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  overflow-y: auto;
+  margin-bottom: 150px;
 }
 
 .logout-container {
@@ -324,16 +336,16 @@ body.logout {
 /* feedback */
 
 #notification-container {
-  position: fixed;
-  top: 100px;
-  right: 10px;
-  max-width: 400px;
-  z-index: 9999;
-  margin-bottom: 150px;
-  display: flex;
-  flex-direction: column;
-  max-height: 70vh;
-  overflow-y: auto;
+position: fixed;
+top: 100px;
+right: 10px;
+max-width: 400px;
+z-index: 9999;
+margin-bottom: 150px;
+display: flex;
+flex-direction: column; 
+max-height: 70vh;
+overflow-y: auto;
 }
 
 .notification {
@@ -365,6 +377,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  margin-bottom: 50px;
 }
 
 th,
@@ -549,6 +562,8 @@ body.dashboard {
   font-family: Arial, sans-serif;
   width: 100%;
   margin: 0;
+  overflow-y: auto;
+  margin-bottom: 150px;
 }
 
 .user-info {
@@ -595,87 +610,8 @@ body.graphics {
   min-height: 100vh;
   margin: 0;
   padding: 0;
-}
-
-#pollName {
-  margin-top: 30px;
-}
-
-.container {
-  display: flex;
-  justify-content: space-between;
-  width: 1200px;
-  margin: auto;
-}
-
-.chart-container {
-  width: 55%;
-  padding: 20px;
-  box-sizing: border-box;
-  margin-top: 80px;
-}
-
-#graficoQueso-container {
-  width: 30%; /* Ajusta el ancho del gráfico de quesos según tus necesidades */
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.chart-container p {
-  text-align: center;
-  font-size: 20px;
-}
-
-/* invite.php */
-
-.invite-form {
-  max-width: 800px; /* Limitar el ancho del formulario para que no se extienda demasiado */
-  margin: 50px auto; /* Centrar el formulario en la página */
-  padding: 20px; /* Agregar espacio interno al formulario */
-  border: 1px solid #ddd; /* Agregar un borde al formulario */
-  border-radius: 10px; /* Agregar bordes redondeados */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Agregar sombra al formulario */
-}
-
-.invite-form label {
-  display: block;
-  margin: 10px 0 5px; /* Espaciado entre etiquetas */
-}
-
-.invite-form input {
-  width: 100%; /* Hacer que el campo de entrada ocupe el ancho completo */
-  padding: 10px; /* Agregar espacio interno al campo de entrada */
-  margin: 5px 0 20px; /* Ajustar márgenes para el campo de entrada */
-  box-sizing: border-box; /* Incluir el relleno y el borde en el ancho total */
-}
-
-.invite-form button {
-  background-color: #4caf50;
-  border: none;
-  color: white;
-  padding: 15px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  cursor: pointer;
-  width: 100%; /* Hacer que el botón ocupe el ancho completo */
-  margin-top: 20px; /* Ajustar margen superior para el botón */
-  border-radius: 5px; /* Agregar bordes redondeados al botón */
-}
-
-/* Estilo adicional para la notificación */
-#notification-container {
-  text-align: center;
-  margin-top: 20px;
-}
-
-/* graphics.php */
-body.graphics {
   overflow-y: auto;
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
+  margin-bottom: 150px;
 }
 
 #pollName {
@@ -687,6 +623,7 @@ body.graphics {
   justify-content: space-between;
   width: 1200px;
   margin: auto;
+  margin-bottom: 60px;
 }
 
 .chart-container {
@@ -697,7 +634,7 @@ body.graphics {
 }
 
 #graficoQueso-container {
-  width: 30%; /* Ajusta el ancho del gráfico de quesos según tus necesidades */
+  width: 30%;
   padding: 20px;
   box-sizing: border-box;
 }
@@ -710,24 +647,24 @@ body.graphics {
 /* invite.php */
 
 .invite-form {
-  max-width: 800px; /* Limitar el ancho del formulario para que no se extienda demasiado */
-  margin: 50px auto; /* Centrar el formulario en la página */
-  padding: 20px; /* Agregar espacio interno al formulario */
-  border: 1px solid #ddd; /* Agregar un borde al formulario */
-  border-radius: 10px; /* Agregar bordes redondeados */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Agregar sombra al formulario */
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .invite-form label {
   display: block;
-  margin: 10px 0 5px; /* Espaciado entre etiquetas */
+  margin: 10px 0 5px;
 }
 
 .invite-form input {
-  width: 100%; /* Hacer que el campo de entrada ocupe el ancho completo */
-  padding: 10px; /* Agregar espacio interno al campo de entrada */
-  margin: 5px 0 20px; /* Ajustar márgenes para el campo de entrada */
-  box-sizing: border-box; /* Incluir el relleno y el borde en el ancho total */
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 20px;
+  box-sizing: border-box;
 }
 
 .invite-form button {
@@ -740,23 +677,85 @@ body.graphics {
   display: inline-block;
   font-size: 16px;
   cursor: pointer;
-  width: 100%; /* Hacer que el botón ocupe el ancho completo */
-  margin-top: 20px; /* Ajustar margen superior para el botón */
-  border-radius: 5px; /* Agregar bordes redondeados al botón */
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 5px;
 }
 
-/* Estilo adicional para la notificación */
 #notification-container {
   text-align: center;
   margin-top: 20px;
 }
 
-/* VOTE_POLL.php */
-.box_img_vote {
-  display: flex;
-  flex-direction: column;
-  width: 30%;
-  margin: 0px auto 80px auto;
-  text-align: center;
-  padding: 30px;
+/* vote_poll.css */
+
+.user-info {
+  margin-bottom: 0px;;
 }
+
+.box_img_vote img {
+  max-width: 200px;
+  max-height: 200px; 
+  margin: 0 auto;
+}
+#formVote {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 50px;
+  margin-top: 0px;
+}
+
+#formVote table {
+  border-collapse: collapse;
+  width: 200px;
+  margin: 10px;
+}
+  
+#formVote table th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+#formVote table th{
+  background-color: #f2f2f2;
+  
+}
+
+#labelVote {
+  text-align: center;
+  display: grid;
+  font-size: 26px;
+}
+
+#formVote table img {
+  max-width: 200px;
+  max-height: 200px; 
+  height: auto;
+  margin-top: 0;
+}
+
+#buttonVote {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+  margin-top: 10px;
+  width: 500px;
+}
+
+#buttonVote:hover {
+  background-color: #45a049;
+}
+
+.box_img_vote {
+  margin-bottom: 0;
+  margin-top: 0px;
+  text-align: center;
+}
+
