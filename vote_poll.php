@@ -90,9 +90,21 @@ if(isset($_GET['token'])) {
     $stmt_token = $pdo->prepare($consulta_token);
     $stmt_token->bindParam(':token', $token, PDO::PARAM_STR);
     $stmt_token->execute();
-    
+
     // Verificar si se encontro un resultado válido
     if($stmt_token->rowCount() > 0) {
+        // Obtener el ID de la encuesta asociada al token
+        $invitacion_row = $stmt_token->fetch(PDO::FETCH_ASSOC);
+        $id_encuesta = $invitacion_row['id_encuesta'];
+
+        // Consultar el valor de encuesta_activa para la encuesta asociada al token
+        $consulta_encuesta_activa = 'SELECT encuestas.encuesta_activa 
+                                     FROM encuestas
+                                     INNER JOIN invitacion ON encuestas.id_encuesta = invitacion.id_encuesta
+                                     WHERE invitacion.id_encuesta = :id_encuesta';
+        $stmt_encuesta_activa = $pdo->prepare($consulta_encuesta_activa);
+        $stmt_encuesta_activa->bindParam(':id_encuesta', $id_encuesta, PDO::PARAM_INT);
+        $stmt_encuesta_activa->execute();
         
         // Consulta SQL para la información de la encuesta y lass opciones
         $consulta_encuesta = 'SELECT encuestas.titulo_encuesta, encuestas.imagen_titulo, opciones_encuestas.nombre_opciones, opciones_encuestas.imagen_opciones
