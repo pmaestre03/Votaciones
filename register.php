@@ -589,7 +589,7 @@ function crearSiguienteFormulario() {
 }
 });
 </script>
-<?php include("Utilidades/footer.php") ?>
 </body>
+<?php include("Utilidades/footer.php") ?>
 
 </html>

@@ -51,17 +51,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $id_opciones_encuesta = $row['id_opciones_encuesta'];
 
             // Insertar el voto en la tabla votaciones_por_usuario
-            $consulta_insert_voto = 'INSERT INTO votaciones_por_usuario (id_encuesta, id_opciones_encuesta, registro, token) VALUES (:id_encuesta, :id_opciones_encuesta, true, :token)';
+            $consulta_insert_voto = 'INSERT INTO votaciones_por_usuario (id_encuesta, registro, token) VALUES (:id_encuesta, true, :token)';
             $stmt_insert_voto = $pdo->prepare($consulta_insert_voto);
             $stmt_insert_voto->bindParam(':id_encuesta', $id_encuesta, PDO::PARAM_INT);
-            $stmt_insert_voto->bindParam(':id_opciones_encuesta', $id_opciones_encuesta, PDO::PARAM_INT);
             $stmt_insert_voto->bindParam(':token', $token, PDO::PARAM_STR);
             $stmt_insert_voto->execute();
 
-            $pdo->commit();
-            header("Location: index.php");
-            showNotification("Encuesta votada correctamente","green");
-            exit;
+            $consulta_insert_voto_encriptado = 'INSERT INTO votos_encriptados (token_encriptado, opciones_encuesta_id ) VALUES (:token_encriptado, :id_opciones_encuesta)';
+            $stmt_insert_voto_encriptado = $pdo->prepare($consulta_insert_voto_encriptado);
+            $stmt_insert_voto_encriptado->bindParam(':id_opciones_encuesta', $id_opciones_encuesta, PDO::PARAM_INT);
+            $token_encriptado = hash('sha512', $token);
+            $stmt_insert_voto_encriptado->bindParam(':token_encriptado', $token_encriptado, PDO::PARAM_STR);
+            $stmt_insert_voto_encriptado->execute();
+            $pdo->commit(); 
+            registrarEvento("Voto registrado");
+            echo "¡Tu voto ha sido registrado con éxito!";
         } catch (PDOException $e) {
             // Rollback de la transacción en caso de error
             $pdo->rollback();

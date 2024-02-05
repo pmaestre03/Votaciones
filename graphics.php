@@ -43,7 +43,8 @@
             echo "<h1 id='pollName'>Detalles de la Encuesta, {$encuesta['titulo_encuesta']}</h1>";
 
             // Consulta para obtener votaciones de la encuesta
-            $queryVotaciones = 'SELECT opciones_encuestas.nombre_opciones, COUNT(votaciones_por_usuario.id_voto) as cantidad FROM opciones_encuestas LEFT JOIN votaciones_por_usuario ON opciones_encuestas.id_opciones_encuesta = votaciones_por_usuario.id_opciones_encuesta WHERE opciones_encuestas.id_encuesta = :id_encuesta GROUP BY opciones_encuestas.nombre_opciones;';
+            // $queryVotaciones = 'SELECT opciones_encuestas.nombre_opciones, COUNT(votaciones_por_usuario.id_voto) as cantidad FROM opciones_encuestas LEFT JOIN votaciones_por_usuario ON opciones_encuestas.id_opciones_encuesta = votaciones_por_usuario.id_opciones_encuesta WHERE opciones_encuestas.id_encuesta = :id_encuesta GROUP BY opciones_encuestas.nombre_opciones;';
+            $queryVotaciones = 'SELECT opciones_encuestas.nombre_opciones, COUNT(votos_encriptados.opciones_encuesta_id) AS cantidad FROM opciones_encuestas LEFT JOIN votos_encriptados ON votos_encriptados.opciones_encuesta_id = opciones_encuestas.id_opciones_encuesta WHERE opciones_encuestas.id_encuesta = :id_encuesta GROUP BY opciones_encuestas.id_opciones_encuesta;';
             $stmtVotaciones = $pdo->prepare($queryVotaciones);
             $stmtVotaciones->bindParam(':id_encuesta', $id_encuesta, PDO::PARAM_INT);
             $stmtVotaciones->execute();
