@@ -17,8 +17,8 @@ try {
     echo "Failed to get DB handle: " . $e->getMessage() . "\n";
     exit;
 }
-if (isset($_SESSION['id_encuesta'])) {
-    $id_encuesta = $_SESSION['id_encuesta'];
+if (!isset($_SESSION['id_encuesta'])) {
+    $id_encuesta = 1;
     
 $query_5 = "SELECT user_email FROM email_invitacion LIMIT 5";
 $stmt_email = $pdo->prepare($query_5);
@@ -26,7 +26,7 @@ $stmt_email->execute();
 $email_array = $stmt_email->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($email_array as $email_row) {
-    $email = trim($email_row);
+    $email = trim($email_row['user_email']);
 
     $query_token = "SELECT token FROM invitacion WHERE user_email = :email AND id_encuesta = :id_encuesta";
     $stmt_token = $pdo->prepare($query_token);
