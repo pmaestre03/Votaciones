@@ -35,7 +35,7 @@ try {
     $result = $query->fetchAll(PDO::FETCH_ASSOC);
     if (count($result) > 0) {
         foreach ($result as $row) {
-            echo '<h1>'.$row['titulo_encuesta'].'</h1>';
+            echo '<h1>Encuesta: '.$row['titulo_encuesta'].'</h1>';
         }
     }
 
