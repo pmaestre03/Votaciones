@@ -30,19 +30,20 @@ try {
          exit;
 }
 
-if (isset($_GET['token'])) {
-         $token = $_GET['token'];
-         $consulta_reset_password = 'SELECT email_reset FROM reset_password WHERE token_password = :token';
-         $stmt_reset = $pdo->prepare($consulta_reset_password);
-         $stmt_reset->bindParam(':token', $token, PDO::PARAM_STR);
-         $stmt_reset->execute();
-         $result = $stmt_reset->fetch(PDO::FETCH_ASSOC);
+$token = $_GET['token'];
+$consulta_reset_password = 'SELECT email_reset FROM reset_password WHERE token_password = :token';
+$stmt_reset = $pdo->prepare($consulta_reset_password);
+$stmt_reset->bindParam(':token', $token, PDO::PARAM_STR);
+$stmt_reset->execute();
+$result = $stmt_reset->fetch(PDO::FETCH_ASSOC);
 
-         if (!$result) {
-                  header("HTTP/1.1 403 Forbidden");
-                  include("../errores/error403.php");
-                  exit;
-         }
+if (!$result) {
+         header("HTTP/1.1 403 Forbidden");
+         include("../errores/error403.php");
+         exit;
+}
+
+if (isset($_GET['token'])) {
          if (isset($_POST["new_password"])) {
                   $token = $_GET["token"];
                   $consulta_reset_password = 'SELECT email_reset from reset_password  where token_password = :token';
