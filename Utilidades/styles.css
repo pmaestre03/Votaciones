@@ -397,7 +397,7 @@ body.logout {
 
 /* feedback */
 
-#notification-container {
+#notification-container, #notification-container-dinamic {
   position: fixed;
   top: 100px;
   right: 10px;

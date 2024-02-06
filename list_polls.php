@@ -98,6 +98,7 @@
             echo "</table>";
             echo "</div>";
         } else {
+            echo "<div class='user-info'>No hay encuestas creadas</div>";
             echo "<script>showNotification('No hay encuestas creadas','red')</script>";
         }
 

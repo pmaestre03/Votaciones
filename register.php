@@ -133,15 +133,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <?php include("Utilidades/header.php") ?>
 
-<div id="notification-container"></div>
+<div id="register"></div>
 <script>
 $(document).ready(function () {
 var titulo = $('<h1>', { class: 'register-info' });
 titulo.text('Registro');
-$('body').append(titulo);
+$('#register').after(titulo);
 
 var divContenedor = $('<div>', { class: 'register-container' });
-$('body').append(divContenedor);
+$('.register-info').after(divContenedor);
 
 var divNotification = $('<div>', {id: 'notification-container'})
 divContenedor.append(divNotification); 

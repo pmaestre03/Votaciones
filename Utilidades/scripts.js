@@ -32,7 +32,7 @@ $(document).ready(function () {
     });
     box_poll.append(fecha_inicio, inputElement, buttonElement);
     container_poll.append(box_poll);
-    $('#notification-container-dinamic').after(container_poll);
+    $('.user-info').after(container_poll);
 $('#validate').click(function(){
     if (box_poll.next('#box').length === 0) {
     validatePoll($(this).prev("input[name]").attr("name"));  }
@@ -125,7 +125,7 @@ function createBoxOptions(optionNumber) {
         $('<button>').attr({ class: 'add-option button-login', 'data-option': optionNumber }).text('Añadir opción').prop('disabled', false).click(function(){
             var currentOptionNumber = $(this).data('option');
             if ($('input[name=opcion' + currentOptionNumber + ']').val().trim() === "") {
-                showNotificationDinamic("La opción " + currentOptionNumber + " no puede estar vacía", 'red');
+                showNotification("La opción " + currentOptionNumber + " no puede estar vacía", 'red');
             } else {
                 createBoxOptions(optionNumber + 1);
                 scrollToBottom();
@@ -143,7 +143,7 @@ function createBoxOptions(optionNumber) {
                 if (opcionValue !== "") {
                     nameOpciones.push(opcionValue);
                 } else {
-                    showNotificationDinamic("La opción " + i + " no puede estar vacía", 'red');
+                    showNotification("La opción " + i + " no puede estar vacía", 'red');
                     return;
                 }
             }
@@ -168,7 +168,7 @@ function validatePoll(inputType){
             var dateHoy = new Date();
             var dateInicio = new Date(nameInicio);
             if (nameInicio.trim()===""){
-                showNotificationDinamic("La fecha inicial no puede estar vacía", 'red');
+                showNotification("La fecha inicial no puede estar vacía", 'red');
             }
             else if((dateInicio)=>dateHoy){
                 localStorage.setItem('nameInicio',nameInicio);
@@ -177,7 +177,7 @@ function validatePoll(inputType){
                 createBoxFinal();
             }
             else{
-                showNotificationDinamic("La fecha inicial tiene que ser posterior al dia de hoy", "red");
+                showNotification("La fecha inicial tiene que ser posterior al dia de hoy", "red");
             }  
             break;
 
@@ -187,10 +187,10 @@ function validatePoll(inputType){
             var dateInicio = new Date(nameInicio);
             var dateFinal = new Date(nameFinal);
             if (nameFinal.trim()===""){
-                showNotificationDinamic("La fecha final no puede estar vacía", 'red');
+                showNotification("La fecha final no puede estar vacía", 'red');
             }
             else if(dateFinal<dateInicio){
-                showNotificationDinamic("La fecha final no puede ser inferior a la fecha inicial", "red");
+                showNotification("La fecha final no puede ser inferior a la fecha inicial", "red");
             } 
             else{
                 localStorage.setItem('nameFinal',nameFinal);
@@ -203,7 +203,7 @@ function validatePoll(inputType){
         case "titulo":
             var nameTitulo = $('input[name=titulo]').val();
             if(nameTitulo.trim()===""){
-                showNotificationDinamic("El titulo no puede estar vacío", 'red');
+                showNotification("El titulo no puede estar vacío", 'red');
             }
             else{
                 localStorage.setItem('nameTitulo',nameTitulo);
@@ -272,26 +272,6 @@ function createBoxBD() {
 
 function showNotification(message, bgColor) {
     var notificationContainer = $("#notification-container");
-
-    var notificationDiv = $("<div>").addClass("notification");
-    notificationDiv.text(message);
-
-    if (bgColor) {
-        notificationDiv.css("background-color", bgColor);
-    }
-
-    var closeButton = $("<button>").addClass("close-button");
-    closeButton.html("&times;");
-    closeButton.click(function () {
-        notificationDiv.remove();
-    });
-
-    notificationDiv.append(closeButton);
-    notificationContainer.prepend(notificationDiv);
-}
-
-function showNotificationDinamic(message, bgColor) {
-    var notificationContainer = $("#notification-container-dinamic");
 
     var notificationDiv = $("<div>").addClass("notification");
     notificationDiv.text(message);

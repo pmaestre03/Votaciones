@@ -9,11 +9,11 @@
         <script src="Utilidades/scripts.js"></script>
 </head>
 <?php require('Utilidades/scripts2.php')?>
-<body class="create_poll">
-<?php include("Utilidades/conexion.php") ?>
 <?php include("Utilidades/header.php") ?>
-
-<div id="notification-container-dinamic"></div>
+<?php include("Utilidades/conexion.php") ?>
+<body class="create_poll">
+<div class='user-info'>Crear encuesta</div>
+<div id="notification-container"></div>
 <?php
 if (isset($_SESSION['usuario'])) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
