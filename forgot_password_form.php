@@ -54,7 +54,7 @@ if (isset($_POST["mail"])) {
 
          // Agregar destinatario y contenido del mensaje
          $mail->AddAddress($email);
-         $subjectmail = "Invitado a VotaPAX";
+         $subjectmail = "Cambio de contraseña";
          $mail->Subject = $subjectmail;
 
          $bodymail = "Se ha solicitado un cambio de contraseña:' <a href='$voting_link'>Enlace</a>'";
