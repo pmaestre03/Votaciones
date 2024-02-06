@@ -48,12 +48,6 @@ if (isset($_POST["new_password"])) {
          $stmt_update_password->bindParam(':email', $email, PDO::PARAM_STR);
          $stmt_update_password->execute();
 
-         $delete_reset_row_query = 'DELETE FROM reset_password WHERE token_password = :token AND email_reset = :email';
-         $stmt_delete_reset_row = $pdo->prepare($delete_reset_row_query);
-         $stmt_delete_reset_row->bindParam(':token', $token, PDO::PARAM_STR);
-         $stmt_delete_reset_row->bindParam(':email', $email, PDO::PARAM_STR);
-         $stmt_delete_reset_row->execute();
-
          $fetch_invitation_tokens_query = 'SELECT token FROM invitacion WHERE email = :email';
          $stmt_fetch_tokens = $pdo->prepare($fetch_invitation_tokens_query);
          $stmt_fetch_tokens->bindParam(':email', $email, PDO::PARAM_STR);
@@ -63,7 +57,6 @@ if (isset($_POST["new_password"])) {
          foreach ($invitation_tokens as $old_token) {
 
                   $new_token = uniqid();
-
 
                   $update_votaciones_token_query = 'UPDATE votaciones_por_usuario SET token = :new_token WHERE token = :old_token';
                   $stmt_update_votaciones_token = $pdo->prepare($update_votaciones_token_query);
@@ -80,11 +73,13 @@ if (isset($_POST["new_password"])) {
                   $stmt_update_hashed_token->bindParam(':email', $email, PDO::PARAM_STR);
                   $stmt_update_hashed_token->bindParam(':hashed_old_token', $hashed_old_token, PDO::PARAM_STR);
                   $stmt_update_hashed_token->execute();
-
-                  echo "<script>showNotification('Contraseña cambiada')</script>";
-
-
-         }
+     }    
+        $delete_reset_row_query = 'DELETE FROM reset_password WHERE token_password = :token AND email_reset = :email';
+        $stmt_delete_reset_row = $pdo->prepare($delete_reset_row_query);
+        $stmt_delete_reset_row->bindParam(':token', $token, PDO::PARAM_STR);
+        $stmt_delete_reset_row->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt_delete_reset_row->execute();
+        echo "<script>showNotification('Contraseña cambiada')</script>";
 }
 
 ?>
