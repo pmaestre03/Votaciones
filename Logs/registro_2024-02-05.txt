@@ -1,3 +1,0 @@
-<!-- procesar_invitaciones.php -->
-PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /home/super/Votaciones/process_invitations.php on line 3
-PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/super/Votaciones/process_invitations.php:1) in /home/super/Votaciones/process_invitations.php on line 6
