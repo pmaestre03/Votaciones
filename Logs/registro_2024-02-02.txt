@@ -1,3 +1,15 @@
+2024-02-02 15:25:47 - Inicio de sesión por el usuario: test@test.com
+2024-02-02 16:29:07 - Inicio de sesión por el usuario: test@test.com
+2024-02-02 17:50:35 - Inicio de sesión por el usuario: test@test.com
+2024-02-02 18:49:17 - Inicio de sesión por el usuario: test@test.com
+2024-02-02 15:33:02 - Inicio de sesión por el usuario: mgonzalezramirez.cf@iesesteveterradas.cat
+2024-02-02 15:34:26 - Inicio de sesión por el usuario: marcelogr2004@gmail.com
+2024-02-02 15:41:55 - Inicio de sesión por el usuario: mgonzalezramirez.cf@iesesteveterradas.cat
+2024-02-02 15:46:22 - Inicio de sesión por el usuario: marcelogr2004@gmail.com
+2024-02-02 15:46:59 - Inicio de sesión por el usuario: mgonzalezramirez.cf@iesesteveterradas.cat
+2024-02-02 16:34:33 - Inicio de sesión por el usuario: marcelogr2004@gmail.com
+2024-02-02 18:39:06 - Inicio de sesión por el usuario: marcelogr2004@gmail.com
+2024-02-02 18:52:54 - Inicio de sesión por el usuario: marcelogr2004@gmail.com
 2024-02-02 15:28:52 - Inicio de sesión por el usuario: paco@paco.com
 2024-02-02 15:29:04 - Inicio de sesión por el usuario: pmaestrefernandez.cf@iesesteveterradas.cat
 2024-02-02 15:55:18 - Inicio de sesión por el usuario: pmaestrefernandez.cf@iesesteveterradas.cat

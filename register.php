@@ -49,10 +49,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             var_dump($prefijo);
 
                             $insertQuery = "INSERT INTO users (nombre, contrasea_cifrada, email, telefono, nombre_pais, rol, pref, nombre_ciudad, codigo_postal) VALUES ('$nombre', '$password', '$mail', '$telefono', '$pais', 'user', '$prefijo', '$ciudad', '$codigoPostal')";
-
+                            
+                            // Ejecutar la consulta
                             if (mysqli_query($conn, $insertQuery)) {
-                                                $usuario = $mail; 
-                                                $contrasenya = $password;  
+
+                                                // Realizar la autenticación del usuario recién registrado
+                                                $usuario = $mail;  // Utilizar el correo electrónico como nombre de usuario
+                                                $contrasenya = $password;  // Utilizar la contraseña cifrada
+                                                // Establecer la conexión a la base de datos con PDO
                                                 try {
                                                                     $pdo = new PDO('mysql:host=localhost;dbname=votaciones', 'userProyecto', 'votacionesAXP24');
                                                                     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -591,7 +595,7 @@ function crearSiguienteFormulario() {
 }
 });
 </script>
-<?php include("Utilidades/footer.php") ?>
 </body>
+<?php include("Utilidades/footer.php") ?>
 
 </html>

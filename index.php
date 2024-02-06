@@ -22,7 +22,6 @@
               </p>
     </div>
     <?php
-                    session_start();
                     if (isset($_SESSION['redirigido']) && $_SESSION['redirigido']) {
                                         echo "<p class='mensaje_informativo'>Para proceder con la validación de su cuenta, le solicitamos amablemente que verifique el mensaje ubicado en la bandeja de entrada de su correo electrónico. <br>En caso de no localizarlo, le recomendamos revisar la carpeta de correo no deseado (Spam). Agradecemos su colaboración.</p>";
 
