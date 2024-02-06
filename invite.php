@@ -27,7 +27,6 @@ if (isset($_GET['id'])) {
         <input type="text" id="emails" name="emails" required>
         <button type="submit" class="invite-button">Enviar Invitaciones</button>
     </form>
-
     <?php include("Utilidades/footer.php") ?>
 </body>
 </html>

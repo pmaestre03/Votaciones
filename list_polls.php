@@ -11,7 +11,10 @@
     <?php include("Utilidades/header.php") ?>
     <div id="notification-container"></div>
     <?php
-   
+   if ($_SESSION["encuesta_editada"]) {
+                    echo "<script>showNotification('Encuesta editada correctamente')</script>";
+                    $_SESSION["encuesta_editada"] = false;
+}
     
     try {
         $hostname = "localhost";
@@ -26,7 +29,7 @@
 
     if (isset($_SESSION['usuario'])) {
         $user = $_SESSION["email"];
-        $listar = 'SELECT id_encuesta, titulo_encuesta, fech_inicio, fecha_fin FROM encuestas WHERE creador = (SELECT id_user FROM users WHERE email=:email);';
+        $listar = 'SELECT id_encuesta, titulo_encuesta, fech_inicio, fecha_fin,estado_enunciado,estado_respuestas,bloqueada FROM encuestas WHERE creador = (SELECT id_user FROM users WHERE email=:email);';
 
         $stmt = $pdo->prepare($listar);
         $stmt->bindParam(':email', $user, PDO::PARAM_STR);
@@ -38,7 +41,7 @@
             echo "<div class='user-info'>Encuestas creadas</div>";
             echo "<div class='center'>";
             echo "<table border='1'>";
-            echo "<tr><th>Título de la Encuesta</th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Estado</th><th></th><th></th>";
+            echo "<tr><th>Título de la Encuesta</th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Estado</th><th>Disponibilidad</th><th>Visibilidad Enunciado</th><th>Visibilidad Respuestas</th><th></th><th></th><th></th>";
             foreach ($encuestas as $encuesta) {
                 echo "<tr>";
                 echo "<td>{$encuesta['titulo_encuesta']}</td>";
@@ -50,23 +53,48 @@
 
                 if ($fechaActual >= $inicioEncuesta && $fechaActual <= $finEncuesta) {
                 echo "<td class='publica'>Activa</td>"; 
+                $inactiva = false;
                 } if ($fechaActual < $inicioEncuesta) {
                 echo "<td class='oculta'>No Activa</td>";
+                $inactiva = true;
                 } if ($fechaActual > $finEncuesta){
                 echo "<td class='finalizada'>Finalizada</td>";
+                $inactiva = true;
                 }
 
+                if ($encuesta['bloqueada'] == 1) {
+                    echo "<td class='finalizada'>Bloqueada</td>";
+                } elseif ($encuesta['bloqueada'] == 0) {
+                    echo "<td class='publica'>Accesible</td>";
+                }
+
+                if ($encuesta['estado_enunciado'] == 'oculta') {
+                    echo "<td class='oculta'>Oculta</td>";
+                } elseif ($encuesta['estado_enunciado'] == 'privada') {
+                    echo "<td class='privada'>Privada</td>";
+                } elseif ($encuesta['estado_enunciado'] == 'publica') {
+                    echo "<td class='publica'>Publica</td>";
+                }
+
+                if ($encuesta['estado_respuestas'] == 'oculta') {
+                    echo "<td class='oculta'>Oculta</td>";
+                } elseif ($encuesta['estado_respuestas'] == 'privada') {
+                    echo "<td class='privada'>Privada</td>";
+                } elseif ($encuesta['estado_respuestas'] == 'publica') {
+                    echo "<td class='publica'>Publica</td>";
+                }
                 $id_encuesta = $encuesta['id_encuesta'];
                 // echo "<td>{$encuesta['id_encuesta']}</td>";
 
                 echo "<td><button onclick=\"window.location.href='graphics.php?id=$id_encuesta'\">Detalles Encuesta</button></td>";
-                echo "<td><button onclick=\"window.location.href='invite.php?id=$id_encuesta'\">Enviar Invitaciones</button></td>";
-
+                if ($encuesta['bloqueada'] == 1 || $inactiva == true) {
+                    echo "<td><button disabled>Enviar Invitaciones</button></td>";
+                } elseif ($encuesta['bloqueada'] == 0  || $inactiva == false) {
+                    echo "<td><button onclick=\"window.location.href='invite.php?id=$id_encuesta'\">Enviar Invitaciones</button></td>";
+                }
+                echo "<td><button onclick=\"window.location.href='edit_poll.php?id_encuesta=$id_encuesta'\">Editar Encuesta</button></td>";
                 echo "</tr>";
-                
-
             }
-
             echo "</table>";
             echo "</div>";
         } else {
@@ -77,7 +105,6 @@
         unset($stmt);
         
     }else {
-            //header("HTTP/1.1 403 Forbidden");
             header("Location: ../errores/error403.php");
             http_response(403);
             exit;

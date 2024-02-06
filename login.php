@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,7 +7,7 @@
     <link rel="stylesheet" href="./Utilidades/styles.css?no-cache=<?php echo time(); ?>">
     <title>Login</title>
     <script src="./Utilidades/scripts.js"></script>
-    <?php require('Utilidades/scripts2.php')?>
+    <?php require('Utilidades/scripts2.php') ?>
 </head>
 <body class="login">
 <?php include("Utilidades/header.php") ?>
@@ -20,6 +21,7 @@
             <label for="password">Contraseña:</label>
             <input type="password" id="password" name="password" required>
 
+            <a href="forgot_password_form.php">¿Contraseña olvidada?</a>
             <button type="submit" class="button button-login">Iniciar Sesión</button>
         </form>
     </div>
@@ -27,70 +29,70 @@
     <!-- BBDD -->
     <?php
 
-try {
-        $hostname = "localhost";
-        $dbname = "votaciones";
-        $username = "userProyecto";
-        $pw = "votacionesAXP24";
-        $pdo = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $pw);
-} catch (PDOException $e) {
-        echo "Failed to get DB handle: " . $e->getMessage() . "\n";
-        exit;
-}
+    try {
+             $hostname = "localhost";
+             $dbname = "votaciones";
+             $username = "userProyecto";
+             $pw = "votacionesAXP24";
+             $pdo = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $pw);
+    } catch (PDOException $e) {
+             echo "Failed to get DB handle: " . $e->getMessage() . "\n";
+             exit;
+    }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $usuario = $_POST["username"];
-        $_SESSION['user_form'] = $usuario;
-        
-        $contrasenya = hash('sha512', $_POST["password"]);
-        $_SESSION['password_form'] = $contrasenya;
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+             $usuario = $_POST["username"];
+             $_SESSION['user_form'] = $usuario;
 
-        $querystr = "SELECT id_user,nombre,email,token_validado,condiciones_aceptadas FROM users WHERE email=:usuario AND contrasea_cifrada=:contrasenya";
-        $query = $pdo->prepare($querystr);
-        $query->bindParam(':usuario', $usuario, PDO::PARAM_STR);
-        $query->bindParam(':contrasenya', $contrasenya, PDO::PARAM_STR);
+             $contrasenya = hash('sha512', $_POST["password"]);
+             $_SESSION['password_form'] = $contrasenya;
 
-        $query->execute();
+             $querystr = "SELECT id_user,nombre,email,token_validado,condiciones_aceptadas FROM users WHERE email=:usuario AND contrasea_cifrada=:contrasenya";
+             $query = $pdo->prepare($querystr);
+             $query->bindParam(':usuario', $usuario, PDO::PARAM_STR);
+             $query->bindParam(':contrasenya', $contrasenya, PDO::PARAM_STR);
 
-        $filas = $query->rowCount();
-        
-        if ($filas > 0) {
-            $usuario = htmlspecialchars($_POST["username"]);
-            $row = $query->fetch(PDO::FETCH_ASSOC);
+             $query->execute();
 
-            $_SESSION['email2'] = $row["email"];
-            $_SESSION['usuario2'] = $row['nombre'];
-            $_SESSION['id_user'] = $row["id_user"];
-            $condiciones_aceptadas = $row['condiciones_aceptadas'];
-            $_SESSION['condiciones_aceptadas'] = $condiciones_aceptadas;
-            if ($row['token_validado'] == 0) {
-                echo "<script>showNotification('Token no validado','red')</script>";
-            }
-            if ($condiciones_aceptadas == 0 && $row['token_validado'] == 1) {
-                header("Location: aceptar_condiciones.php");
-                exit();
-            } 
-            if ($condiciones_aceptadas == 1 && $row['token_validado'] == 1) {
-                        $_SESSION['email'] = $row["email"];
-                        $_SESSION['usuario'] = $row['nombre'];;
-                        //echo "Usuario Correcto: Hola $nombre_usuario";
-                        registrarEvento("Inicio de sesión por el usuario: $usuario");
-                        //echo console.log($row['token_validado']);
-                        header("Location: dashboard.php");
-                        exit();
-            }     
-        } else {
-                            $usuarioIntentado = htmlspecialchars($_POST["username"]);
+             $filas = $query->rowCount();
 
-                            echo "<script>showNotification('Usuario o contraseña incorrecto','red')</script>";
+             if ($filas > 0) {
+                      $usuario = htmlspecialchars($_POST["username"]);
+                      $row = $query->fetch(PDO::FETCH_ASSOC);
+                      $_SESSION['email2'] = $row["email"];
+                      $_SESSION['usuario2'] = $row['nombre'];
+                      $_SESSION['id_user'] = $row["id_user"];
+                      $condiciones_aceptadas = $row['condiciones_aceptadas'];
+                      $_SESSION['condiciones_aceptadas'] = $condiciones_aceptadas;
+                      if ($row['token_validado'] == 0) {
+                               echo "<script>showNotification('Token no validado','red')</script>";
+                      }
+                      if ($condiciones_aceptadas == 0 && $row['token_validado'] == 1) {
+                               header("Location: aceptar_condiciones.php");
+                               exit();
+                      }
+                      if ($condiciones_aceptadas == 1 && $row['token_validado'] == 1) {
+                               $_SESSION['email'] = $row["email"];
+                               $_SESSION['usuario'] = $row['nombre'];
+                               
+                               //echo "Usuario Correcto: Hola $nombre_usuario";
+                               registrarEvento("Inicio de sesión por el usuario: $usuario");
+                               //echo console.log($row['token_validado']);
+                               header("Location: dashboard.php");
+                               exit();
+                      }
+             } else {
+                      $usuarioIntentado = htmlspecialchars($_POST["username"]);
 
-                            registrarEvento("Intento de inicio de sesión fallido por el usuario: $usuarioIntentado");
-        }
+                      echo "<script>showNotification('Usuario o contraseña incorrecto','red')</script>";
 
-        unset($pdo);
-        unset($query);
-}
-?>
+                      registrarEvento("Intento de inicio de sesión fallido por el usuario: $usuarioIntentado");
+             }
+
+             unset($pdo);
+             unset($query);
+    }
+    ?>
 
 <?php include("Utilidades/footer.php") ?>
 </body>

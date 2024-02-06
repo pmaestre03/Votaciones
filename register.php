@@ -48,7 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             echo "Contenido del prefijo: ";
                             var_dump($prefijo);
 
-                            // Consulta SQL para insertar los datos
                             $insertQuery = "INSERT INTO users (nombre, contrasea_cifrada, email, telefono, nombre_pais, rol, pref, nombre_ciudad, codigo_postal) VALUES ('$nombre', '$password', '$mail', '$telefono', '$pais', 'user', '$prefijo', '$ciudad', '$codigoPostal')";
                             
                             // Ejecutar la consulta
@@ -78,7 +77,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                                     $row = $query->fetch(PDO::FETCH_ASSOC);
                                                                     $nombre_usuario = $row['nombre'];
                                                                     $email = $row['email'];
-                                                                    $idUser = $row['id_user'];                                                                                
+                                                                    $idUser = $row['id_user'];
+                                                                    $searchInvite = "SELECT user_email from invitacion where user_email='$email'";
+                                                                                if (mysqli_query($conn, $searchInvite)) {
+                                                                                                    $updateInvite = "UPDATE invitacion SET email='$email ',id_user=$idUser where user_email='$email '";
+                                                                                                    mysqli_query($conn,$updateInvite);
+                                                                                }
                                                                     session_start();
                                                                     $_SESSION['redirigido'] = true;         
                                                                     $token = generateRandomToken();
@@ -120,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Formulario Dinámico</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<link rel="stylesheet" href="./Utilidades/styles.css">
+<link rel="stylesheet" href="./Utilidades/styles.css?no-cache=<?php echo time(); ?>">
 <script src="./Utilidades/scripts.js"></script>
 
 </head>

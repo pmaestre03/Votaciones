@@ -27,7 +27,6 @@
 
         // Obtener el id_user del usuario actual desde la sesión
         $id_user = $_SESSION['id_user'];
-        $user_email = $_SESSION['email2'];
 
         // Consulta para obtener las encuestas votadas y no votadas por el usuario
         $consulta_encuestas = "SELECT invitacion.id_encuesta, encuestas.titulo_encuesta, invitacion.token_activo
@@ -42,14 +41,13 @@
         echo "<div class='user-info'>Encuestas Realizadas y Pendientes</div>";
         echo "<div class='center'>";
         echo "<table>";
-        echo "<tr><th>Título de la Encuesta</th><th>Estado</th></tr>";
+        echo "<tr><th>Título de la Encuesta</th><th>Estado</th><th></th></tr>";
 
         // Mostrar cada encuesta junto con su estado
         while ($row = $stmt_encuestas->fetch(PDO::FETCH_ASSOC)) {
             $id_encuesta = $row['id_encuesta'];
             $titulo_encuesta = $row['titulo_encuesta'];
             $token_activo = $row['token_activo'];
-
             echo "<tr>";
             echo "<td>$titulo_encuesta</td>";
             echo "<td>";
@@ -59,9 +57,9 @@
                 echo "Realizada";
             }
             echo "</td>";
+            echo "<td><button onclick=\"window.location.href='confirm_password.php?id_encuesta=$id_encuesta'\">Ver Voto</button></td>";
             echo "</tr>";
         }
-
         echo "</table>";
         echo "</div>";
     } else {

@@ -37,6 +37,7 @@
         // Obtén los resultados de la encuesta
         $encuesta = $stmtEncuesta->fetch(PDO::FETCH_ASSOC);
 
+
         // Verifica si el usuario actual es el creador de la encuesta
         if ($encuesta && $encuesta['creador'] == $id_usuario_actual) {
             // Ahora puedes utilizar $encuesta para mostrar la información de la encuesta
