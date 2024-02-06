@@ -1,4 +1,6 @@
 <script src="./Utilidades/scripts.js"></script>
+<link rel="stylesheet" href="Utilidades/styles.css?no-cache=<?php echo time(); ?>">
+
 <?php
 include("Utilidades/header.php");
 // Obtener el ID de la encuesta desde la URL
@@ -112,9 +114,10 @@ if (!isset($_SESSION['usuario'])) {
                     }
                     else { // Si el correo electrónico no existe en la tabla users,
                         // Insertar el correo en la tabla email_invitacion
-                        $consulta_email_invitacion = 'INSERT INTO email_invitacion (user_email) VALUES (:email)';
+                        $consulta_email_invitacion = 'INSERT INTO email_invitacion (user_email, token) VALUES (:email, :token)';
                         $stmt_email_invitacion = $pdo->prepare($consulta_email_invitacion);
                         $stmt_email_invitacion->bindParam(':email', $email, PDO::PARAM_STR);
+                        $stmt_email_invitacion->bindParam(':token', $token, PDO::PARAM_STR);
                         $stmt_email_invitacion->execute();
 
                         // Dejar el id_user y el email como NULL

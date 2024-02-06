@@ -1,0 +1,4 @@
+2024-02-02 15:25:47 - Inicio de sesión por el usuario: test@test.com
+2024-02-02 16:29:07 - Inicio de sesión por el usuario: test@test.com
+2024-02-02 17:50:35 - Inicio de sesión por el usuario: test@test.com
+2024-02-02 18:49:17 - Inicio de sesión por el usuario: test@test.com

@@ -1,8 +1,10 @@
 /* header.php */
 body {
   font-family: Arial, sans-serif;
-  margin: 0;
   padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  margin-bottom: 150px;
 }
 
 header {
@@ -73,6 +75,11 @@ h1 {
 
 /* footer.php */
 
+.gif-container {
+  text-align: center;
+}
+
+
 body.footer {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -139,12 +146,15 @@ footer {
   color: white;
 }
 
+
+
 /* index.php */
 
 body.index {
   text-align: center;
-  margin: 0;
   padding: 0;
+  overflow-y: auto;
+  margin-bottom: 150px;
 }
 
 .contenedor_indice {
@@ -160,6 +170,8 @@ body.dashboard {
   font-family: Arial, sans-serif;
   width: 100%;
   margin: 0;
+  overflow-y: auto;
+  margin-bottom: 150px;
 }
 
 .user-info {
@@ -231,6 +243,8 @@ body.login {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  overflow-y: auto;
+  margin-bottom: 150px;
 }
 
 .content-paragraph {
@@ -268,7 +282,7 @@ label {
   font-size: 18px;
 }
 
-input {
+.username, .password {
   padding: 15px;
   margin-bottom: 20px;
   border: 2px solid #ccc;
@@ -298,11 +312,13 @@ body.logout {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  overflow-y: auto;
+  margin-bottom: 150px;
 }
 
 .logout-container {
   max-width: 600px;
-  margin: 250px auto;
+  margin: 80px auto 150px;
   padding: 30px;
   background-color: #f9f9f9;
   border: 1px solid #ccc;
@@ -360,6 +376,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  margin-bottom: 50px;
 }
 
 th,
@@ -544,6 +561,8 @@ body.dashboard {
   font-family: Arial, sans-serif;
   width: 100%;
   margin: 0;
+  overflow-y: auto;
+  margin-bottom: 150px;
 }
 
 .user-info {
@@ -590,6 +609,8 @@ body.graphics {
   min-height: 100vh;
   margin: 0;
   padding: 0;
+  overflow-y: auto;
+  margin-bottom: 150px;
 }
 
 #pollName {
@@ -601,6 +622,7 @@ body.graphics {
   justify-content: space-between;
   width: 1200px;
   margin: auto;
+  margin-bottom: 60px;
 }
 
 .chart-container {
@@ -663,3 +685,76 @@ body.graphics {
   text-align: center;
   margin-top: 20px;
 }
+
+/* vote_poll.css */
+
+.user-info {
+  margin-bottom: 0px;;
+}
+
+.box_img_vote img {
+  max-width: 200px;
+  max-height: 200px; 
+  margin: 0 auto;
+}
+#formVote {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 50px;
+  margin-top: 0px;
+}
+
+#formVote table {
+  border-collapse: collapse;
+  width: 200px;
+  margin: 10px;
+}
+  
+#formVote table th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+#formVote table th{
+  background-color: #f2f2f2;
+  
+}
+
+#labelVote {
+  text-align: center;
+  display: grid;
+  font-size: 26px;
+}
+
+#formVote table img {
+  max-width: 200px;
+  max-height: 200px; 
+  height: auto;
+  margin-top: 0;
+}
+
+#buttonVote {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+  margin-top: 10px;
+  width: 500px;
+}
+
+#buttonVote:hover {
+  background-color: #45a049;
+}
+
+.box_img_vote {
+  margin-bottom: 0;
+  margin-top: 0px;
+  text-align: center;
+}
+
