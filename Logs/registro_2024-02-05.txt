@@ -1,12 +1,3 @@
-2024-02-05 15:24:09 - Inicio de sesión por el usuario: test@test.com
-2024-02-05 15:32:05 - Inicio de sesión por el usuario: test@test.com
-2024-02-05 15:38:33 - Inicio de sesión por el usuario: test@test.com
-2024-02-05 15:39:57 - Inicio de sesión por el usuario: test@test.com
-2024-02-05 16:00:56 - Inicio de sesión por el usuario: test@test.com
-2024-02-05 16:05:00 - Intento de inicio de sesión fallido por el usuario: test@test.com
-2024-02-05 16:05:01 - Intento de inicio de sesión fallido por el usuario: test@test.com
-2024-02-05 16:05:29 - Intento de inicio de sesión fallido por el usuario: paco@paco.com
-2024-02-05 16:05:37 - Inicio de sesión por el usuario: paco@paco.com
-2024-02-05 16:34:12 - Voto registrado
-2024-02-05 17:41:54 - Intento de inicio de sesión fallido por el usuario: test@test.com
-2024-02-05 17:42:00 - Inicio de sesión por el usuario: paco@paco.com
+<!-- procesar_invitaciones.php -->
+PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /home/super/Votaciones/process_invitations.php on line 3
+PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/super/Votaciones/process_invitations.php:1) in /home/super/Votaciones/process_invitations.php on line 6
