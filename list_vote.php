@@ -27,6 +27,7 @@
 
         // Obtener el id_user del usuario actual desde la sesión
         $id_user = $_SESSION['id_user'];
+        $user_email = $_SESSION['email2'];
 
         // Consulta para obtener las encuestas votadas y no votadas por el usuario
         $consulta_encuestas = "SELECT invitacion.id_encuesta, encuestas.titulo_encuesta, invitacion.token_activo
