@@ -1,0 +1,3 @@
+2024-02-06 16:31:07 - Intento de inicio de sesión fallido por el usuario: marcelogr2004@gmail.com
+2024-02-06 16:31:21 - Inicio de sesión por el usuario: marcelogr2004@gmail.com
+2024-02-06 16:44:25 - Inicio de sesión por el usuario: marcelogr2004@gmail.com

@@ -13,7 +13,7 @@
 <?php include("Utilidades/conexion.php") ?>
 <?php include("Utilidades/header.php") ?>
 
-<div id="notification-container"></div>
+<div id="notification-container-dinamic"></div>
 <?php
 if (isset($_SESSION['usuario'])) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
