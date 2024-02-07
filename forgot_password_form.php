@@ -5,6 +5,7 @@
 <?php include("Utilidades/header.php") ?>
 <body>
 <div id="notification-container"></div>
+    <div class='user-info'>Reinicio de contraseña</div>
     <div class='login-container'>
         <form method='post'>
             <label for="mail">Escribe tu correo electronico</label>

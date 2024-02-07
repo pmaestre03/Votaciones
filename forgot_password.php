@@ -5,6 +5,7 @@
 <?php include("Utilidades/header.php") ?>
 <body>
 <div id="notification-container"></div>
+    <div class='user-info'>Cambio de contraseña</div>
     <div class='login-container'>
         <form method='post' onsubmit="return validarFormulario()">
         <h1>Una vez cambiada la reestablecida la contraseña no podras ver tus anteriores votos</h1><br>

@@ -27,3 +27,6 @@
 2024-02-07 20:18:12 - Contraseña confirmada por el usuario: mgonzalezramirez.cf@iesesteveterradas.cat
 2024-02-07 20:27:04 - Voto registrado
 2024-02-07 20:28:32 - Voto registrado
+2024-02-07 20:41:09 - Inicio de sesión por el usuario: mgonzalezramirez.cf@iesesteveterradas.cat
+2024-02-07 20:42:37 - Intento de inicio de sesión fallido por el usuario: marcelogr2004@gmail.com
+2024-02-07 20:42:45 - Inicio de sesión por el usuario: marcelogr2004@gmail.com

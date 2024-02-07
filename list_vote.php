@@ -12,6 +12,7 @@
 <?php include("Utilidades/header.php") ?>
 <?php include("Utilidades/conexion.php") ?>
 <body class="list_vote">
+<div id="notification-container"></div>
 <?php
     if (isset($_SESSION['id_user'])) {
         try {
@@ -38,30 +39,35 @@
         $stmt_encuestas->bindParam(':id_user', $id_user, PDO::PARAM_INT);
         $stmt_encuestas->execute();
 
-        echo "<div class='user-info'>Encuestas Realizadas y Pendientes</div>";
-        echo "<div class='center'>";
-        echo "<table>";
-        echo "<tr><th>Título de la Encuesta</th><th>Estado</th><th></th></tr>";
+        if ($stmt_encuestas->rowCount() > 0) {
+            echo "<div class='user-info'>Encuestas realizadas y pendientes</div>";
+            echo "<div class='center'>";
+            echo "<table>";
+            echo "<tr><th>Título de la Encuesta</th><th>Estado</th><th></th></tr>";
 
-        // Mostrar cada encuesta junto con su estado
-        while ($row = $stmt_encuestas->fetch(PDO::FETCH_ASSOC)) {
-            $id_encuesta = $row['id_encuesta'];
-            $titulo_encuesta = $row['titulo_encuesta'];
-            $token_activo = $row['token_activo'];
-            echo "<tr>";
-            echo "<td>$titulo_encuesta</td>";
-            echo "<td>";
-            if ($token_activo == 1) {
-                echo "Pendiente";
-            } else {
-                echo "Realizada";
+            // Mostrar cada encuesta junto con su estado
+            while ($row = $stmt_encuestas->fetch(PDO::FETCH_ASSOC)) {
+                $id_encuesta = $row['id_encuesta'];
+                $titulo_encuesta = $row['titulo_encuesta'];
+                $token_activo = $row['token_activo'];
+                echo "<tr>";
+                echo "<td>$titulo_encuesta</td>";
+                echo "<td>";
+                if ($token_activo == 1) {
+                    echo "Pendiente";
+                } else {
+                    echo "Realizada";
+                }
+                echo "</td>";
+                echo "<td><button onclick=\"window.location.href='confirm_password.php?id_encuesta=$id_encuesta'\">Ver Voto</button></td>";
+                echo "</tr>";
             }
-            echo "</td>";
-            echo "<td><button onclick=\"window.location.href='confirm_password.php?id_encuesta=$id_encuesta'\">Ver Voto</button></td>";
-            echo "</tr>";
+            echo "</table>";
+            echo "</div>";
+        } else {
+            echo "<div class='user-info'>No hay encuestas disponibles</div>";
+            echo "<script>showNotification('No hay encuestas ni realizadas ni pendientes','red')</script>";
         }
-        echo "</table>";
-        echo "</div>";
     } else {
         header("Location: ../errores/error403.php");
         http_response(403);
@@ -69,6 +75,5 @@
     }
 ?>
 <?php include("Utilidades/footer.php") ?>
-    <div id="notification-container"></div>
 </body>
 </html>
