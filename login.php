@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php //session_start(); ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,7 +11,7 @@
 </head>
 <body class="login">
 <?php include("Utilidades/header.php") ?>
-
+<div class='user-info'>Login</div>
 <!-- Formulario Login -->
 <div class="login-container">
 <form method="post">
