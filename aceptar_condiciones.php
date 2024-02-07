@@ -40,7 +40,7 @@ try {
     echo "Failed to get DB handle: " . $e->getMessage() . "\n";
     exit;
 }
-if (isset($_SESSION['email'])) {
+if (isset($_SESSION['email2'])) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST['accept-conditions'])) {
             $correo = $_SESSION['user_form'] ?? "";
