@@ -26,7 +26,7 @@ $email_array = $stmt_email->fetchAll(PDO::FETCH_ASSOC);
 foreach ($email_array as $email_row) {
     $email = trim($email_row['user_email']);
 
-    $query_token = "SELECT token FROM invitacion WHERE user_email = :email AND invitacion.token = email.invitacion.token";
+    $query_token = "SELECT token FROM email_invitacion WHERE user_email = :email";
     $stmt_token = $pdo->prepare($query_token);
     $stmt_token->bindParam(':email', $email, PDO::PARAM_STR);
     $stmt_token->execute();
