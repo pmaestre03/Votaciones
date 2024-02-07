@@ -1,4 +1,4 @@
-
+<?php require('Utilidades/scripts2.php')?>
 <?php
 // Conectar a la base de datos
 $conn = mysqli_connect('localhost', 'userProyecto', 'votacionesAXP24', 'votaciones');
@@ -48,10 +48,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             echo "Contenido del prefijo: ";
                             var_dump($prefijo);
 
-                            // Consulta SQL para insertar los datos
                             $insertQuery = "INSERT INTO users (nombre, contrasea_cifrada, email, telefono, nombre_pais, rol, pref, nombre_ciudad, codigo_postal) VALUES ('$nombre', '$password', '$mail', '$telefono', '$pais', 'user', '$prefijo', '$ciudad', '$codigoPostal')";
+                            
                             // Ejecutar la consulta
                             if (mysqli_query($conn, $insertQuery)) {
+
                                                 // Realizar la autenticación del usuario recién registrado
                                                 $usuario = $mail;  // Utilizar el correo electrónico como nombre de usuario
                                                 $contrasenya = $password;  // Utilizar la contraseña cifrada
@@ -76,7 +77,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                                     $row = $query->fetch(PDO::FETCH_ASSOC);
                                                                     $nombre_usuario = $row['nombre'];
                                                                     $email = $row['email'];
-                                                                    $idUser = $row['id_user'];                                                                                
+                                                                    $idUser = $row['id_user'];
+                                                                    $searchInvite = "SELECT user_email from invitacion where user_email='$email'";
+                                                                                if (mysqli_query($conn, $searchInvite)) {
+                                                                                                    $updateInvite = "UPDATE invitacion SET email='$email ',id_user=$idUser where user_email='$email '";
+                                                                                                    mysqli_query($conn,$updateInvite);
+                                                                                }
                                                                     session_start();
                                                                     $_SESSION['redirigido'] = true;         
                                                                     $token = generateRandomToken();
@@ -118,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Formulario Dinámico</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<link rel="stylesheet" href="./Utilidades/styles.css">
+<link rel="stylesheet" href="./Utilidades/styles.css?no-cache=<?php echo time(); ?>">
 <script src="./Utilidades/scripts.js"></script>
 
 </head>
@@ -127,15 +133,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <?php include("Utilidades/header.php") ?>
 
-<div id="notification-container"></div>
+<div id="register"></div>
 <script>
 $(document).ready(function () {
 var titulo = $('<h1>', { class: 'register-info' });
 titulo.text('Registro');
-$('body').append(titulo);
+$('#register').after(titulo);
 
 var divContenedor = $('<div>', { class: 'register-container' });
-$('body').append(divContenedor);
+$('.register-info').after(divContenedor);
 
 var divNotification = $('<div>', {id: 'notification-container'})
 divContenedor.append(divNotification); 
@@ -589,7 +595,7 @@ function crearSiguienteFormulario() {
 }
 });
 </script>
-<?php include("Utilidades/footer.php") ?>
 </body>
+<?php include("Utilidades/footer.php") ?>
 
 </html>
