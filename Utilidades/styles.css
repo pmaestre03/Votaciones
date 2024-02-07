@@ -888,3 +888,11 @@ td {
 .button-reject:hover[type="submit"] {
   background-color: #c00101;
 }
+
+#none {
+         cursor:  default;
+}
+
+.dashboard-box {
+         cursor: pointer;
+}
