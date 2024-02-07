@@ -289,7 +289,7 @@ body.dashboard {
 
 .poll-container {
   max-width: 600px;
-  margin: 15px auto;
+  margin: 15px auto 50px auto;
   padding: 30px;
   border: 1px solid #ccc;
   background-color: #f9f9f9;
