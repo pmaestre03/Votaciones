@@ -30,6 +30,12 @@ try {
          exit;
 }
 
+if (!isset($_GET['token'])) {
+    header("HTTP/1.1 403 Forbidden");
+    http_response(403);
+    exit;
+}
+
 $token = $_GET['token'];
 $consulta_reset_password = 'SELECT email_reset FROM reset_password WHERE token_password = :token';
 $stmt_reset = $pdo->prepare($consulta_reset_password);
@@ -38,9 +44,9 @@ $stmt_reset->execute();
 $result = $stmt_reset->fetch(PDO::FETCH_ASSOC);
 
 if (!$result) {
-         header("HTTP/1.1 403 Forbidden");
-         include("../errores/error403.php");
-         exit;
+    header("Location: ../errores/error403.php");
+    http_response(403);
+    exit;
 }
 
 if (isset($_GET['token'])) {
