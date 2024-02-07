@@ -9,7 +9,7 @@
 <body class="dashboard">
 <?php include("Utilidades/header.php") ?>
     <?php
-        echo $_SESSION['token'];
+        //echo $_SESSION['token'];
         if (isset($_SESSION['usuario'])) {
             
             echo "<div class='user-info'>";
@@ -81,6 +81,19 @@
                     echo '    });';
                     echo '});';
                 echo '</script>';
+
+                echo "<div class='dashboard-box' id='votePolls'>";
+                    echo "<h2>Cambiar contraseña</h2>";
+                echo "</div>";
+
+                echo '<script>';
+                    echo '$(document).ready(function() {';
+                    echo '    $("#votePolls").on("click", function() {';
+                    echo '        window.location.href = "change_password.php";';
+                    echo '    });';
+                    echo '});';
+                echo '</script>';
+
 
             echo "</div>";
             

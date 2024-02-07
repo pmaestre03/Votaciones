@@ -1,4 +1,7 @@
+<link rel="stylesheet" href="./Utilidades/styles.css?no-cache=<?php echo time(); ?>">
 <?php include("Utilidades/conexion.php") ?>
+<?php include("Utilidades/header.php") ?>
+<div class='login-container'>
 <?php
 
 $token = $_GET['token'];
@@ -19,9 +22,11 @@ if ($result && mysqli_num_rows($result) > 0) {
     $deleteTokenQuery = "DELETE FROM tokens_emails WHERE token = '$token'";
     mysqli_query($conn, $deleteTokenQuery);
 
-    echo "Correo electrónico validado correctamente. Puedes iniciar sesión ahora.";
+    echo "<h1>Correo electrónico validado correctamente. Puedes iniciar sesión ahora.</h1>";
 } else {
-    echo "Token no válido o expirado.";
+    echo "<h1>Token no válido o expirado.</h1>";
 }
 
 ?>
+</div>
+<?php include("Utilidades/footer.php") ?>

@@ -8,6 +8,12 @@
 </head>
 <body class="index">
     <?php include("Utilidades/header.php") ?>
+    <img class="papeletas papeleta1" src="imagenes/papeleta.jpg">
+    <img class="papeletas papeleta2" src="imagenes/papeleta.jpg">
+    <img class="papeletas papeleta3" src="imagenes/papeleta.jpg">
+    <img class="papeletas papeleta4" src="imagenes/papeleta.jpg">
+    <img class="papeletas papeleta5" src="imagenes/papeleta.jpg">
+    <img class="papeletas papeleta6" src="imagenes/papeleta.jpg">
     <div class="contenedor_indice">
     <img src="./imagenes/votaciones.jpeg" alt="">
     <p class="parrafo_indice">Nuestra plataforma se fundamenta en un sistema de votación que brinda la posibilidad de participar en encuestas de manera anónima o mediante la utilización de un usuario previamente registrado.<br>
@@ -16,7 +22,6 @@
               </p>
     </div>
     <?php
-                    session_start();
                     if (isset($_SESSION['redirigido']) && $_SESSION['redirigido']) {
                                         echo "<p class='mensaje_informativo'>Para proceder con la validación de su cuenta, le solicitamos amablemente que verifique el mensaje ubicado en la bandeja de entrada de su correo electrónico. <br>En caso de no localizarlo, le recomendamos revisar la carpeta de correo no deseado (Spam). Agradecemos su colaboración.</p>";
 
