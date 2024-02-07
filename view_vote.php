@@ -14,6 +14,7 @@ if ($_SESSION['password_confirmada'] == false) {
 <?php require('Utilidades/scripts2.php')?>
 <body>
 <div id="notification-container"></div>
+<div class='user-info'>Tu voto</div>
 <div class="login-container">
     
 <?php
@@ -68,12 +69,16 @@ try {
                 if (count($result) > 0) {
                     foreach ($result as $row) {
                                         echo '<br><h2>Tu voto ha sido:<br> '.$row['nombre_opciones'].'</h2><br>';
-                                        if ($row['imagen_opciones']!='NULL') {
+                                        if ($row['imagen_opciones']!='') {
                                                             echo "<img src='./".$row['imagen_opciones']."' width=500px>";
                                         }
                     }
             }
         }
+    }
+    else {
+        echo '<br><h2>No hay voto</h2><br>';
+        echo "<script>showNotification('Todavía no has votado','red')</script>";
     }
 }
 ?>

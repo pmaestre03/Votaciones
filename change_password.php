@@ -5,6 +5,7 @@
 <?php include("Utilidades/header.php") ?>
 <body>
 <div id="notification-container"></div>
+    <div class='user-info'>Cambiar contraseña</div>
     <div class='login-container'>
         <form method='post' onsubmit="return validarFormulario()">
             <label for="old_password">Contraseña actual</label>

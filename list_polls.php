@@ -104,7 +104,8 @@
                       echo "</table>";
                       echo "</div>";
              } else {
-                      echo "<script>showNotification('No hay encuestas creadas','red')</script>";
+                    echo "<div class='user-info'>No hay encuestas creadas</div>";
+                    echo "<script>showNotification('No hay encuestas creadas','red')</script>";
              }
 
              unset($pdo);

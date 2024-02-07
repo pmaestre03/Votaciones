@@ -54,6 +54,10 @@ h2 {
   background-color: #3498db;
 }
 
+.add-option {
+  margin: 10px 50px;
+}
+
 #signupButton {
   font-size: 20px;
   border-radius: 4px;

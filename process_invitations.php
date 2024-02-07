@@ -49,7 +49,7 @@ foreach ($email_array as $email_row) {
     $mail->AddAddress($email);
     $subjectmail = "Invitado a VotaPAX";
     $mail->Subject = $subjectmail;
-    $bodymail = "¡Hola! Has sido invitado a votar en nuestra encuesta. Para votar, haz clic en el siguiente enlace:' <a href='$voting_link'>Enlace</a>'";
+    $bodymail = "¡Hola! Has sido invitado a votar en nuestra encuesta. Para votar, haz clic en el siguiente enlace:'<a href='$voting_link'>Vota</a>'";
     $mail->MsgHTML($bodymail);
 
     if (!$mail->Send()) {
